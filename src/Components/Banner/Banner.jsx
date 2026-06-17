@@ -29,7 +29,7 @@ const HeroBanner = () => {
     ];
 
     return (
-        <div className="relative w-full h-[550px] md:h-[650px] bg-slate-900">
+        <div className="relative w-full h-[550px] md:h-[650px] bg-slate-900 overflow-hidden">
             <Swiper
                 modules={[Autoplay, EffectFade, Pagination]}
                 effect={'fade'}

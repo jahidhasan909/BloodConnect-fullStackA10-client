@@ -1,6 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Shared/Navbar";
+import Footer from "@/Components/Shared/Footer";
 
 
 
@@ -21,9 +22,10 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
-        <main>
+        <main className="grow">
           {children}
         </main>
+        <Footer></Footer>
       </body>
     </html>
   );
