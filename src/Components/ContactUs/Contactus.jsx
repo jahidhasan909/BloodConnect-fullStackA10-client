@@ -1,22 +1,16 @@
 'use client'
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin,  Send } from 'lucide-react';
+import { Card } from '@heroui/react';
 
 const ContactSection = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-    });
+    const [formData, setFormData] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
     };
 
     const handleChange = (e) => {
-  
     };
 
     return (
@@ -40,26 +34,26 @@ const ContactSection = () => {
                     <div className="lg:col-span-2 space-y-8">
                         
                        
-                        <div className="bg-[#E11D48] text-white rounded-[2rem] p-8 shadow-lg shadow-rose-600/10 relative overflow-hidden group">
+                        <Card className="bg-[#E11D48] text-white rounded-[2rem] p-8 shadow-lg shadow-rose-600/10 relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-300">
                                 <Phone className="w-32 h-32" />
                             </div>
                             <span className="text-[10px] font-bold uppercase tracking-widest text-rose-200 block mb-2">
                                 24/7 Emergency Hotline
                             </span>
-                            <h3 className="text-2xl font-black tracking-tight mb-4">
+                            <h3 className="text-2xl font-black tracking-tight">
                                 Urgent Blood Support
                             </h3>
-                            <a href="tel:+8801700000000" className="text-2xl sm:text-3xl font-extrabold tracking-tight hover:underline block mb-2">
+                            <a href="tel:+8801700000000" className="text-2xl sm:text-3xl font-extrabold tracking-tight hover:underline block mb-1">
                                 +880 1700-00000
                             </a>
                             <p className="text-xs text-rose-100/80 leading-relaxed">
                                 Call directly for zero-latency communication during medical crises. Our support syncs across blood dispatch networks.
                             </p>
-                        </div>
+                        </Card>
 
              
-                        <div className="bg-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2rem] p-8 space-y-6">
+                        <Card className="bg-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2rem] p-8 space-y-6">
                             
                        
                             <div className="flex items-start gap-4">
@@ -90,12 +84,12 @@ const ContactSection = () => {
                  
                           
 
-                        </div>
+                        </Card>
 
                     </div>
 
                    
-                    <div className="lg:col-span-3 bg-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 sm:p-10 relative">
+                    <Card className="lg:col-span-3 bg-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 sm:p-10 relative">
                         
                         <form onSubmit={handleSubmit} className="space-y-6">
                             
@@ -166,7 +160,7 @@ const ContactSection = () => {
 
                         </form>
 
-                    </div>
+                    </Card>
 
                 </div>
 
