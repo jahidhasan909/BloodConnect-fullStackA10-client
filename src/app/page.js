@@ -1,4 +1,5 @@
 import HeroBanner from "@/Components/Banner/Banner";
+import ContactSection from "@/Components/ContactUs/Contactus";
 import FeaturedSection from "@/Components/Featuredsection/Featuredesction";
 import Image from "next/image";
 
@@ -7,6 +8,7 @@ export default function Home() {
     <>
     <HeroBanner></HeroBanner>
     <FeaturedSection></FeaturedSection>
+    <ContactSection></ContactSection>
     </>
   );
 }
