@@ -19,6 +19,11 @@ const Navbar = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    if (pathname.includes('dashboard')) {
+        return null;
+    }
+
+
 
     const linkClass = (path) =>
         pathname === path
@@ -39,8 +44,8 @@ const Navbar = () => {
 
                     <div className="hidden md:flex items-center gap-8">
                         <Link href="/" className={linkClass('/')}>Home</Link>
-                        <Link href="/donation-requests" className={linkClass('/donation-requests')}>Donation Requests</Link>
-                        <Link href="/search-donor" className={linkClass('/search-donor')}>Search Donor</Link>
+                        <Link href="/donationrequest" className={linkClass('/donationrequest')}>Donation Requests</Link>
+                        <Link href="/searchdonor" className={linkClass('/searchdonor')}>Search Donor</Link>
 
 
                         {isLoggedIn && (
@@ -131,16 +136,16 @@ const Navbar = () => {
                         Home
                     </Link>
                     <Link
-                        href="/donation-requests"
+                        href="/donationrequest"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/donation-requests' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/donationrequest' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
                     >
                         Donation Requests
                     </Link>
                     <Link
-                        href="/search-donor"
+                        href="/searchdonor"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/search-donor' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/searchdonor' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
                     >
                         Search Donor
                     </Link>

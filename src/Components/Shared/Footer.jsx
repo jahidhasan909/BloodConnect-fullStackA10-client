@@ -3,10 +3,17 @@ import React from 'react';
 import Link from 'next/link';
 import { FaGithub, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+
+    const pathname = usePathname()
+    if (pathname.includes('dashboard')) {
+        return null;
+    }
+
 
     return (
 
