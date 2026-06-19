@@ -14,15 +14,20 @@ import {
 } from "lucide-react";
 
 import { Button, Drawer } from "@heroui/react";
+import { auth } from "@/lib/auth";
 
 export default async function DashboardSidebar() {
 
-    //   const session = await auth.api.getSession({
-    //     headers: await headers(),
-    //   });
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
-    //   const user = session?.user;
-    const role = "donor";
+    const user = session?.user;
+    const role = user?.role || 'donor';
+
+    console.log(role,'role');
+    
+
 
     const dashboardItems = {
         donor: [
@@ -47,7 +52,7 @@ export default async function DashboardSidebar() {
     };
 
 
-    const navItems = dashboardItems[role] || dashboardItems["donor"];
+    const navItems = dashboardItems[role];
 
     return (
         <div className="flex">
@@ -110,8 +115,8 @@ export default async function DashboardSidebar() {
                     <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Access Control</p>
                         <span className={`inline-block text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md mt-1.5 border ${role === 'admin' ? 'bg-purple-50 text-purple-700 border-purple-100' :
-                                role === 'volunteer' ? 'bg-blue-50 text-blue-700 border-blue-100' :
-                                    'bg-rose-50 text-[#E11D48] border-rose-100'
+                            role === 'volunteer' ? 'bg-blue-50 text-blue-700 border-blue-100' :
+                                'bg-rose-50 text-[#E11D48] border-rose-100'
                             }`}>
                             {role} Node
                         </span>

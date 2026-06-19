@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import {
     Dropdown,
@@ -9,26 +9,29 @@ import {
     DropdownMenu,
     DropdownItem,
     Avatar,
-    Button
+    Button,
+    Label
 } from "@heroui/react";
 import Image from 'next/image';
 import { authClient } from '@/lib/auth-client';
+import { ArrowRightFromSquare } from '@gravity-ui/icons';
 
 const Navbar = () => {
 
 
-    const { data,isPending} = authClient.useSession()
-    
-    
+    const { data, isPending } = authClient.useSession()
+
+
+
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     if (isPending) {
         return <div>loading....</div>
     }
-console.log(data?.user);
+    const user = data?.user
+
 
     if (pathname.includes('dashboard')) {
         return null;
@@ -59,42 +62,63 @@ console.log(data?.user);
                         <Link href="/searchdonor" className={linkClass('/searchdonor')}>Search Donor</Link>
 
 
-                        {isLoggedIn && (
+                        {user && (
                             <Link href="/funding" className={linkClass('/funding')}>Funding</Link>
                         )}
                     </div>
 
 
                     <div className="hidden md:flex items-center">
-                        {!isLoggedIn ? (
-                            <Button
-                                as={Link}
-                                href="/login"
-                                className="bg-[#E11D48] text-white font-medium rounded-md px-6 shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                                </svg>
-                                Login
-                            </Button>
+                        {!user ? (
+                            <Link href={'/login'}>
+                                <Button
+                                    className="bg-[#E11D48] text-white font-medium rounded-md px-6 shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2"
+                                >
+
+                                    Login
+                                </Button>
+                            </Link>
                         ) : (
-                            <Dropdown placement="bottom-end">
-                                <DropdownTrigger>
-                                    <Avatar
-                                        isBordered
-                                        as="button"
-                                        className="transition-transform border-[#E11D48] w-9 h-9 cursor-pointer"
-                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb"
-                                    />
-                                </DropdownTrigger>
-                                <DropdownMenu aria-label="Profile Actions" variant="flat">
-                                    <DropdownItem key="dashboard" href="/dashboard" className="text-slate-700">
-                                        Dashboard
-                                    </DropdownItem>
-                                    <DropdownItem key="logout" color="danger" className="text-danger" onPress={() => setIsLoggedIn(false)}>
-                                        Logout
-                                    </DropdownItem>
-                                </DropdownMenu>
+                            <Dropdown>
+                                <Dropdown.Trigger className="rounded-full">
+                                    <Avatar>
+                                        <Avatar.Image
+                                            alt="userimg"
+                                            src={user?.image}
+                                        />
+                                        <Avatar.Fallback delayMs={600}>{user?.name?.charAt(0, 2)}</Avatar.Fallback>
+                                    </Avatar>
+                                </Dropdown.Trigger>
+                                <Dropdown.Popover>
+                                    <div className="px-3 pt-3 pb-1">
+                                        <div className="flex items-center gap-2">
+                                            <Avatar size="sm">
+                                                <Avatar.Image
+                                                    alt="userimg"
+                                                    src={user?.image}
+                                                />
+                                                <Avatar.Fallback delayMs={600}>{user?.name?.charAt(0, 2)}</Avatar.Fallback>
+                                            </Avatar>
+                                            <div className="flex flex-col gap-0">
+                                                <p className="text-sm leading-5 font-medium">{user?.name}</p>
+                                                <p className="text-xs leading-none text-muted">{user?.email}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item textValue="Dashboard">
+                                            <Link className='w-full' href={`/dashboard/${user.role}`}>
+                                                <Label>Dashboard</Label>
+                                            </Link>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => authClient.signOut()} textValue="Logout" variant="danger">
+                                            <div className="flex w-full items-center justify-between gap-2">
+                                                <Label>Log Out</Label>
+                                                <ArrowRightFromSquare className="size-3.5 text-danger" />
+                                            </div>
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown.Popover>
                             </Dropdown>
                         )}
                     </div>
@@ -102,20 +126,56 @@ console.log(data?.user);
 
                     <div className="md:hidden flex items-center gap-4">
 
-                        {isLoggedIn && (
-                            <Dropdown placement="bottom-end">
-                                <DropdownTrigger>
-                                    <Avatar
-                                        isBordered
-                                        as="button"
-                                        className="transition-transform border-[#E11D48] w-8 h-8 cursor-pointer"
-                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb"
-                                    />
-                                </DropdownTrigger>
-                                <DropdownMenu aria-label="Profile Actions" variant="flat">
-                                    <DropdownItem key="dashboard" href="/dashboard">Dashboard</DropdownItem>
-                                    <DropdownItem key="logout" color="danger" onPress={() => setIsLoggedIn(false)}>Logout</DropdownItem>
-                                </DropdownMenu>
+                         {!user ? (
+                            <Link href={'/login'}>
+                                <Button
+                                    className="bg-[#E11D48] text-white font-medium rounded-md px-6 shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2"
+                                >
+
+                                    Login
+                                </Button>
+                            </Link>
+                        ) : (
+                            <Dropdown>
+                                <Dropdown.Trigger className="rounded-full">
+                                    <Avatar>
+                                        <Avatar.Image
+                                            alt="userimg"
+                                            src={user?.image}
+                                        />
+                                        <Avatar.Fallback delayMs={600}>{user?.name?.charAt(0, 2)}</Avatar.Fallback>
+                                    </Avatar>
+                                </Dropdown.Trigger>
+                                <Dropdown.Popover>
+                                    <div className="px-3 pt-3 pb-1">
+                                        <div className="flex items-center gap-2">
+                                            <Avatar size="sm">
+                                                <Avatar.Image
+                                                    alt="userimg"
+                                                    src={user?.image}
+                                                />
+                                                <Avatar.Fallback delayMs={600}>{user?.name?.charAt(0, 2)}</Avatar.Fallback>
+                                            </Avatar>
+                                            <div className="flex flex-col gap-0">
+                                                <p className="text-sm leading-5 font-medium">{user?.name}</p>
+                                                <p className="text-xs leading-none text-muted">{user?.email}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item textValue="Dashboard">
+                                            <Link className='w-full' href={`/dashboard/${user.role}`}>
+                                                <Label>Dashboard</Label>
+                                            </Link>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => authClient.signOut()} textValue="Logout" variant="danger">
+                                            <div className="flex w-full items-center justify-between gap-2">
+                                                <Label>Log Out</Label>
+                                                <ArrowRightFromSquare className="size-3.5 text-danger" />
+                                            </div>
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown.Popover>
                             </Dropdown>
                         )}
 
@@ -161,7 +221,7 @@ console.log(data?.user);
                         Search Donor
                     </Link>
 
-                    {isLoggedIn && (
+                    {user && (
                         <Link
                             href="/funding"
                             onClick={() => setIsMenuOpen(false)}
@@ -171,22 +231,7 @@ console.log(data?.user);
                         </Link>
                     )}
 
-                    {!isLoggedIn && (
-                        <div className="pt-2">
-                            <Button
-                                as={Link}
-                                href="/login"
-                                variant='outline'
-                                onClick={() => setIsMenuOpen(false)}
-                                className="w-full bg-[#E11D48]  text-white font-medium rounded-md  h-11 shadow-sm flex items-center justify-center gap-2"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                                </svg>
-                                Login
-                            </Button>
-                        </div>
-                    )}
+                    
                 </div>
             )}
         </nav>
