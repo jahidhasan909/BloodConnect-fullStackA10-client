@@ -12,12 +12,23 @@ import {
     Button
 } from "@heroui/react";
 import Image from 'next/image';
+import { authClient } from '@/lib/auth-client';
 
 const Navbar = () => {
+
+
+    const { data,isPending} = authClient.useSession()
+    
+    
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    if (isPending) {
+        return <div>loading....</div>
+    }
+console.log(data?.user);
 
     if (pathname.includes('dashboard')) {
         return null;

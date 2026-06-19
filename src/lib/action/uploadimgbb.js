@@ -10,6 +10,8 @@ export const uploadImagebb = async (image) => {
         body: formdata
     })
 
-    const data = res.json()
+    const data = await res.json()
+    console.log(data);
+    
     return data.data;
 }
