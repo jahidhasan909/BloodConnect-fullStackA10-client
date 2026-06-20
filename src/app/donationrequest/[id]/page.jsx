@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from "@heroui/react";
+import { DonationConfirmeModal } from '@/Components/DonationRequestCard/DonationConfirmeModal';
 
 
 const DonationDetailspage = async ({ params }) => {
@@ -70,12 +71,9 @@ const DonationDetailspage = async ({ params }) => {
                     </div>
                 </div>
 
-                {/* Client Side Action Button Trigger Container */}
-                {/* <DonateActionButton 
-                    requestId={donationRequest._id} 
-                    initialStatus={donationRequest.donationStatus} 
-                    baseurl={baseurl} 
-                /> */}
+               
+
+                <DonationConfirmeModal donationRequest={donationRequest}></DonationConfirmeModal>
 
             </Card>
 
