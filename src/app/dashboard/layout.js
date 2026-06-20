@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }) {
   return (
    <div className="flex">
     <DashboardSidebar></DashboardSidebar>
-    <main>{children}</main>
+    <main className="grow">{children}</main>
    </div>
   );
 }

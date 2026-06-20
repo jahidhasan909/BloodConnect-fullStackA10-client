@@ -25,16 +25,17 @@ export default async function DashboardSidebar() {
     const user = session?.user;
     const role = user?.role || 'donor';
 
-    console.log(role,'role');
+ 
+  
     
 
 
     const dashboardItems = {
         donor: [
             { icon: Home, label: "Dashboard Home", link: "/dashboard" },
-            { icon: User, label: "Profile Page", link: "/dashboard/profile" },
-            { icon: FileText, label: "My Requests", link: "/dashboard/my-donation-requests" },
-            { icon: PlusCircle, label: "Create Request", link: "/dashboard/create-donation-request" },
+            { icon: User, label: "Profile Page", link: "/dashboard/donor/profile" },
+            { icon: FileText, label: "My Requests", link: "/dashboard/donor/my-donation-requests" },
+            { icon: PlusCircle, label: "Create Request", link: "/dashboard/donor/create-donation-request" },
         ],
 
         volunteer: [
@@ -112,15 +113,7 @@ export default async function DashboardSidebar() {
                     </Link>
 
 
-                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Access Control</p>
-                        <span className={`inline-block text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md mt-1.5 border ${role === 'admin' ? 'bg-purple-50 text-purple-700 border-purple-100' :
-                            role === 'volunteer' ? 'bg-blue-50 text-blue-700 border-blue-100' :
-                                'bg-rose-50 text-[#E11D48] border-rose-100'
-                            }`}>
-                            {role} Node
-                        </span>
-                    </div>
+                   
 
                     {/* Desktop Navigation Map */}
                     <nav className="flex flex-col gap-1">
