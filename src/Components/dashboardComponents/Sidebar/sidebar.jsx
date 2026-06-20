@@ -1,4 +1,4 @@
-// import { auth } from "@/lib/auth";
+
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,7 +32,7 @@ export default async function DashboardSidebar() {
 
     const dashboardItems = {
         donor: [
-            { icon: Home, label: "Dashboard Home", link: "/dashboard" },
+            { icon: Home, label: "Dashboard Home", link: "/dashboard/donor" },
             { icon: User, label: "Profile Page", link: "/dashboard/donor/profile" },
             { icon: FileText, label: "My Requests", link: "/dashboard/donor/my-donation-requests" },
             { icon: PlusCircle, label: "Create Request", link: "/dashboard/donor/create-donation-request" },
