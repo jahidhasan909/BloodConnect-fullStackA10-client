@@ -48,7 +48,7 @@ const DonationRequestCard = ({ request }) => {
 
            
             <div className="pt-5 mt-auto">
-                <Link href={`/donation-request/view/${request._id}`} passHref className="w-full block">
+                <Link href={`/donationrequest/${request._id}`} passHref className="w-full block">
                     <Button 
                         className="w-full bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 rounded-xl text-xs font-semibold h-9 shadow-xs"
                     >
