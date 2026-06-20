@@ -99,9 +99,9 @@ export default function CreateDonationRequest() {
     };
 
 
+    const baseurl = process.env.NEXT_PUBLIC_BASE_URL
 
-
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
 
 
@@ -126,11 +126,24 @@ export default function CreateDonationRequest() {
             donationDate: formatDate(data.donationDate),
             donationTime: formatTime12Hour(data.donationTime),
             requestMessage: data.requestMessage,
-            donationStatus:'pending'
+            donationStatus: 'pending'
         };
 
 
-        console.log(requestInfo);
+        const res = await fetch(`${baseurl}/api/donationrequest`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({...requestInfo})
+        })
+
+        const requestData = await res.json()
+
+        if (requestData.insertedId) {
+           console.log('success',requestData);
+           
+        }
 
 
 
@@ -367,7 +380,7 @@ export default function CreateDonationRequest() {
 
 
 
-                  
+
                     <div className="flex flex-col gap-1.5 z-50">
                         <label htmlFor="requestMessage" className="text-xs font-semibold text-slate-700">
                             Request Message (Detailed Medical Necessity Reason)
@@ -383,7 +396,7 @@ export default function CreateDonationRequest() {
                         />
                     </div>
 
-                
+
                     <div className="mt-4 flex w-full">
                         <Button
                             type="submit"
