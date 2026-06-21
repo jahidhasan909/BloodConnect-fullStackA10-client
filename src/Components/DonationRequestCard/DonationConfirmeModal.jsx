@@ -11,6 +11,28 @@ export function DonationConfirmeModal({ donationRequest }) {
 
     const user = data?.user
 
+    const baseurl = process.env.NEXT_PUBLIC_BASE_URL
+
+
+    const handleDonorConfrim = async (id) => {
+        const res = await fetch(`${baseurl}/api/donationrequest/${id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                donationStatus: 'inprogress',
+                donorName: user?.name,
+                donorEmail: user?.email
+            })
+        })
+        const updatedData = await res.json()
+        if (updatedData) {
+            console.log(updatedData, 'updated');
+
+        }
+    }
+
     if (isPending) {
         return <div>loading...</div>
     }
@@ -36,7 +58,7 @@ export function DonationConfirmeModal({ donationRequest }) {
                             </p>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button className="w-full" slot="close">
+                            <Button onClick={() => handleDonorConfrim(donationRequest._id)} className="w-full" slot="close">
                                 Confrim
                             </Button>
                         </Modal.Footer>

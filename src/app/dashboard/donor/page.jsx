@@ -88,7 +88,7 @@ const DonorDashboardPage = () => {
                                         <Table.Column>Date & Time</Table.Column>
                                         <Table.Column>Blood Group</Table.Column>
                                         <Table.Column>Status</Table.Column>
-                                        <Table.Column>Hospital Contact</Table.Column>
+                                        <Table.Column>Donor Information</Table.Column>
                                         <Table.Column className="text-center w-[80px]">Action</Table.Column>
                                     </Table.Header>
                                     <Table.Body>
@@ -113,8 +113,8 @@ const DonorDashboardPage = () => {
                                                 </Table.Cell>
                                                 <Table.Cell className="text-xs">
                                                     <div>
-                                                        <p className="font-medium text-slate-700 dark:text-slate-300">{request.hospitalName}</p>
-                                                        <p className="text-slate-400 text-[11px] truncate max-w-[150px]">{request.fullAddressLine}</p>
+                                                        <p className="font-medium text-slate-700 dark:text-slate-300">{request.donorName}</p>
+                                                        <p className="text-slate-400 text-[11px] truncate max-w-[150px]">{request.donorEmail}</p>
                                                     </div>
                                                 </Table.Cell>
 

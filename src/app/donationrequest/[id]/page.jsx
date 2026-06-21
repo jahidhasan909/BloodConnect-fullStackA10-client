@@ -6,7 +6,7 @@ import { DonationConfirmeModal } from '@/Components/DonationRequestCard/Donation
 const DonationDetailspage = async ({ params }) => {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL
     const { id } = await params
-    const res = await fetch(`${baseurl}/api/donationrequest/${id}`, { cache: 'no-store' })
+    const res = await fetch(`${baseurl}/api/donationrequest/${id}`)
     const donationRequest = await res.json()
 
     if (!donationRequest) {
