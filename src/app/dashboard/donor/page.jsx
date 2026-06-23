@@ -187,7 +187,7 @@ const DonorDashboardPage = () => {
 
                     {/* Bottom Dynamic Actions Button */}
                     <div className="flex justify-center pt-4">
-                        <Link href={'/my-donation-request'}>
+                        <Link href={'/dashboard/donor/my-donation-requests'}>
                             <Button
                                 variant="secondary"
                                 className="w-full sm:w-auto font-medium transition-all"

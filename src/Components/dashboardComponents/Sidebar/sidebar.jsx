@@ -16,18 +16,21 @@ import {
 import { Button, Drawer } from "@heroui/react";
 import { auth } from "@/lib/auth";
 
+
 export default async function DashboardSidebar() {
 
+   
     const session = await auth.api.getSession({
         headers: await headers(),
     });
 
+
     const user = session?.user;
     const role = user?.role || 'donor';
 
- 
-  
-    
+
+
+
 
 
     const dashboardItems = {
@@ -113,7 +116,7 @@ export default async function DashboardSidebar() {
                     </Link>
 
 
-                   
+
 
                     {/* Desktop Navigation Map */}
                     <nav className="flex flex-col gap-1">
