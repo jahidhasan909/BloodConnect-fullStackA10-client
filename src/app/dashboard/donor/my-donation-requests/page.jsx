@@ -26,7 +26,7 @@ const MyDonationRequestpage = async ({searchParams}) => {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL
     const res = await fetch(`${baseurl}/api/my/pegination/donationrequest?requesterEmail=${session?.user?.email}&page=${page}`)
     const donationRequest = await res.json()
-    console.log(donationRequest);
+    
     
 
     return (
