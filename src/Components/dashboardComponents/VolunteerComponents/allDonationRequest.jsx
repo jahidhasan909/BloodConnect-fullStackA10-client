@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 const AllDonationRequest = ({ donationRequest }) => {
-    // সেফটি চেকের জন্য ডাটা স্ট্রাকচার হ্যান্ডলিং
+  
     const [requestData, setRequestData] = useState(donationRequest?.data || []);
     const page = donationRequest?.page || 1;
     const totalPages = donationRequest?.totalPage || 1;
@@ -21,14 +21,13 @@ const AllDonationRequest = ({ donationRequest }) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    // শুধুমাত্র স্ট্যাটাস আপডেট করার ফাংশন (ভলান্টিয়ার প্রিভিলেজ)
+    
     const handleStatusUpdate = (id, newStatus) => {
         setRequestData(prev => 
             prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
         );
         setActiveMenuId(null);
-        // এখানে ডাটাবেজে ডাটা পাঠানোর জন্য আপনার API পুশ লজিক যুক্ত করতে পারেন:
-        // axios.patch(`/api/donation-request/${id}`, { donationStatus: newStatus })
+     
     };
 
     return (
@@ -41,7 +40,7 @@ const AllDonationRequest = ({ donationRequest }) => {
                 />
             )}
 
-            {/* হেডার সেকশন */}
+           
             <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-slate-50 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700">
                 <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
                     All Blood Donation Requests <span className="text-red-600 font-extrabold">(Volunteer Access)</span>
@@ -52,7 +51,7 @@ const AllDonationRequest = ({ donationRequest }) => {
             {requestData.length > 0 ? (
                 <section className="space-y-4 relative">
 
-                    {/* ডেস্কটপ ভিউ */}
+                
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -93,7 +92,7 @@ const AllDonationRequest = ({ donationRequest }) => {
                                                     </div>
                                                 </Table.Cell>
 
-                                                {/* ডেস্কটপ স্ট্যাটাস অ্যাকশন ড্রপডাউন */}
+                                               
                                                 <Table.Cell className="text-center overflow-visible">
                                                     <div className="relative inline-block text-left overflow-visible">
                                                         <button
@@ -144,7 +143,7 @@ const AllDonationRequest = ({ donationRequest }) => {
                         </Table>
                     </div>
 
-                    {/* মোবাইল ভিউ */}
+                   
                     <div className="block sm:hidden space-y-4">
                         {requestData.map((request) => (
                             <div key={request._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
@@ -204,7 +203,7 @@ const AllDonationRequest = ({ donationRequest }) => {
     );
 };
 
-// ভলান্টিয়ার এক্সক্লুসিভ অ্যাকশন মেনু (শুধুমাত্র স্ট্যাটাস কন্ট্রোল করার জন্য)
+
 const VolunteerActionMenu = ({ request, onStatusUpdate, isMobile = false }) => {
     return (
         <div className={`absolute right-0 z-50 mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>

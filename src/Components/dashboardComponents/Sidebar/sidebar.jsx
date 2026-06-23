@@ -48,10 +48,10 @@ export default async function DashboardSidebar() {
         ],
 
         admin: [
-            { icon: Home, label: "Dashboard Home", link: "/dashboard" },
-            { icon: User, label: "Profile Page", link: "/dashboard/profile" },
-            { icon: Users, label: "All Users", link: "/dashboard/all-users" },
-            { icon: Droplet, label: "All Blood Requests", link: "/dashboard/all-blood-donation-request" },
+            { icon: Home, label: "Dashboard Home", link: "/dashboard/admin" },
+            { icon: User, label: "Profile Page", link: "/dashboard/admin/profile" },
+            { icon: Users, label: "All Users", link: "/dashboard/admin/all-users" },
+            { icon: Droplet, label: "All Blood Requests", link: "/dashboard/admin/all-blood-donation-request" },
         ],
     };
 
