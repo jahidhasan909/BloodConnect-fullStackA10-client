@@ -1,4 +1,4 @@
-import MyDonationRequestPegination from '@/Components/dashboardComponents/MyDonationRequestPegination/MyDonationRequestPegination';
+import MyDonationRequestPegination from '@/Components/dashboardComponents/DonorComponents/MyDonationRequestPegination';
 import { auth } from '@/lib/auth';
 
 import { headers } from 'next/headers';
