@@ -42,9 +42,9 @@ export default async function DashboardSidebar() {
         ],
 
         volunteer: [
-            { icon: Home, label: "Dashboard Home", link: "/dashboard" },
-            { icon: User, label: "Profile Page", link: "/dashboard/profile" },
-            { icon: Droplet, label: "All Blood Requests", link: "/dashboard/all-blood-donation-request" },
+            { icon: Home, label: "Dashboard Home", link: "/dashboard/volunteer" },
+            { icon: User, label: "Profile Page", link: "/dashboard/volunteer/profile" },
+            { icon: Droplet, label: "All Blood Requests", link: "/dashboard/volunteer/all-blood-donation-request" },
         ],
 
         admin: [
