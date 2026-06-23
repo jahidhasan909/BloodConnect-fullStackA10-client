@@ -204,8 +204,8 @@ const AllUsersManagementPage = ({ Users }) => {
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-center gap-3">
                                         <Avatar>
-                                            <Avatar.Image alt="userimage" src={Users?.image} />
-                                            <Avatar.Fallback>{Users?.name?.charAt(0, 2)}</Avatar.Fallback>
+                                            <Avatar.Image alt="userimage" src={user?.image} />
+                                            <Avatar.Fallback>{user?.name?.charAt(0, 2)}</Avatar.Fallback>
                                         </Avatar>
                                         <div>
                                             <h3 className="font-bold text-slate-900 dark:text-white text-base">{user.name}</h3>
