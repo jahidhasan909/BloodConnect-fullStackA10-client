@@ -1,17 +1,19 @@
 "use client";
 
 import { Button, Pagination, Table, Dropdown } from '@heroui/react';
+
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 const MyDonationRequestPegination = ({ donationRequest, user }) => {
+    const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
     const [requestData, setRequestData] = useState(donationRequest?.data || []);
-    const [statusFilter, setStatusFilter] = useState('all'); 
+    const [statusFilter, setStatusFilter] = useState('all');
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRequestToDelete, setSelectedRequestToDelete] = useState(null);
 
- 
     useEffect(() => {
         if (donationRequest?.data) {
             setRequestData(donationRequest.data);
@@ -27,7 +29,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     }
 
     const handleStatusUpdate = (id, newStatus) => {
-        setRequestData(prev => 
+        setRequestData(prev =>
             prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
         );
     };
@@ -37,13 +39,26 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
         setIsModalOpen(true);
     };
 
-    const confirmDelete = () => {
+
+    const confirmDelete = async () => {
+        if (!selectedRequestToDelete) return;
+
+        const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
+            method: 'DELETE',
+        });
+
+
+        const deleletData=await res.json()
+        if (deleletData) {
+          window.location.reload('/dashboard/donor')
+        }
+
         setRequestData(prev => prev.filter(req => req._id !== selectedRequestToDelete));
         setIsModalOpen(false);
         setSelectedRequestToDelete(null);
+
     };
 
-    
     const filteredRequests = requestData.filter(request => {
         if (statusFilter === 'all') return true;
         return request?.donationStatus?.toLowerCase() === statusFilter.toLowerCase();
@@ -52,7 +67,6 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
-       
             <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
@@ -61,7 +75,6 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                     <p className="text-xs md:text-sm text-slate-500 mt-1">Track and manage your submitted requests.</p>
                 </div>
 
-              
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                     <label htmlFor="status-filter" className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                         Filter:
@@ -84,7 +97,6 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
             {filteredRequests.length > 0 ? (
                 <section className="space-y-4 relative">
 
-                    
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -125,7 +137,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                                                     </div>
                                                 </Table.Cell>
 
-                                                {/* HeroUI Dropdown Action Menu */}
+
                                                 <Table.Cell className="text-center overflow-visible">
                                                     <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                                 </Table.Cell>
@@ -166,7 +178,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                         </Table>
                     </div>
 
-             
+                    {/* MOBILE VIEW */}
                     <div className="block sm:hidden space-y-4">
                         {filteredRequests.map((request) => (
                             <div key={request._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
@@ -175,8 +187,8 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                                         <h3 className="font-bold text-slate-900 dark:text-white text-base">{request?.recipientName}</h3>
                                         <p className="text-xs text-slate-500 mt-0.5">{request?.recipientDistrict}, {request?.recipientUpazila}</p>
                                     </div>
-                                    
-                                    {/* Mobile HeroUI Dropdown */}
+
+
                                     <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                 </div>
 
@@ -215,7 +227,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                 </div>
             )}
 
-
+            {/* {modal} */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
                     <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
@@ -232,14 +244,14 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     );
 };
 
-// HeroUI ড্রপডাউন স্ট্রাকচার সাব-কম্পোনেন্ট
+
 const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
     return (
         <Dropdown>
-            <Button 
-                isIconOnly 
-                aria-label="Actions" 
-                variant="light" 
+            <Button
+                isIconOnly
+                aria-label="Actions"
+                variant="light"
                 radius="full"
                 className="text-slate-600 dark:text-slate-300"
             >
@@ -248,44 +260,45 @@ const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
                 </svg>
             </Button>
             <Dropdown.Popover>
-                <Dropdown.Menu 
+                <Dropdown.Menu
                     aria-label="Request Operations"
-                  
                     className="p-1 min-w-[160px]"
                 >
                     <Dropdown.Item id="view" textValue="View Details" className="text-xs font-medium rounded-lg">
-                     <Link className='w-full' href={`/dashboard/donor/${request._id}`}>
-                        View Details
-                     </Link>
+                        <Link className='w-full' href={`/dashboard/donor/${request._id}`}>
+                            View Details
+                        </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg">
+                    <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg" onClick={() => window.location.href = `/donation-request/edit/${request._id}`}>
                         Edit Request
                     </Dropdown.Item>
 
                     {request?.donationStatus === "inprogress" && (
-                        <Dropdown.Item 
-                            id="done" 
+                        <Dropdown.Item
+                            id="done"
                             textValue="Mark as Done"
                             className="text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-lg bg-emerald-50/20"
+                            onClick={() => onStatusUpdate(request._id, 'done')}
                         >
                             Mark as Done
                         </Dropdown.Item>
                     )}
                     {request?.donationStatus === "inprogress" && (
-                        <Dropdown.Item 
-                            id="canceled" 
+                        <Dropdown.Item
+                            id="canceled"
                             textValue="Mark as Canceled"
                             className="text-rose-600 dark:text-rose-400 text-xs font-bold rounded-lg bg-rose-50/20"
+                            onClick={() => onStatusUpdate(request._id, 'canceled')}
                         >
                             Mark as Canceled
                         </Dropdown.Item>
                     )}
 
-                    <Dropdown.Item 
-                        id="delete" 
+                    <Dropdown.Item
+                        id="delete"
                         textValue="Delete Request"
-                        variant="danger"
-                        className="text-red-600 dark:text-red-400 text-xs font-medium rounded-lg border-t border-slate-100 dark:border-slate-700 mt-1 pt-2"
+                        className="text-red-600 dark:text-red-400 text-xs font-medium rounded-lg"
+                        onClick={() => onDelete(request._id)}
                     >
                         Delete Request
                     </Dropdown.Item>

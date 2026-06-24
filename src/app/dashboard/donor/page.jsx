@@ -43,9 +43,25 @@ const DonorDashboardPage = () => {
         setActiveMenuId(null);
     };
 
-    const confirmDelete = () => {
+    const confirmDelete = async () => {
+        if (!selectedRequestToDelete) return;
+
+
+        const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
+            method: 'DELETE',
+        });
+
+        const deleletData = await res.json()
+        if (deleletData) {
+            window.location.reload('/dashboard/donor/all-blood-donation-request')
+        }
+
+
+
         setMyRequest(prev => prev.filter(req => req._id !== selectedRequestToDelete));
         setIsModalOpen(false);
+        setSelectedRequestToDelete(null);
+
     };
 
     if (isPending) {
@@ -185,7 +201,7 @@ const DonorDashboardPage = () => {
                         ))}
                     </div>
 
-                    {/* Bottom Dynamic Actions Button */}
+                 
                     <div className="flex justify-center pt-4">
                         <Link href={'/dashboard/donor/my-donation-requests'}>
                             <Button
@@ -198,7 +214,7 @@ const DonorDashboardPage = () => {
                 </section>
             )}
 
-            {/* Confirmation Delete Modal Layout */}
+            {/* Modal Layout */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
                     <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
