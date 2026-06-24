@@ -250,16 +250,13 @@ const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
             <Dropdown.Popover>
                 <Dropdown.Menu 
                     aria-label="Request Operations"
-                    onAction={(key) => {
-                        if (key === 'view') window.location.href = `/donation-request/view/${request._id}`;
-                        else if (key === 'edit') window.location.href = `/donation-request/edit/${request._id}`;
-                        else if (key === 'delete') onDelete(request._id);
-                        else onStatusUpdate(request._id, key);
-                    }}
+                  
                     className="p-1 min-w-[160px]"
                 >
                     <Dropdown.Item id="view" textValue="View Details" className="text-xs font-medium rounded-lg">
+                     <Link className='w-full' href={`/dashboard/donor/${request._id}`}>
                         View Details
+                     </Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg">
                         Edit Request
