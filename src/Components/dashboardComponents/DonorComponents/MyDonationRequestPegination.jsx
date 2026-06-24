@@ -1,67 +1,90 @@
-"use client"
-import { Button, Pagination, Table } from '@heroui/react';
+"use client";
+
+import { Button, Pagination, Table, Dropdown } from '@heroui/react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const MyDonationRequestPegination = ({ donationRequest, user }) => {
 
-    const donationRequests = donationRequest.data
-    const page = donationRequest.page
-    const pages = []
-    const totalPages = donationRequest.totalPage
-
-    for (let i = 1; i <= totalPages; i++) {
-        pages.push(i)
-    }
-
-
-    const [activeMenuId, setActiveMenuId] = useState(null);
+    const [requestData, setRequestData] = useState(donationRequest?.data || []);
+    const [statusFilter, setStatusFilter] = useState('all'); 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRequestToDelete, setSelectedRequestToDelete] = useState(null);
 
+ 
+    useEffect(() => {
+        if (donationRequest?.data) {
+            setRequestData(donationRequest.data);
+        }
+    }, [donationRequest]);
 
-    const toggleDropdown = (id) => {
-        setActiveMenuId(activeMenuId === id ? null : id);
-    };
+    const page = donationRequest?.page || 1;
+    const totalPages = donationRequest?.totalPage || 1;
+    const pages = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+    }
 
     const handleStatusUpdate = (id, newStatus) => {
-        setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
-        setActiveMenuId(null);
+        setRequestData(prev => 
+            prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
+        );
     };
 
     const triggerDelete = (id) => {
         setSelectedRequestToDelete(id);
         setIsModalOpen(true);
-        setActiveMenuId(null);
     };
 
     const confirmDelete = () => {
-        setMyRequest(prev => prev.filter(req => req._id !== selectedRequestToDelete));
+        setRequestData(prev => prev.filter(req => req._id !== selectedRequestToDelete));
         setIsModalOpen(false);
+        setSelectedRequestToDelete(null);
     };
+
+    
+    const filteredRequests = requestData.filter(request => {
+        if (statusFilter === 'all') return true;
+        return request?.donationStatus?.toLowerCase() === statusFilter.toLowerCase();
+    });
+
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
-            {activeMenuId !== null && (
-                <div
-                    className="fixed inset-0 z-20 bg-transparent cursor-default"
-                    onClick={() => setActiveMenuId(null)}
-                />
-            )}
+       
+            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
+                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
+                    </h1>
+                    <p className="text-xs md:text-sm text-slate-500 mt-1">Track and manage your submitted requests.</p>
+                </div>
 
-
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700">
-                <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-                    Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
-                </h1>
-                <p className="text-xs md:text-sm text-slate-500 mt-1">Track and manage your submitted requests.</p>
+              
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                    <label htmlFor="status-filter" className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        Filter:
+                    </label>
+                    <select
+                        id="status-filter"
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[145px]"
+                    >
+                        <option value="all">All ({requestData.length})</option>
+                        <option value="pending">Pending ({requestData.filter(r => r.donationStatus === 'pending').length})</option>
+                        <option value="inprogress">In Progress ({requestData.filter(r => r.donationStatus === 'inprogress').length})</option>
+                        <option value="done">Done ({requestData.filter(r => r.donationStatus === 'done').length})</option>
+                        <option value="canceled">Canceled ({requestData.filter(r => r.donationStatus === 'canceled').length})</option>
+                    </select>
+                </div>
             </header>
 
-            {donationRequests.length > 0 && (
+            {filteredRequests.length > 0 ? (
                 <section className="space-y-4 relative">
 
-
-
+                    
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -73,48 +96,38 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                                         <Table.Column>Blood Group</Table.Column>
                                         <Table.Column>Status</Table.Column>
                                         <Table.Column>Donor Information</Table.Column>
-                                        <Table.Column className="text-center w-[80px]">Action</Table.Column>
+                                        <Table.Column className="text-center w-[120px]">Action</Table.Column>
                                     </Table.Header>
                                     <Table.Body>
-                                        {donationRequests.map((request) => (
+                                        {filteredRequests.map((request) => (
                                             <Table.Row key={request._id} className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50/50 transition-colors overflow-visible">
-                                                <Table.Cell className="font-semibold text-slate-900 dark:text-white">{request.recipientName}</Table.Cell>
-                                                <Table.Cell className="text-sm text-slate-600 dark:text-slate-300">{request.recipientDistrict}, {request.recipientUpazila}</Table.Cell>
+                                                <Table.Cell className="font-semibold text-slate-900 dark:text-white">{request?.recipientName}</Table.Cell>
+                                                <Table.Cell className="text-sm text-slate-600 dark:text-slate-300">{request?.recipientDistrict}, {request?.recipientUpazila}</Table.Cell>
                                                 <Table.Cell className="text-xs text-slate-600">
-                                                    <div className="font-medium">{request.donationDate}</div>
-                                                    <div className="text-slate-400">{request.donationTime}</div>
+                                                    <div className="font-medium dark:text-slate-300">{request?.donationDate}</div>
+                                                    <div className="text-slate-400">{request?.donationTime}</div>
                                                 </Table.Cell>
                                                 <Table.Cell>
-                                                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-red-100 text-red-700">{request.bloodGroup}</span>
+                                                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400">{request?.bloodGroup}</span>
                                                 </Table.Cell>
                                                 <Table.Cell>
-                                                    <span className={`text-xs capitalize px-2.5 py-0.5 rounded-full border font-medium
-                                                        ${request.donationStatus === 'pending' ? 'bg-amber-50 border-amber-200 text-amber-700' : ''}
-                                                        ${request.donationStatus === 'inprogress' ? 'bg-blue-50 border-blue-200 text-blue-700' : ''}
-                                                        ${request.donationStatus === 'done' ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : ''}
-                                                        ${request.donationStatus === 'canceled' ? 'bg-rose-50 border-rose-200 text-rose-700' : ''}
-                                                    `}>{request.donationStatus}</span>
+                                                    <span className={`text-xs capitalize px-2.5 py-0.5 rounded-full border font-semibold
+                                                        ${request?.donationStatus === 'pending' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-950/20 dark:border-amber-900 dark:text-amber-400' : ''}
+                                                        ${request?.donationStatus === 'inprogress' ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-950/20 dark:border-blue-900 dark:text-blue-400' : ''}
+                                                        ${request?.donationStatus === 'done' ? 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-950/20 dark:border-emerald-900 dark:text-emerald-400' : ''}
+                                                        ${request?.donationStatus === 'canceled' ? 'bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-950/20 dark:border-rose-900 dark:text-rose-400' : ''}
+                                                    `}>{request?.donationStatus}</span>
                                                 </Table.Cell>
                                                 <Table.Cell className="text-xs">
                                                     <div>
-                                                        <p className="font-medium text-slate-700 dark:text-slate-300">{request.donorName}</p>
-                                                        <p className="text-slate-400 text-[11px] truncate max-w-[150px]">{request.donorEmail}</p>
+                                                        <p className="font-medium text-slate-700 dark:text-slate-300">{request?.donorName || "Not Assigned"}</p>
+                                                        <p className="text-slate-400 text-[11px] truncate max-w-[150px]">{request?.donorEmail || ""}</p>
                                                     </div>
                                                 </Table.Cell>
 
-                                                {/* Desktop Dropdown */}
+                                                {/* HeroUI Dropdown Action Menu */}
                                                 <Table.Cell className="text-center overflow-visible">
-                                                    <div className="relative inline-block text-left overflow-visible">
-                                                        <button
-                                                            onClick={() => toggleDropdown(request._id)}
-                                                            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-600 dark:text-slate-300 transition-colors focus:outline-hidden relative z-30"
-                                                        >
-                                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
-                                                        </button>
-                                                        {activeMenuId === request._id && (
-                                                            <ActionMenu request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
-                                                        )}
-                                                    </div>
+                                                    <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                                 </Table.Cell>
                                             </Table.Row>
                                         ))}
@@ -125,81 +138,70 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                                 <Pagination size="sm">
                                     <Pagination.Content>
                                         <Pagination.Item>
-                                            <Pagination.Previous
-                                                isDisabled={page === 1}
-
-                                            >
-                                                <Link className='flex gap-1'   href={`/dashboard/donor/my-donation-requests?page=${page - 1}`}>
-                                                <Pagination.PreviousIcon />
-                                                Prev
+                                            <Pagination.Previous isDisabled={page === 1}>
+                                                <Link className='flex gap-1' href={`/dashboard/donor/my-donation-requests?page=${page - 1}`}>
+                                                    <Pagination.PreviousIcon /> Prev
                                                 </Link>
                                             </Pagination.Previous>
                                         </Pagination.Item>
                                         {pages.map((p) => (
                                             <Pagination.Item key={p}>
-                                                <Link   href={`/dashboard/donor/my-donation-requests?page=${p}`}>
-                                                <Pagination.Link isActive={p === page}>
-                                                    {p}
-                                                </Pagination.Link>
+                                                <Link href={`/dashboard/donor/my-donation-requests?page=${p}`}>
+                                                    <Pagination.Link isActive={p === page}>
+                                                        {p}
+                                                    </Pagination.Link>
                                                 </Link>
                                             </Pagination.Item>
                                         ))}
                                         <Pagination.Item>
-                                            <Pagination.Next
-                                                isDisabled={page === totalPages}
-
-                                            >
-                                               <Link className='flex gap-1'   href={`/dashboard/donor/my-donation-requests?page=${page + 1}`}>
-                                                Next
-                                                <Pagination.NextIcon /></Link>
+                                            <Pagination.Next isDisabled={page === totalPages}>
+                                                <Link className='flex gap-1' href={`/dashboard/donor/my-donation-requests?page=${page + 1}`}>
+                                                    Next <Pagination.NextIcon />
+                                                </Link>
                                             </Pagination.Next>
                                         </Pagination.Item>
                                     </Pagination.Content>
                                 </Pagination>
                             </Table.Footer>
-
                         </Table>
                     </div>
 
-                    {/* MOBILE VIEW  */}
+             
                     <div className="block sm:hidden space-y-4">
-                        {donationRequests.slice(0, 3).map((request) => (
+                        {filteredRequests.map((request) => (
                             <div key={request._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h3 className="font-bold text-slate-900 dark:text-white text-base">{request.recipientName}</h3>
-                                        <p className="text-xs text-slate-500 mt-0.5">{request.recipientDistrict}, {request.recipientUpazila}</p>
+                                        <h3 className="font-bold text-slate-900 dark:text-white text-base">{request?.recipientName}</h3>
+                                        <p className="text-xs text-slate-500 mt-0.5">{request?.recipientDistrict}, {request?.recipientUpazila}</p>
                                     </div>
-                                    <div className="relative">
-                                        <button
-                                            onClick={() => toggleDropdown(request._id)}
-                                            className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500 focus:outline-hidden relative z-30"
-                                        >
-                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
-                                        </button>
-                                        {activeMenuId === request._id && (
-                                            <ActionMenu request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} isMobile />
-                                        )}
-                                    </div>
+                                    
+                                    {/* Mobile HeroUI Dropdown */}
+                                    <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-3 pt-2 text-xs border-t border-slate-100 dark:border-slate-800">
                                     <div>
                                         <span className="text-slate-400 block mb-0.5">Blood Group</span>
-                                        <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-red-100 text-red-700">{request.bloodGroup}</span>
+                                        <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400">{request?.bloodGroup}</span>
                                     </div>
                                     <div>
                                         <span className="text-slate-400 block mb-0.5">Status</span>
-                                        <span className="capitalize font-medium text-slate-700 dark:text-slate-300">{request.donationStatus}</span>
+                                        <span className={`capitalize font-bold
+                                            ${request?.donationStatus === 'pending' ? 'text-amber-600' : ''}
+                                            ${request?.donationStatus === 'inprogress' ? 'text-blue-600' : ''}
+                                            ${request?.donationStatus === 'done' ? 'text-emerald-600' : ''}
+                                            ${request?.donationStatus === 'canceled' ? 'text-rose-600' : ''}
+                                        `}>{request?.donationStatus}</span>
                                     </div>
                                     <div className="col-span-2">
                                         <span className="text-slate-400 block mb-0.5">Schedule</span>
-                                        <span className="text-slate-700 dark:text-slate-300 font-medium">{request.donationDate} at {request.donationTime}</span>
+                                        <span className="text-slate-700 dark:text-slate-300 font-medium">{request?.donationDate} at {request?.donationTime}</span>
                                     </div>
                                     <div className="col-span-2 bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg mt-1">
                                         <span className="text-[10px] uppercase tracking-wider text-slate-400 block">Hospital Details</span>
-                                        <span className="font-semibold text-slate-800 dark:text-slate-200 block">{request.hospitalName}</span>
-                                        <span className="text-slate-500 text-[11px] block truncate">{request.fullAddressLine}</span>
+                                        <span className="font-semibold text-slate-800 dark:text-slate-200 block">{request?.hospitalName}</span>
+                                        <span className="text-slate-500 text-[11px] block truncate">{request?.fullAddressLine}</span>
                                     </div>
                                 </div>
                             </div>
@@ -207,57 +209,93 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                     </div>
 
                 </section>
-            )
-            }
+            ) : (
+                <div className="text-center p-12 border border-dashed rounded-xl text-slate-400">
+                    No blood donation requests found matching this criteria.
+                </div>
+            )}
 
-            {/* Confirmation Delete Modal Layout */}
-            {
-                isModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-                        <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
-                            <h3 className="text-base font-bold text-slate-900 dark:text-white">Delete Donation Request?</h3>
-                            <p className="text-sm text-slate-500">This action will remove the record permanently.</p>
-                            <div className="flex flex-col sm:flex-row justify-end gap-2 pt-2">
-                                <Button variant="ghost" size="sm" className="w-full sm:w-auto order-2 sm:order-1" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button className="bg-red-600 hover:bg-red-700 text-white w-full sm:w-auto order-1 sm:order-2" size="sm" onClick={confirmDelete}>Confirm Delete</Button>
-                            </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+                    <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white">Delete Donation Request?</h3>
+                        <p className="text-sm text-slate-500">This action will remove the record permanently.</p>
+                        <div className="flex flex-col sm:flex-row justify-end gap-2 pt-2">
+                            <Button variant="ghost" size="sm" className="w-full sm:w-auto order-2 sm:order-1" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                            <Button className="bg-red-600 hover:bg-red-700 text-white w-full sm:w-auto order-1 sm:order-2" size="sm" onClick={confirmDelete}>Confirm Delete</Button>
                         </div>
                     </div>
-                )
-            }
-        </div >
+                </div>
+            )}
+        </div>
     );
 };
 
-// Dropdown Action Menu Component
-const ActionMenu = ({ request, onStatusUpdate, onDelete, isMobile = false }) => {
+// HeroUI ড্রপডাউন স্ট্রাকচার সাব-কম্পোনেন্ট
+const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
     return (
-        <div className={`absolute right-0 z-50 mt-2 w-44 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>
-            <button onClick={() => window.location.href = `/donation-request/view/${request._id}`} className="flex w-full items-center px-3 py-2 text-left text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">
-                View Details
-            </button>
-            <button onClick={() => window.location.href = `/donation-request/edit/${request._id}`} className="flex w-full items-center px-3 py-2 text-left text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">
-                Edit Request
-            </button>
+        <Dropdown>
+            <Button 
+                isIconOnly 
+                aria-label="Actions" 
+                variant="light" 
+                radius="full"
+                className="text-slate-600 dark:text-slate-300"
+            >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+            </Button>
+            <Dropdown.Popover>
+                <Dropdown.Menu 
+                    aria-label="Request Operations"
+                    onAction={(key) => {
+                        if (key === 'view') window.location.href = `/donation-request/view/${request._id}`;
+                        else if (key === 'edit') window.location.href = `/donation-request/edit/${request._id}`;
+                        else if (key === 'delete') onDelete(request._id);
+                        else onStatusUpdate(request._id, key);
+                    }}
+                    className="p-1 min-w-[160px]"
+                >
+                    <Dropdown.Item id="view" textValue="View Details" className="text-xs font-medium rounded-lg">
+                        View Details
+                    </Dropdown.Item>
+                    <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg">
+                        Edit Request
+                    </Dropdown.Item>
 
-            {request.donationStatus === "inprogress" && (
-                <>
-                    <button onClick={() => onStatusUpdate(request._id, 'done')} className="flex w-full items-center px-3 py-2 text-left text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg">
-                        Mark as Done
-                    </button>
-                    <button onClick={() => onStatusUpdate(request._id, 'canceled')} className="flex w-full items-center px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg">
-                        Mark as Canceled
-                    </button>
-                </>
-            )}
+                    {request?.donationStatus === "inprogress" && (
+                        <Dropdown.Item 
+                            id="done" 
+                            textValue="Mark as Done"
+                            className="text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-lg bg-emerald-50/20"
+                        >
+                            Mark as Done
+                        </Dropdown.Item>
+                    )}
+                    {request?.donationStatus === "inprogress" && (
+                        <Dropdown.Item 
+                            id="canceled" 
+                            textValue="Mark as Canceled"
+                            className="text-rose-600 dark:text-rose-400 text-xs font-bold rounded-lg bg-rose-50/20"
+                        >
+                            Mark as Canceled
+                        </Dropdown.Item>
+                    )}
 
-            <div className="my-1 border-t border-slate-100 dark:border-slate-700" />
-            <button onClick={() => onDelete(request._id)} className="flex w-full items-center px-3 py-2 text-left text-xs font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg">
-                Delete Request
-            </button>
-        </div>
+                    <Dropdown.Item 
+                        id="delete" 
+                        textValue="Delete Request"
+                        variant="danger"
+                        className="text-red-600 dark:text-red-400 text-xs font-medium rounded-lg border-t border-slate-100 dark:border-slate-700 mt-1 pt-2"
+                    >
+                        Delete Request
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown.Popover>
+        </Dropdown>
     );
-
 };
 
 export default MyDonationRequestPegination;

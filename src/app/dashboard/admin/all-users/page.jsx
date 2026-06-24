@@ -12,7 +12,7 @@ const AllUserPage = async ({searchParams}) => {
     }
 
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL
-    const res = await fetch(`${baseurl}/api/users?page=${page}`)
+    const res = await fetch(`${baseurl}/api/pegination/users?page=${page}`)
     const users = await res.json()
     
 
