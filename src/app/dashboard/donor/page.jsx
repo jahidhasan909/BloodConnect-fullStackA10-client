@@ -22,18 +22,39 @@ const DonorDashboardPage = () => {
 
     const donationRequests = myrequest;
 
-
     const [activeMenuId, setActiveMenuId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRequestToDelete, setSelectedRequestToDelete] = useState(null);
-
 
     const toggleDropdown = (id) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    const handleStatusUpdate = (id, newStatus) => {
-        setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
+   
+    const handleStatusUpdate = async (id, newStatus) => {
+        if (newStatus === 'done' || newStatus === 'canceled') {
+            try {
+              
+                const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (res.ok) {
+                   
+                    setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
+                } else {
+                    console.error(`Failed to update status to ${newStatus} on the server.`);
+                }
+            } catch (error) {
+                console.error(`Error updating status to ${newStatus}:`, error);
+            }
+        } else {
+       
+            setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
+        }
         setActiveMenuId(null);
     };
 
@@ -46,22 +67,21 @@ const DonorDashboardPage = () => {
     const confirmDelete = async () => {
         if (!selectedRequestToDelete) return;
 
+        try {
+            const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
+                method: 'DELETE',
+            });
 
-        const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
-            method: 'DELETE',
-        });
-
-        const deleletData = await res.json()
-        if (deleletData) {
-            window.location.reload('/dashboard/donor/all-blood-donation-request')
+            const deleletData = await res.json()
+            if (res.ok && deleletData) {
+                setMyRequest(prev => prev.filter(req => req._id !== selectedRequestToDelete));
+            }
+        } catch (error) {
+            console.error("Error deleting request:", error);
+        } finally {
+            setIsModalOpen(false);
+            setSelectedRequestToDelete(null);
         }
-
-
-
-        setMyRequest(prev => prev.filter(req => req._id !== selectedRequestToDelete));
-        setIsModalOpen(false);
-        setSelectedRequestToDelete(null);
-
     };
 
     if (isPending) {
@@ -78,7 +98,6 @@ const DonorDashboardPage = () => {
                 />
             )}
 
-
             <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700">
                 <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
                     Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
@@ -92,7 +111,6 @@ const DonorDashboardPage = () => {
                         <h2 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-200">Your Recent Donation Requests</h2>
                         <span className="text-[11px] bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full text-slate-600">Recent 3</span>
                     </div>
-
 
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
@@ -201,7 +219,6 @@ const DonorDashboardPage = () => {
                         ))}
                     </div>
 
-                 
                     <div className="flex justify-center pt-4">
                         <Link href={'/dashboard/donor/my-donation-requests'}>
                             <Button
@@ -209,7 +226,8 @@ const DonorDashboardPage = () => {
                                 className="w-full sm:w-auto font-medium transition-all"
                             >
                                 View My All Requests
-                            </Button></Link>
+                            </Button>
+                        </Link>
                     </div>
                 </section>
             )}
@@ -231,7 +249,7 @@ const DonorDashboardPage = () => {
     );
 };
 
-// Dropdown Action Menu Component
+// Action Menu Component
 const ActionMenu = ({ request, onStatusUpdate, onDelete, isMobile = false }) => {
     return (
         <div className={`absolute right-0 z-50 mt-2 w-44 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>

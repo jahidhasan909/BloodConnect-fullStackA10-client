@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Pagination, Table, Dropdown } from '@heroui/react';
-
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
@@ -28,10 +27,35 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
         pages.push(i);
     }
 
-    const handleStatusUpdate = (id, newStatus) => {
-        setRequestData(prev =>
-            prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
-        );
+
+    const handleStatusUpdate = async (id, newStatus) => {
+        if (newStatus === 'done' || newStatus === 'canceled') {
+            try {
+                
+                const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (res.ok) {
+                    
+                    setRequestData(prev =>
+                        prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
+                    );
+                } else {
+                    console.error(`Failed to update status to ${newStatus} on the server.`);
+                }
+            } catch (error) {
+                console.error(`Error updating status to ${newStatus}:`, error);
+            }
+        } else {
+           
+            setRequestData(prev =>
+                prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
+            );
+        }
     };
 
     const triggerDelete = (id) => {
@@ -39,24 +63,25 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
         setIsModalOpen(true);
     };
 
-
     const confirmDelete = async () => {
         if (!selectedRequestToDelete) return;
 
-        const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
-            method: 'DELETE',
-        });
+        try {
+            const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
+                method: 'DELETE',
+            });
 
-
-        const deleletData=await res.json()
-        if (deleletData) {
-          window.location.reload('/dashboard/donor')
+            const deleletData = await res.json();
+            if (res.ok && deleletData) {
+                
+                setRequestData(prev => prev.filter(req => req._id !== selectedRequestToDelete));
+            }
+        } catch (error) {
+            console.error("Error deleting request:", error);
+        } finally {
+            setIsModalOpen(false);
+            setSelectedRequestToDelete(null);
         }
-
-        setRequestData(prev => prev.filter(req => req._id !== selectedRequestToDelete));
-        setIsModalOpen(false);
-        setSelectedRequestToDelete(null);
-
     };
 
     const filteredRequests = requestData.filter(request => {
@@ -137,7 +162,6 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                                                     </div>
                                                 </Table.Cell>
 
-
                                                 <Table.Cell className="text-center overflow-visible">
                                                     <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                                 </Table.Cell>
@@ -188,7 +212,6 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                                         <p className="text-xs text-slate-500 mt-0.5">{request?.recipientDistrict}, {request?.recipientUpazila}</p>
                                     </div>
 
-
                                     <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                 </div>
 
@@ -227,7 +250,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                 </div>
             )}
 
-            {/* {modal} */}
+            {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
                     <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
@@ -243,7 +266,6 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
         </div>
     );
 };
-
 
 const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
     return (
@@ -265,7 +287,7 @@ const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
                     className="p-1 min-w-[160px]"
                 >
                     <Dropdown.Item id="view" textValue="View Details" className="text-xs font-medium rounded-lg">
-                        <Link className='w-full' href={`/dashboard/donor/${request._id}`}>
+                        <Link className='w-full block' href={`/dashboard/donor/${request._id}`}>
                             View Details
                         </Link>
                     </Dropdown.Item>
