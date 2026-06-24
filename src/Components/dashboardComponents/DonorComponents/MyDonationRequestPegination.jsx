@@ -31,7 +31,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     const handleStatusUpdate = async (id, newStatus) => {
         if (newStatus === 'done' || newStatus === 'canceled') {
             try {
-                
+
                 const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
                     method: 'PATCH',
                     headers: {
@@ -40,7 +40,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                 });
 
                 if (res.ok) {
-                    
+
                     setRequestData(prev =>
                         prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
                     );
@@ -51,7 +51,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
                 console.error(`Error updating status to ${newStatus}:`, error);
             }
         } else {
-           
+
             setRequestData(prev =>
                 prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
             );
@@ -73,7 +73,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
 
             const deleletData = await res.json();
             if (res.ok && deleletData) {
-                
+
                 setRequestData(prev => prev.filter(req => req._id !== selectedRequestToDelete));
             }
         } catch (error) {
@@ -291,8 +291,10 @@ const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
                             View Details
                         </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg" onClick={() => window.location.href = `/donation-request/edit/${request._id}`}>
-                        Edit Request
+                    <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg">
+                        <Link href={`/dashboard/donor/edit/${request._id}`} className="w-full">
+                            Edit Request
+                        </Link>
                     </Dropdown.Item>
 
                     {request?.donationStatus === "inprogress" && (
