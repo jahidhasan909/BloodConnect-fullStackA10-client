@@ -30,9 +30,9 @@ const AllUsersManagementPage = ({ Users }) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    // Updated: Now fully connected to your /api/usercollaction/makeblock API
+    
     const handleStatusUpdate = async (userId, newStatus) => {
-        // ১. আইডি দিয়ে ওই নির্দিষ্ট ইউজারকে খুঁজে বের করা
+        
         const targetUser = usersList.find(user => user._id === userId);
         
         if (!targetUser) return;
@@ -50,7 +50,6 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
-                   
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, status: 'blocked' } : user)
                     );
@@ -62,23 +61,41 @@ const AllUsersManagementPage = ({ Users }) => {
                 console.error("Network Error:", error);
                 alert("Something went wrong with the network. Please try again.");
             }
-        } else {
-            
-            setUsersList(prev =>
-                prev.map(user => user._id === userId ? { ...user, status: newStatus } : user)
-            );
+        } 
+       
+        else if (newStatus === 'active') {
+            try {
+                const response = await fetch(`${baseurl}/api/usercollaction/unblocked?email=${targetUser.email}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    setUsersList(prev =>
+                        prev.map(user => user._id === userId ? { ...user, status: 'active' } : user)
+                    );
+                } else {
+                    console.error("Backend Error:", data);
+                    alert(`Failed to unblock user: ${data.error || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error("Network Error:", error);
+                alert("Something went wrong with the network. Please try again.");
+            }
         }
 
         setActiveMenuId(null);
     };
 
     const handleRoleUpdate = async (userId, newRole) => {
-        
         const targetUser = usersList.find(user => user._id === userId);
         
         if (!targetUser) return;
 
-        
         if (newRole === 'volunteer') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makevolunteer?email=${targetUser.email}`, {
@@ -91,7 +108,6 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
-                   
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
                     );
@@ -104,7 +120,6 @@ const AllUsersManagementPage = ({ Users }) => {
                 alert("Something went wrong with the network. Please try again.");
             }
         } else {
-          
             setUsersList(prev =>
                 prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
             );
