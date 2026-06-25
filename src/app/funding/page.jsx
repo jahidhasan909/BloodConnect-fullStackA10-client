@@ -1,9 +1,202 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import { Table, Button, Pagination } from '@heroui/react';
+import Funding from '@/Components/Funding/funding';
 
 const Fundingpage = () => {
-    return (
-        <div>
+    const [isOpen, setIsOpen] = useState(false);
+
+  
+    const [funds, setFunds] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(true);
+
+  
+    const [grandTotal, setGrandTotal] = useState(0);
+
+    useEffect(() => {
+        const fetchPaginatedFunds = async () => {
+            setLoading(true);
+            const backendUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+            try {
             
+                const response = await fetch(`${backendUrl}/api/pegination/funding?page=${currentPage}&limit=10`);
+                const result = await response.json();
+
+                
+                setFunds(result.data || []);
+                setCurrentPage(result.page || 1);
+                setTotalPages(result.totalPage || 1);
+            } catch (error) {
+                console.error("Error loading paginated funds:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPaginatedFunds();
+    }, [currentPage]);
+
+    useEffect(() => {
+        if (funds.length > 0 && grandTotal === 0) {
+            const pageTotal = funds.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            setGrandTotal(prev => prev === 0 ? pageTotal : prev);
+        }
+    }, [funds]);
+
+    
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+    }
+
+    return (
+        <div className="max-w-7xl mt-30 mx-auto p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 min-h-screen pb-24 relative">
+
+           
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-slate-50 to-red-50 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 gap-4 shadow-xs">
+                <div>
+                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">Organization Funding</h1>
+                    <p className="text-xs md:text-sm text-slate-500 mt-1">Review user contributions across pages or make a new secure donation.</p>
+                </div>
+
+                <Button
+                    onPress={() => setIsOpen(true)}
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-red-600/20 self-start sm:self-auto"
+                >
+                    Give Fund
+                </Button>
+            </div>
+
+         
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Current Page Total</span>
+                    <span className="text-2xl font-extrabold text-red-600 mt-1 block">
+                        ${funds.reduce((sum, item) => sum + Number(item.amount || 0), 0).toLocaleString()}
+                    </span>
+                </div>
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Active Page</span>
+                    <span className="text-2xl font-extrabold text-slate-800 dark:text-white mt-1 block">Page {currentPage} of {totalPages}</span>
+                </div>
+            </div>
+
+        
+            {funds.length > 0 || loading ? (
+                <section className="space-y-4 relative">
+                    
+                    {/* Desktop Table View */}
+                    <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                        <Table className="overflow-visible">
+                            <Table.ScrollContainer className="overflow-visible">
+                                <Table.Content aria-label="Paginated Funding list table" className="min-w-[600px] md:min-w-[800px] overflow-visible">
+                                    <Table.Header>
+                                        <Table.Column isRowHeader className="font-bold">Donor Name</Table.Column>
+                                        <Table.Column className="font-bold">Fund Amount</Table.Column>
+                                        <Table.Column className="font-bold">Funding Date</Table.Column>
+                                    </Table.Header>
+                                    <Table.Body emptyContent={loading ? "Loading funding logs..." : "No funding logs available on this page."}>
+                                        {funds.map((fund) => (
+                                            <Table.Row key={fund._id} className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                                <Table.Cell className="font-semibold text-slate-700 dark:text-slate-300">{fund.name}</Table.Cell>
+                                                <Table.Cell className="font-bold text-emerald-600">${Number(fund.amount).toFixed(2)}</Table.Cell>
+                                                <Table.Cell className="text-xs text-slate-500">{fund.date}</Table.Cell>
+                                            </Table.Row>
+                                        ))}
+                                    </Table.Body>
+                                </Table.Content>
+                            </Table.ScrollContainer>
+                            
+                            {/* Table Footer with Pagination Control */}
+                            {totalPages > 1 && (
+                                <Table.Footer>
+                                    <Pagination size="sm">
+                                        <Pagination.Content>
+                                            <Pagination.Item>
+                                                <button 
+                                                    disabled={currentPage === 1}
+                                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                                    className={`flex gap-1 items-center text-xs font-semibold px-2 py-1 rounded-md ${currentPage === 1 ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                                                >
+                                                    <Pagination.PreviousIcon /> Prev
+                                                </button>
+                                            </Pagination.Item>
+                                            {pages.map((p) => (
+                                                <Pagination.Item key={p}>
+                                                    <button
+                                                        onClick={() => setCurrentPage(p)}
+                                                        className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${p === currentPage ? 'bg-red-600 text-white font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                                                    >
+                                                        {p}
+                                                    </button>
+                                                </Pagination.Item>
+                                            ))}
+                                            <Pagination.Item>
+                                                <button 
+                                                    disabled={currentPage === totalPages}
+                                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                                    className={`flex gap-1 items-center text-xs font-semibold px-2 py-1 rounded-md ${currentPage === totalPages ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                                                >
+                                                    Next <Pagination.NextIcon />
+                                                </button>
+                                            </Pagination.Item>
+                                        </Pagination.Content>
+                                    </Pagination>
+                                </Table.Footer>
+                            )}
+                        </Table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="block sm:hidden space-y-4">
+                        {loading ? (
+                            <div className="text-center p-8 text-slate-400">Loading funding logs...</div>
+                        ) : (
+                            funds.map((fund) => (
+                                <div key={fund._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <h3 className="font-bold text-slate-900 dark:text-white text-base">{fund.name}</h3>
+                                            <p className="text-xs text-slate-400 mt-0.5">Date: {fund.date}</p>
+                                        </div>
+                                        <div>
+                                            <span className="px-2.5 py-1 rounded text-xs font-bold bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400">
+                                                ${Number(fund.amount).toFixed(2)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+
+                        {/* Mobile Pagination Trigger Controls */}
+                        {totalPages > 1 && (
+                            <div className="flex justify-center p-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800">
+                                <Pagination
+                                    isCompact
+                                    showControls
+                                    color="danger"
+                                    page={currentPage}
+                                    total={totalPages}
+                                    onChange={(page) => setCurrentPage(page)}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                </section>
+            ) : (
+                <div className="text-center p-12 border border-dashed rounded-xl text-slate-400 border-slate-200 dark:border-slate-800">
+                    No funding logs available on this page.
+                </div>
+            )}
+
+            {/* modal */}
+            <Funding isOpen={isOpen} onOpenChange={setIsOpen} />
         </div>
     );
 };
