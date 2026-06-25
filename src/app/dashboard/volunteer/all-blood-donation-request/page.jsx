@@ -1,4 +1,5 @@
-import AllDonationRequest from '@/Components/dashboardComponents/VolunteerComponents/allDonationRequest';
+import AllDonationRequestvolunteerDashboard from '@/Components/dashboardComponents/VolunteerComponents/allDonationRequest';
+
 import React from 'react';
 
 const volunteerAllBooldRequestPage = async ({ searchParams }) => {
@@ -19,7 +20,7 @@ const volunteerAllBooldRequestPage = async ({ searchParams }) => {
 
     return (
         <div>
-           <AllDonationRequest donationRequest={donationRequest}></AllDonationRequest>
+           <AllDonationRequestvolunteerDashboard donationRequest={donationRequest}></AllDonationRequestvolunteerDashboard>
         </div>
     );
 };
