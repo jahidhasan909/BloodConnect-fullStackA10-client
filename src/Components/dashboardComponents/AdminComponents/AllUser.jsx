@@ -2,14 +2,22 @@
 
 import { Avatar, Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AllUsersManagementPage = ({ Users }) => {
-    
-    
 
-    const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'active', 'blocked'
+    const usersArray = Array.isArray(Users) ? Users : (Users?.data || Users?.users || []);
+
+    const [usersList, setUsersList] = useState(usersArray);
+    const [statusFilter, setStatusFilter] = useState('all');
     const [activeMenuId, setActiveMenuId] = useState(null);
+
+   
+    const baseurl = process.env.NEXT_PUBLIC_BASE_URL ;
+
+    useEffect(() => {
+        setUsersList(Array.isArray(Users) ? Users : (Users?.data || Users?.users || []));
+    }, [Users]);
 
     const page = Users?.page || 1;
     const totalPages = Users?.totalPage || 1;
@@ -23,26 +31,56 @@ const AllUsersManagementPage = ({ Users }) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    // (Block / Unblock)
     const handleStatusUpdate = (userId, newStatus) => {
-        setUsers(prev =>
+        setUsersList(prev =>
             prev.map(user => user._id === userId ? { ...user, status: newStatus } : user)
         );
         setActiveMenuId(null);
-
     };
 
-    // (Make Volunteer / Make Admin)
-    const handleRoleUpdate = (userId, newRole) => {
-        setUsers(prev =>
-            prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
-        );
+   
+    const handleRoleUpdate = async (userId, newRole) => {
+        // ১. আইডি দিয়ে ওই নির্দিষ্ট ইউজারকে খুঁজে বের করা
+        const targetUser = usersList.find(user => user._id === userId);
+        
+        if (!targetUser) return;
+
+        // ২. যদি রোল 'volunteer' করতে চাওয়া হয়, তবেই ব্যাকএন্ডে রিকোয়েস্ট যাবে
+        if (newRole === 'volunteer') {
+            try {
+                const response = await fetch(`${baseurl}/api/usercollaction/makevolunteer?email=${targetUser.email}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // ব্যাকএন্ডে সফল হলে ফ্রন্টএন্ডের স্টেট আপডেট হবে
+                    setUsersList(prev =>
+                        prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
+                    );
+                } else {
+                    console.error("Backend Error:", data);
+                    alert(`Failed to update role: ${data.error || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error("Network Error:", error);
+                alert("Something went wrong with the network. Please try again.");
+            }
+        } else {
+            // অন্যান্য রোলের জন্য (যেমন: Admin) লোকাল স্টেট আপডেট (ভবিষ্যতে এপিআই যুক্ত করতে পারবেন)
+            setUsersList(prev =>
+                prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
+            );
+        }
+
         setActiveMenuId(null);
-
     };
 
-
-    const filteredUsers = Users.filter(user => {
+    const filteredUsers = usersList.filter(user => {
         if (statusFilter === 'all') return true;
         return user.status === statusFilter;
     });
@@ -57,7 +95,6 @@ const AllUsersManagementPage = ({ Users }) => {
                 />
             )}
 
-
             <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold">
@@ -71,19 +108,19 @@ const AllUsersManagementPage = ({ Users }) => {
                         onClick={() => setStatusFilter('all')}
                         className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'all' ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'}`}
                     >
-                        All ({Users.length})
+                        All ({usersList.length})
                     </button>
                     <button
                         onClick={() => setStatusFilter('active')}
                         className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'active' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-emerald-400'}`}
                     >
-                        Active ({Users.filter(u => u.status === 'active').length})
+                        Active ({usersList.filter(u => u.status === 'active').length})
                     </button>
                     <button
                         onClick={() => setStatusFilter('blocked')}
                         className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'blocked' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-amber-400'}`}
                     >
-                        Blocked ({Users.filter(u => u.status === 'blocked').length})
+                        Blocked ({usersList.filter(u => u.status === 'blocked').length})
                     </button>
                 </div>
             </header>
@@ -91,7 +128,7 @@ const AllUsersManagementPage = ({ Users }) => {
             {filteredUsers.length > 0 ? (
                 <section className="space-y-4 relative">
 
-
+                    {/* Desktop Table View */}
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -106,7 +143,6 @@ const AllUsersManagementPage = ({ Users }) => {
                                     <Table.Body>
                                         {filteredUsers.map((user) => (
                                             <Table.Row key={user._id} className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50/50 transition-colors overflow-visible">
-
                                                 <Table.Cell className="font-semibold text-slate-900 dark:text-white">
                                                     <div className="flex items-center gap-3">
                                                         <Avatar>
@@ -117,11 +153,9 @@ const AllUsersManagementPage = ({ Users }) => {
                                                     </div>
                                                 </Table.Cell>
 
-
                                                 <Table.Cell className="text-sm text-slate-600 dark:text-slate-300 font-medium">
                                                     {user.email}
                                                 </Table.Cell>
-
 
                                                 <Table.Cell>
                                                     <span className={`px-2.5 py-0.5 rounded text-xs font-bold capitalize border
@@ -133,7 +167,6 @@ const AllUsersManagementPage = ({ Users }) => {
                                                     </span>
                                                 </Table.Cell>
 
-
                                                 <Table.Cell>
                                                     <span className={`text-xs capitalize px-2.5 py-0.5 rounded-full border font-semibold
                                                         ${user.status === 'active' ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-amber-50 border-amber-200 text-amber-700'}
@@ -141,7 +174,6 @@ const AllUsersManagementPage = ({ Users }) => {
                                                         {user.status}
                                                     </span>
                                                 </Table.Cell>
-
 
                                                 <Table.Cell className="text-center overflow-visible">
                                                     <div className="relative inline-block text-left overflow-visible">
@@ -197,7 +229,7 @@ const AllUsersManagementPage = ({ Users }) => {
                         </Table>
                     </div>
 
-
+                    {/* Mobile Card View */}
                     <div className="block sm:hidden space-y-4">
                         {filteredUsers.map((user) => (
                             <div key={user._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
@@ -254,51 +286,46 @@ const AllUsersManagementPage = ({ Users }) => {
     );
 };
 
-
 const AdminUserActionMenu = ({ user, onStatusUpdate, onRoleUpdate, isMobile = false }) => {
     return (
-        <div className={`absolute right-0 Honest z-50 mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>
+        <div className={`absolute right-0 z-50 mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>
 
-            
             <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 mb-1">
                 Manage Status
             </div>
             {user.status === 'active' ? (
                 <button
                     onClick={() => onStatusUpdate(user._id, 'blocked')}
-                    className="flex w-full items-center px-3 py-2 text-left text-xs font-semibold rounded-lg hover:bg-amber-50 text-amber-600"
+                    className="flex w-full items-center px-3 py-2 text-left text-xs font-semibold rounded-lg hover:bg-amber-50 dark:hover:bg-amber-950/30 text-amber-600"
                 >
                     Block User
                 </button>
             ) : (
                 <button
                     onClick={() => onStatusUpdate(user._id, 'active')}
-                    className="flex w-full items-center px-3 py-2 text-left text-xs font-semibold rounded-lg hover:bg-emerald-50 text-emerald-600"
+                    className="flex w-full items-center px-3 py-2 text-left text-xs font-semibold rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-emerald-600"
                 >
                     Unblock User
                 </button>
             )}
 
-           
-            <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-b-slate-100 dark:border-slate-700 my-1">
+            <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 my-1">
                 Change Role
             </div>
 
-          
             {user.role === 'donor' && (
                 <button
                     onClick={() => onRoleUpdate(user._id, 'volunteer')}
-                    className="flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-blue-50 text-blue-600"
+                    className="flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/30 text-blue-600"
                 >
                     Make Volunteer
                 </button>
             )}
 
-          
             {user.role !== 'admin' && (
                 <button
                     onClick={() => onRoleUpdate(user._id, 'admin')}
-                    className="flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-red-50 text-red-600"
+                    className="flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600"
                 >
                     Make Admin
                 </button>

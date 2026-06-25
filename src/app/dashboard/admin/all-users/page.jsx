@@ -1,7 +1,7 @@
 import AllUsersManagementPage from '@/Components/dashboardComponents/AdminComponents/AllUser';
 import React from 'react';
 
-const AllUserPage = async ({searchParams}) => {
+const AllUserPage = async ({ searchParams }) => {
 
 
     const params = await searchParams;
@@ -14,7 +14,8 @@ const AllUserPage = async ({searchParams}) => {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL
     const res = await fetch(`${baseurl}/api/pegination/users?page=${page}`)
     const users = await res.json()
-    
+
+    console.log(users,'us');
 
 
     return (
