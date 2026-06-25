@@ -37,7 +37,7 @@ const AllUsersManagementPage = ({ Users }) => {
         
         if (!targetUser) return;
 
-       
+        
         if (newStatus === 'blocked') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makeblock?email=${targetUser.email}`, {
@@ -91,11 +91,14 @@ const AllUsersManagementPage = ({ Users }) => {
         setActiveMenuId(null);
     };
 
+  
     const handleRoleUpdate = async (userId, newRole) => {
+       
         const targetUser = usersList.find(user => user._id === userId);
         
         if (!targetUser) return;
 
+       
         if (newRole === 'volunteer') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makevolunteer?email=${targetUser.email}`, {
@@ -119,10 +122,31 @@ const AllUsersManagementPage = ({ Users }) => {
                 console.error("Network Error:", error);
                 alert("Something went wrong with the network. Please try again.");
             }
-        } else {
-            setUsersList(prev =>
-                prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
-            );
+        } 
+        
+        else if (newRole === 'admin') {
+            try {
+                const response = await fetch(`${baseurl}/api/usercollaction/makeadmin?email=${targetUser.email}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    setUsersList(prev =>
+                        prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
+                    );
+                } else {
+                    console.error("Backend Error:", data);
+                    alert(`Failed to make admin: ${data.error || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error("Network Error:", error);
+                alert("Something went wrong with the network. Please try again.");
+            }
         }
 
         setActiveMenuId(null);

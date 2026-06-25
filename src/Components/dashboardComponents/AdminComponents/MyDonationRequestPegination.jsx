@@ -1,16 +1,17 @@
 "use client";
 
-import { Button, Pagination, Table } from '@heroui/react';
+import { Button, Pagination, Table, Dropdown } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
-const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
-  
-    const [requestData, setRequestData] = useState(donationRequest?.data || []);
-    const [statusFilter, setStatusFilter] = useState('all'); 
-    const [activeMenuId, setActiveMenuId] = useState(null);
+const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
+    const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    const baseurl = process.env.NEXT_PUBLIC_BASE_URL || '';
+    const [requestData, setRequestData] = useState(donationRequest?.data || []);
+    const [statusFilter, setStatusFilter] = useState('all');
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedRequestToDelete, setSelectedRequestToDelete] = useState(null);
 
     useEffect(() => {
         if (donationRequest?.data) {
@@ -23,55 +24,64 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
     const pages = [];
 
     for (let i = 1; i <= totalPages; i++) {
-        pages.push(i)
+        pages.push(i);
     }
 
-    const toggleDropdown = (id) => {
-        setActiveMenuId(activeMenuId === id ? null : id);
-    };
 
-    
     const handleStatusUpdate = async (id, newStatus) => {
-        let apiEndpoint = '';
-
-        //  status action
-        if (newStatus === 'pending') {
-            apiEndpoint = `${baseurl}/api/donationrequest/pending/${id}`;
-        } else if (newStatus === 'inprogress') {
-            apiEndpoint = `${baseurl}/api/donationrequest/inprogress/${id}`;
-        } else if (newStatus === 'done') {
-            apiEndpoint = `${baseurl}/api/donationrequest/done/${id}`;
-        } else if (newStatus === 'canceled') {
-            apiEndpoint = `${baseurl}/api/donationrequest/canceled/${id}`;
-        }
-
-        if (apiEndpoint) {
+        if (newStatus === 'done' || newStatus === 'canceled') {
             try {
-                const response = await fetch(apiEndpoint, {
+
+                const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
                     method: 'PATCH',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     }
                 });
 
-                const data = await response.json();
+                if (res.ok) {
 
-                if (response.ok) {
-                    
-                    setRequestData(prev => 
+                    setRequestData(prev =>
                         prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
                     );
                 } else {
-                    console.error("Backend Error:", data);
-                    alert(`Failed to update status: ${data.error || 'Unknown error'}`);
+                    console.error(`Failed to update status to ${newStatus} on the server.`);
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                alert("Something went wrong with the network. Please try again.");
+                console.error(`Error updating status to ${newStatus}:`, error);
             }
-        }
+        } else {
 
-        setActiveMenuId(null);
+            setRequestData(prev =>
+                prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
+            );
+        }
+    };
+
+    const triggerDelete = (id) => {
+        setSelectedRequestToDelete(id);
+        setIsModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!selectedRequestToDelete) return;
+
+        try {
+            const res = await fetch(`${baseurl}/api/my/donationrequest/${selectedRequestToDelete}`, {
+                method: 'DELETE',
+            });
+
+            const deleletData = await res.json();
+            if (res.ok && deleletData) {
+
+                setRequestData(prev => prev.filter(req => req._id !== selectedRequestToDelete));
+            }
+        } catch (error) {
+            console.error("Error deleting request:", error);
+        } finally {
+            setIsModalOpen(false);
+            setSelectedRequestToDelete(null);
+        }
     };
 
     const filteredRequests = requestData.filter(request => {
@@ -82,19 +92,12 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
-            {activeMenuId !== null && (
-                <div
-                    className="fixed inset-0 z-20 bg-transparent cursor-default"
-                    onClick={() => setActiveMenuId(null)}
-                />
-            )}
-
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-slate-50 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-                        All Blood Donation Requests <span className="text-red-600 font-extrabold">(Volunteer Access)</span>
+                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-500 mt-1">Review requests and update the donation operations status.</p>
+                    <p className="text-xs md:text-sm text-slate-500 mt-1">Track and manage your submitted requests.</p>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -105,7 +108,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                         id="status-filter"
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[140px]"
+                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[145px]"
                     >
                         <option value="all">All ({requestData.length})</option>
                         <option value="pending">Pending ({requestData.filter(r => r.donationStatus === 'pending').length})</option>
@@ -119,7 +122,6 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
             {filteredRequests.length > 0 ? (
                 <section className="space-y-4 relative">
 
-                    {/* Desktop Table View */}
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -131,7 +133,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                                         <Table.Column>Blood Group</Table.Column>
                                         <Table.Column>Status</Table.Column>
                                         <Table.Column>Donor Information</Table.Column>
-                                        <Table.Column className="text-center w-[80px]">Update Status</Table.Column>
+                                        <Table.Column className="text-center w-[120px]">Action</Table.Column>
                                     </Table.Header>
                                     <Table.Body>
                                         {filteredRequests.map((request) => (
@@ -161,17 +163,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                                                 </Table.Cell>
 
                                                 <Table.Cell className="text-center overflow-visible">
-                                                    <div className="relative inline-block text-left overflow-visible">
-                                                        <button
-                                                            onClick={() => toggleDropdown(request._id)}
-                                                            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-600 dark:text-slate-300 transition-colors focus:outline-hidden relative z-30"
-                                                        >
-                                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
-                                                        </button>
-                                                        {activeMenuId === request._id && (
-                                                            <VolunteerActionMenu request={request} onStatusUpdate={handleStatusUpdate} />
-                                                        )}
-                                                    </div>
+                                                    <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                                 </Table.Cell>
                                             </Table.Row>
                                         ))}
@@ -183,14 +175,14 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                                     <Pagination.Content>
                                         <Pagination.Item>
                                             <Pagination.Previous isDisabled={page === 1}>
-                                                <Link className='flex gap-1' href={`/dashboard/volunteer/all-blood-donation-request?page=${page - 1}`}>
+                                                <Link className='flex gap-1' href={`/dashboard/donor/my-donation-requests?page=${page - 1}`}>
                                                     <Pagination.PreviousIcon /> Prev
                                                 </Link>
                                             </Pagination.Previous>
                                         </Pagination.Item>
                                         {pages.map((p) => (
                                             <Pagination.Item key={p}>
-                                                <Link href={`/dashboard/volunteer/all-blood-donation-request?page=${p}`}>
+                                                <Link href={`/dashboard/donor/my-donation-requests?page=${p}`}>
                                                     <Pagination.Link isActive={p === page}>
                                                         {p}
                                                     </Pagination.Link>
@@ -199,7 +191,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                                         ))}
                                         <Pagination.Item>
                                             <Pagination.Next isDisabled={page === totalPages}>
-                                                <Link className='flex gap-1' href={`/dashboard/volunteer/all-blood-donation-request?page=${page + 1}`}>
+                                                <Link className='flex gap-1' href={`/dashboard/donor/my-donation-requests?page=${page + 1}`}>
                                                     Next <Pagination.NextIcon />
                                                 </Link>
                                             </Pagination.Next>
@@ -210,7 +202,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                         </Table>
                     </div>
 
-                    {/* Mobile Card View */}
+                    {/* MOBILE VIEW */}
                     <div className="block sm:hidden space-y-4">
                         {filteredRequests.map((request) => (
                             <div key={request._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
@@ -219,17 +211,8 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                                         <h3 className="font-bold text-slate-900 dark:text-white text-base">{request?.recipientName}</h3>
                                         <p className="text-xs text-slate-500 mt-0.5">{request?.recipientDistrict}, {request?.recipientUpazila}</p>
                                     </div>
-                                    <div className="relative">
-                                        <button
-                                            onClick={() => toggleDropdown(request._id)}
-                                            className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500 focus:outline-hidden relative z-30"
-                                        >
-                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
-                                        </button>
-                                        {activeMenuId === request._id && (
-                                            <VolunteerActionMenu request={request} onStatusUpdate={handleStatusUpdate} isMobile />
-                                        )}
-                                    </div>
+
+                                    <DonorActionDropdown request={request} onStatusUpdate={handleStatusUpdate} onDelete={triggerDelete} />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-3 pt-2 text-xs border-t border-slate-100 dark:border-slate-800">
@@ -266,47 +249,87 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                     No blood donation requests found matching this criteria.
                 </div>
             )}
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+                    <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white">Delete Donation Request?</h3>
+                        <p className="text-sm text-slate-500">This action will remove the record permanently.</p>
+                        <div className="flex flex-col sm:flex-row justify-end gap-2 pt-2">
+                            <Button variant="ghost" size="sm" className="w-full sm:w-auto order-2 sm:order-1" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                            <Button className="bg-red-600 hover:bg-red-700 text-white w-full sm:w-auto order-1 sm:order-2" size="sm" onClick={confirmDelete}>Confirm Delete</Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-
-const VolunteerActionMenu = ({ request, onStatusUpdate, isMobile = false }) => {
+const DonorActionDropdown = ({ request, onStatusUpdate, onDelete }) => {
     return (
-        <div className={`absolute right-0 z-50 mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>
-            <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 mb-1">
-                Change Status
-            </div>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'pending')} 
-                className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-amber-50 dark:hover:bg-amber-950/20 text-amber-600 ${request?.donationStatus === 'pending' ? 'bg-amber-50/60 font-bold' : ''}`}
+        <Dropdown>
+            <Button
+                isIconOnly
+                aria-label="Actions"
+                variant="light"
+                radius="full"
+                className="text-slate-600 dark:text-slate-300"
             >
-                Set to Pending
-            </button>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'inprogress')} 
-                className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/20 text-blue-600 ${request?.donationStatus === 'inprogress' ? 'bg-blue-50/60 font-bold' : ''}`}
-            >
-                Set to In Progress
-            </button>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'done')} 
-                className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/20 text-emerald-600 ${request?.donationStatus === 'done' ? 'bg-emerald-50/60 font-bold' : ''}`}
-            >
-                Mark as Done
-            </button>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'canceled')} 
-                className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/20 text-rose-600 ${request?.donationStatus === 'canceled' ? 'bg-rose-50/60 font-bold' : ''}`}
-            >
-                Mark as Canceled
-            </button>
-        </div>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+            </Button>
+            <Dropdown.Popover>
+                <Dropdown.Menu
+                    aria-label="Request Operations"
+                    className="p-1 min-w-[160px]"
+                >
+                    <Dropdown.Item id="view" textValue="View Details" className="text-xs font-medium rounded-lg">
+                        <Link className='w-full block' href={`/dashboard/donor/${request._id}`}>
+                            View Details
+                        </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item id="edit" textValue="Edit Request" className="text-xs font-medium rounded-lg">
+                        <Link href={`/dashboard/donor/edit/${request._id}`} className="w-full">
+                            Edit Request
+                        </Link>
+                    </Dropdown.Item>
+
+                    {request?.donationStatus === "inprogress" && (
+                        <Dropdown.Item
+                            id="done"
+                            textValue="Mark as Done"
+                            className="text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-lg bg-emerald-50/20"
+                            onClick={() => onStatusUpdate(request._id, 'done')}
+                        >
+                            Mark as Done
+                        </Dropdown.Item>
+                    )}
+                    {request?.donationStatus === "inprogress" && (
+                        <Dropdown.Item
+                            id="canceled"
+                            textValue="Mark as Canceled"
+                            className="text-rose-600 dark:text-rose-400 text-xs font-bold rounded-lg bg-rose-50/20"
+                            onClick={() => onStatusUpdate(request._id, 'canceled')}
+                        >
+                            Mark as Canceled
+                        </Dropdown.Item>
+                    )}
+
+                    <Dropdown.Item
+                        id="delete"
+                        textValue="Delete Request"
+                        className="text-red-600 dark:text-red-400 text-xs font-medium rounded-lg"
+                        onClick={() => onDelete(request._id)}
+                    >
+                        Delete Request
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown.Popover>
+        </Dropdown>
     );
 };
 
-export default AllDonationRequestAdminDashboard;
+export default MyDonationRequestPeginationAdmin;

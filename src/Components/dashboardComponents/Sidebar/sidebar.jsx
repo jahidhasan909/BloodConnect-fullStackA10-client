@@ -44,14 +44,18 @@ export default async function DashboardSidebar() {
         volunteer: [
             { icon: Home, label: "Dashboard Home", link: "/dashboard/volunteer" },
             { icon: User, label: "Profile Page", link: "/dashboard/volunteer/profile" },
-            { icon: Droplet, label: "All Blood Requests", link: "/dashboard/volunteer/all-blood-donation-request" },
+             { icon: FileText, label: "My Requests", link: "/dashboard/volunteer/my-donation-requests" },
+            { icon: PlusCircle, label: "Create Request", link: "/dashboard/volunteer/create-donation-request" },
+            { icon: Droplet, label: "Public Requests", link: "/dashboard/volunteer/all-blood-donation-request" },
         ],
 
         admin: [
             { icon: Home, label: "Dashboard Home", link: "/dashboard/admin" },
             { icon: User, label: "Profile Page", link: "/dashboard/admin/profile" },
+             { icon: FileText, label: "My Requests", link: "/dashboard/admin/my-donation-requests" },
+            { icon: PlusCircle, label: "Create Request", link: "/dashboard/admin/create-donation-request" },
             { icon: Users, label: "All Users", link: "/dashboard/admin/all-users" },
-            { icon: Droplet, label: "All Blood Requests", link: "/dashboard/admin/all-blood-donation-request" },
+            { icon: Droplet, label: "Public Requests", link: "/dashboard/admin/all-blood-donation-request" },
         ],
     };
 
