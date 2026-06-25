@@ -12,8 +12,7 @@ const AllUsersManagementPage = ({ Users }) => {
     const [statusFilter, setStatusFilter] = useState('all');
     const [activeMenuId, setActiveMenuId] = useState(null);
 
-   
-    const baseurl = process.env.NEXT_PUBLIC_BASE_URL ;
+    const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
     useEffect(() => {
         setUsersList(Array.isArray(Users) ? Users : (Users?.data || Users?.users || []));
@@ -31,21 +30,55 @@ const AllUsersManagementPage = ({ Users }) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    const handleStatusUpdate = (userId, newStatus) => {
-        setUsersList(prev =>
-            prev.map(user => user._id === userId ? { ...user, status: newStatus } : user)
-        );
-        setActiveMenuId(null);
-    };
-
-   
-    const handleRoleUpdate = async (userId, newRole) => {
-        // ১. আইডি দিয়ে ওই নির্দিষ্ট ইউজারকে খুঁজে বের করা
+    // Updated: Now fully connected to your /api/usercollaction/makeblock API
+    const handleStatusUpdate = async (userId, newStatus) => {
+        // ১. আইডি দিয়ে ওই নির্দিষ্ট ইউজারকে খুঁজে বের করা
         const targetUser = usersList.find(user => user._id === userId);
         
         if (!targetUser) return;
 
-        // ২. যদি রোল 'volunteer' করতে চাওয়া হয়, তবেই ব্যাকএন্ডে রিকোয়েস্ট যাবে
+       
+        if (newStatus === 'blocked') {
+            try {
+                const response = await fetch(`${baseurl}/api/usercollaction/makeblock?email=${targetUser.email}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                   
+                    setUsersList(prev =>
+                        prev.map(user => user._id === userId ? { ...user, status: 'blocked' } : user)
+                    );
+                } else {
+                    console.error("Backend Error:", data);
+                    alert(`Failed to block user: ${data.error || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error("Network Error:", error);
+                alert("Something went wrong with the network. Please try again.");
+            }
+        } else {
+            
+            setUsersList(prev =>
+                prev.map(user => user._id === userId ? { ...user, status: newStatus } : user)
+            );
+        }
+
+        setActiveMenuId(null);
+    };
+
+    const handleRoleUpdate = async (userId, newRole) => {
+        
+        const targetUser = usersList.find(user => user._id === userId);
+        
+        if (!targetUser) return;
+
+        
         if (newRole === 'volunteer') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makevolunteer?email=${targetUser.email}`, {
@@ -58,7 +91,7 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    // ব্যাকএন্ডে সফল হলে ফ্রন্টএন্ডের স্টেট আপডেট হবে
+                   
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
                     );
@@ -71,7 +104,7 @@ const AllUsersManagementPage = ({ Users }) => {
                 alert("Something went wrong with the network. Please try again.");
             }
         } else {
-            // অন্যান্য রোলের জন্য (যেমন: Admin) লোকাল স্টেট আপডেট (ভবিষ্যতে এপিআই যুক্ত করতে পারবেন)
+          
             setUsersList(prev =>
                 prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
             );
@@ -120,7 +153,7 @@ const AllUsersManagementPage = ({ Users }) => {
                         onClick={() => setStatusFilter('blocked')}
                         className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'blocked' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-amber-400'}`}
                     >
-                        Blocked ({usersList.filter(u => u.status === 'blocked').length})
+                        Blocked ({usersList.filter(u => u.status === 'blocked' || u.status === 'block').length})
                     </button>
                 </div>
             </header>

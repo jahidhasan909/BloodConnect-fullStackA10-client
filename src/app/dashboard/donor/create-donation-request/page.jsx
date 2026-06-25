@@ -81,6 +81,9 @@ export default function CreateDonationRequest() {
 
     const user = userData?.user
 
+    if (user.status === 'block' || user.status === 'blocked') {
+        return <div className=" text-red-500">you are blocked user </div>
+    }
 
     const formatTime12Hour = (time24) => {
         let [hour, minute] = time24.split(":");
@@ -135,14 +138,14 @@ export default function CreateDonationRequest() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({...requestInfo})
+            body: JSON.stringify({ ...requestInfo })
         })
 
         const requestData = await res.json()
 
         if (requestData.insertedId) {
-           console.log('success',requestData);
-           
+            console.log('success', requestData);
+
         }
 
 
