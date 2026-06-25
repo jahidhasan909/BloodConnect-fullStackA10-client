@@ -73,6 +73,7 @@ export default function RegistrationForm() {
 
 
     const onSubmit = async (data) => {
+        const { data: tokenData } = await authClient.token()
         if (data.password !== data.confirmPassword) {
             alert("Passwords do not match!");
             return;
@@ -111,6 +112,7 @@ export default function RegistrationForm() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                authorization: `Bearer ${tokenData?.token}`,
             },
             body: JSON.stringify({
                 userId: resdata?.user?.id,

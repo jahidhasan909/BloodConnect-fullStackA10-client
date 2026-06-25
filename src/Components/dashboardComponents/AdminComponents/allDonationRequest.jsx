@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from '@/lib/auth-client';
 import { Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -33,6 +34,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
     
     const handleStatusUpdate = async (id, newStatus) => {
         let apiEndpoint = '';
+        const { data: tokenData } = await authClient.token()
 
         //  status action
         if (newStatus === 'pending') {
@@ -51,6 +53,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: `Bearer ${tokenData?.token}`,
                     }
                 });
 

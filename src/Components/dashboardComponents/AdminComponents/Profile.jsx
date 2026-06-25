@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { Edit2, Save, X, ShieldAlert, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function ProfileAdmin({ userData }) {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -88,6 +89,7 @@ export default function ProfileAdmin({ userData }) {
 
     const onFormSubmit = async (data) => {
         setSubmitting(true);
+        const { data: tokenData } = await authClient.token()
 
         
         const selectedDistrictObj = districts.find(d => d.id === data.district);
@@ -107,6 +109,7 @@ export default function ProfileAdmin({ userData }) {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
+                    authorization: `Bearer ${tokenData?.token}`,
                 },
                 body: JSON.stringify(finalPayload),
             });
