@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from '@/lib/auth-client';
 import { Avatar, Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -30,20 +31,21 @@ const AllUsersManagementPage = ({ Users }) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    
+
     const handleStatusUpdate = async (userId, newStatus) => {
-        
+
         const targetUser = usersList.find(user => user._id === userId);
-        
+        const { data: tokenData } = await authClient.token()
         if (!targetUser) return;
 
-        
+
         if (newStatus === 'blocked') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makeblock?email=${targetUser.email}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: `Bearer ${tokenData?.token}`,
                     }
                 });
 
@@ -61,14 +63,17 @@ const AllUsersManagementPage = ({ Users }) => {
                 console.error("Network Error:", error);
                 alert("Something went wrong with the network. Please try again.");
             }
-        } 
-       
+        }
+
+
+
         else if (newStatus === 'active') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/unblocked?email=${targetUser.email}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: `Bearer ${tokenData?.token}`,
                     }
                 });
 
@@ -91,20 +96,21 @@ const AllUsersManagementPage = ({ Users }) => {
         setActiveMenuId(null);
     };
 
-  
+
     const handleRoleUpdate = async (userId, newRole) => {
-       
+        const { data: tokenData } = await authClient.token()
         const targetUser = usersList.find(user => user._id === userId);
-        
+
         if (!targetUser) return;
 
-       
+
         if (newRole === 'volunteer') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makevolunteer?email=${targetUser.email}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: `Bearer ${tokenData?.token}`,
                     }
                 });
 
@@ -122,14 +128,15 @@ const AllUsersManagementPage = ({ Users }) => {
                 console.error("Network Error:", error);
                 alert("Something went wrong with the network. Please try again.");
             }
-        } 
-        
+        }
+
         else if (newRole === 'admin') {
             try {
                 const response = await fetch(`${baseurl}/api/usercollaction/makeadmin?email=${targetUser.email}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: `Bearer ${tokenData?.token}`,
                     }
                 });
 

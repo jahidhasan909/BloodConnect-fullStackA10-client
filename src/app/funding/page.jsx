@@ -7,13 +7,11 @@ import Funding from '@/Components/Funding/funding';
 const Fundingpage = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-  
     const [funds, setFunds] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
 
-  
     const [grandTotal, setGrandTotal] = useState(0);
 
     useEffect(() => {
@@ -22,11 +20,9 @@ const Fundingpage = () => {
             const backendUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
             try {
-            
                 const response = await fetch(`${backendUrl}/api/pegination/funding?page=${currentPage}&limit=10`);
                 const result = await response.json();
 
-                
                 setFunds(result.data || []);
                 setCurrentPage(result.page || 1);
                 setTotalPages(result.totalPage || 1);
@@ -47,7 +43,6 @@ const Fundingpage = () => {
         }
     }, [funds]);
 
-    
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -56,7 +51,7 @@ const Fundingpage = () => {
     return (
         <div className="max-w-7xl mt-30 mx-auto p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
-           
+            {/* Header Banner */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-slate-50 to-red-50 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 gap-4 shadow-xs">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">Organization Funding</h1>
@@ -71,7 +66,6 @@ const Fundingpage = () => {
                 </Button>
             </div>
 
-         
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Current Page Total</span>
@@ -85,11 +79,9 @@ const Fundingpage = () => {
                 </div>
             </div>
 
-        
             {funds.length > 0 || loading ? (
                 <section className="space-y-4 relative">
                     
-                    {/* Desktop Table View */}
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -98,20 +90,26 @@ const Fundingpage = () => {
                                         <Table.Column isRowHeader className="font-bold">Donor Name</Table.Column>
                                         <Table.Column className="font-bold">Fund Amount</Table.Column>
                                         <Table.Column className="font-bold">Funding Date</Table.Column>
+                                        <Table.Column className="font-bold">Status</Table.Column>
                                     </Table.Header>
                                     <Table.Body emptyContent={loading ? "Loading funding logs..." : "No funding logs available on this page."}>
                                         {funds.map((fund) => (
                                             <Table.Row key={fund._id} className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50/50 transition-colors">
                                                 <Table.Cell className="font-semibold text-slate-700 dark:text-slate-300">{fund.name}</Table.Cell>
-                                                <Table.Cell className="font-bold text-emerald-600">${Number(fund.amount).toFixed(2)}</Table.Cell>
+                                                <Table.Cell className="font-bold text-slate-900 dark:text-white">${Number(fund.amount).toFixed(2)}</Table.Cell>
                                                 <Table.Cell className="text-xs text-slate-500">{fund.date}</Table.Cell>
+                                                <Table.Cell>
+                                                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/40 dark:border-emerald-800/30">
+                                                        • {fund.status || 'success'}
+                                                    </span>
+                                                </Table.Cell>
                                             </Table.Row>
                                         ))}
                                     </Table.Body>
                                 </Table.Content>
                             </Table.ScrollContainer>
                             
-                            {/* Table Footer with Pagination Control */}
+                          
                             {totalPages > 1 && (
                                 <Table.Footer>
                                     <Pagination size="sm">
@@ -163,9 +161,12 @@ const Fundingpage = () => {
                                             <h3 className="font-bold text-slate-900 dark:text-white text-base">{fund.name}</h3>
                                             <p className="text-xs text-slate-400 mt-0.5">Date: {fund.date}</p>
                                         </div>
-                                        <div>
-                                            <span className="px-2.5 py-1 rounded text-xs font-bold bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400">
+                                        <div className="flex flex-col items-end gap-1.5">
+                                            <span className="px-2.5 py-1 rounded text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
                                                 ${Number(fund.amount).toFixed(2)}
+                                            </span>
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/40 dark:border-emerald-800/30">
+                                                • {fund.status || 'success'}
                                             </span>
                                         </div>
                                     </div>
@@ -195,7 +196,7 @@ const Fundingpage = () => {
                 </div>
             )}
 
-            {/* modal */}
+            {/* Modal Injection */}
             <Funding isOpen={isOpen} onOpenChange={setIsOpen} />
         </div>
     );
