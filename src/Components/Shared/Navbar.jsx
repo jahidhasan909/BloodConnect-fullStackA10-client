@@ -16,6 +16,8 @@ import Image from 'next/image';
 import { authClient } from '@/lib/auth-client';
 import { ArrowRightFromSquare } from '@gravity-ui/icons';
 
+import Loader from './Loading';
+
 const Navbar = () => {
 
 
@@ -28,7 +30,9 @@ const Navbar = () => {
 
 
     if (isPending) {
-        return <div>loading....</div>
+        return <div>
+           <Loader></Loader>
+        </div>
     }
     const user = data?.user
 
@@ -37,23 +41,25 @@ const Navbar = () => {
         return null;
     }
 
+    console.log(user,'us');
+    
 
 
     const linkClass = (path) =>
         pathname === path
-            ? "text-[#E11D48] font-semibold transition-colors"
-            : "text-slate-700 hover:text-[#E11D48] font-medium transition-colors";
+            ? "text-[#db0000] font-bold transition-colors"
+            : "text-slate-700 hover:text-[#db0000] font-medium transition-colors";
 
     return (
         <nav className="absolute    fixed top-0 z-50   w-full">
-            <div className=" px-4 container border my-4 bg-white/60 shadow-md rounded-2xl backdrop-blur-md mx-auto sm:px-6 lg:px-8">
+            <div className=" px-4 container border border-gray-100 my-4 bg-white/40 shadow-md rounded-2xl backdrop-blur-md mx-auto sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center">
 
 
-                    <Link href="/" className="flex items-center gap- flex-shrink-0">
+                    <Link href="/" className="flex items-center  flex-shrink-0 ">
                         <Image width={34} height={33} alt='logo' className='w-full object-cover mt-2 h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
                         <span className="text-xl font-bold text-slate-900 tracking-tight ">
-                            <span className='text-[#E11D48]'>Blood</span>Connect </span>
+                            <span className='text-[#db0000]'>Blood</span>Connect </span>
                     </Link>
 
                     <div className="hidden md:flex items-center gap-8">
@@ -72,7 +78,7 @@ const Navbar = () => {
                         {!user ? (
                             <Link href={'/login'}>
                                 <Button
-                                    className="bg-[#E11D48] text-white font-medium rounded-md px-6 shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2"
+                                    className="bg-[#db0000] text-white  rounded-md px-6 shadow-sm hover:bg-[#db0000] font-bold transition-all flex items-center gap-2"
                                 >
 
                                     Login
@@ -129,7 +135,7 @@ const Navbar = () => {
                          {!user ? (
                             <Link href={'/login'}>
                                 <Button
-                                    className="bg-[#E11D48] text-white font-medium rounded-md px-6 shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2"
+                                    className="bg-[#db0000] text-white font-medium rounded-md px-6 shadow-sm hover:bg-[#db0000] transition-all flex items-center gap-2"
                                 >
 
                                     Login
@@ -168,8 +174,8 @@ const Navbar = () => {
                                                 <Label>Dashboard</Label>
                                             </Link>
                                         </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => authClient.signOut()} textValue="Logout" variant="danger">
-                                            <div className="flex w-full items-center justify-between gap-2">
+                                        <Dropdown.Item onClick={() => authClient.signOut()} textValue="Logout" variant="">
+                                            <div className="flex text-[#db0000] w-full items-center justify-between gap-2">
                                                 <Label>Log Out</Label>
                                                 <ArrowRightFromSquare className="size-3.5 text-danger" />
                                             </div>
@@ -181,7 +187,7 @@ const Navbar = () => {
 
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-slate-700 hover:text-[#E11D48] focus:outline-none p-2 rounded-md hover:bg-slate-50 transition-colors"
+                            className="text-slate-700 hover:text-[#db0000] focus:outline-none p-2 rounded-md hover:bg-slate-50 transition-colors"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                 {isMenuOpen ? (
@@ -202,21 +208,21 @@ const Navbar = () => {
                     <Link
                         href="/"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
                     >
                         Home
                     </Link>
                     <Link
                         href="/donationrequest"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/donationrequest' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/donationrequest' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
                     >
                         Donation Requests
                     </Link>
                     <Link
                         href="/searchdonor"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/searchdonor' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/searchdonor' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
                     >
                         Search Donor
                     </Link>
@@ -225,7 +231,7 @@ const Navbar = () => {
                         <Link
                             href="/funding"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`block px-3 py-2.5 rounded-xl ${pathname === '/funding' ? 'bg-rose-50 text-[#E11D48] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                            className={`block px-3 py-2.5 rounded-xl ${pathname === '/funding' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
                         >
                             Funding
                         </Link>

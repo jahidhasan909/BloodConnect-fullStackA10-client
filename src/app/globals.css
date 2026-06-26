@@ -1,2 +1,25 @@
 @import "tailwindcss";
 @import "@heroui/styles"; 
+
+
+
+
+@keyframes floating {
+  0% {
+    transform: translateY(15%) rotate(0deg);
+  }
+  50% {
+    transform: translateY(5%) rotate(1.5deg);
+  }
+  100% {
+    transform: translateY(15%) rotate(0deg);
+  }
+}
+
+.animate-floating {
+  animation: floating 6s ease-in-out infinite;
+}
+
+.react-type-animation::after {
+  color: #E11D48; 
+}
