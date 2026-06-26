@@ -73,7 +73,7 @@ const CommunityImpactStats = () => {
     ];
 
     return (
-        <section className="bg-[#db0000]/20 z-10 relative overflow-hidden  rounded-b-4xl text-slate-600 py-20 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
+        <section className="bg-[#db0000]/16 z-10 relative overflow-hidden  rounded-b-4xl text-slate-600 py-20 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
             <div className="absolute -top-40 left-1/2 -z-10 -translate-x-1/2 w-[700px] h-[300px] bg-red-400/20 blur-[120px] rounded-full pointer-events-none" />
             <div className="max-w-7xl mx-auto">
 
