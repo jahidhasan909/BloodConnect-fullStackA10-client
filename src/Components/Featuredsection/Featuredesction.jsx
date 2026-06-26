@@ -90,11 +90,11 @@ const FeaturedSection = () => {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
 
-                <div className="mb-10 space-y-3 max-w-3xl">
+                <div className="mb-10 space-y-3  text-center">
                     <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-none">
                         Why Choose BloodConnect
                     </h2>
-                    <p className="text-base sm:text-[1rem] text-gray-500 max-w-2xl font-normal leading-relaxed">
+                    <p className="text-base sm:text-[1rem] text-gray-500  font-normal leading-relaxed">
                         Connect with verified donors and get blood support when it matters most.
                     </p>
                 </div>

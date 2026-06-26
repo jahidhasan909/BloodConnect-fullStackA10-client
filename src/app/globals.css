@@ -21,5 +21,10 @@
 }
 
 .react-type-animation::after {
-  color: #E11D48; 
+  color: #db0000; 
+}
+
+:root {
+  --swiper-navigation-color: #db0000; 
+  --swiper-theme-color: #db0000;     
 }

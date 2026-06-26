@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Users, HeartPulse, DollarSign } from 'lucide-react';
-import { Card } from '@heroui/react';
+import { Card, Chip } from '@heroui/react';
 import { motion } from "framer-motion";
 
 const CommunityImpactStats = () => {
@@ -73,23 +73,20 @@ const CommunityImpactStats = () => {
     ];
 
     return (
-        <section className="bg-[#db0000]/16 z-10 relative overflow-hidden  rounded-b-4xl text-slate-600 py-20 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
+        <section className="bg-[#db0000]/16 z-10 relative overflow-hidden  rounded-b-4xl text-slate-600 py-13 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
             <div className="absolute -top-40 left-1/2 -z-10 -translate-x-1/2 w-[700px] h-[300px] bg-red-400/20 blur-[120px] rounded-full pointer-events-none" />
             <div className="max-w-7xl mx-auto">
 
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4   mb-5">
+                <div className=" gap-4   mb-7">
                     <div>
-                        <div className="inline-flex items-center gap-2 rounded-full bg-red-100 px-3 py-1 mb-4">
-                            <span className="h-2 w-2  rounded-full bg-red-600 animate-pulse"></span>
-                            <span className="text-xs font-semibold uppercase tracking-wider text-red-600">
-                                Live Statistics
-                            </span>
+                        <div className="flex  justify-center items-center  rounded-full  px-3 py-1 mb-2">
+                            <Chip color="" className='bg-red-100 text-[#db0000] gap-2'><span className="h-2 w-2  rounded-full bg-red-600 animate-pulse"></span> Live Statistics</Chip>
                         </div>
-                        <h3 className="text-4xl font-black text-slate-900 tracking-tight">
+                        <h3 className="text-4xl text-center font-black text-slate-900 tracking-tight">
                             Community  <span className='text-[#db0000]'>Impact</span>
                         </h3>
-                        <p className="text-[1rem] text-gray-500 mt-1">
-                            Track the real-time impact of our community through active donors, blood requests, and life-saving contributions.
+                        <p className="text-[1rem] text-gray-500 mt-2 text-center">
+                            Track the real-time impact of our community through active donors, blood requests, and <br /> life-saving contributions.
                         </p>
                     </div>
                 </div>
