@@ -17,7 +17,7 @@ export default async function Success({ searchParams }) {
 
         <a
           href="/funding"
-          className="inline-block mt-6 bg-slate-800 hover:bg-slate-900 text-white px-6 py-2 rounded-xl"
+          className="inline-block mt-6 bg-[#db0000] hover:bg-red-900 text-white px-6 py-2 rounded-xl"
         >
           Back to Funding
         </a>

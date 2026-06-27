@@ -51,33 +51,23 @@ const Fundingpage = () => {
     return (
         <div className="max-w-7xl mt-30 mx-auto p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
-            {/* Header Banner */}
+            <div className='text-center'>
+                <h1 className='text-4xl font-bold'>Community Funding History</h1>
+                <p className='text-[1rem] text-gray-500 mt-2'>View recent community donations and contribute to support our mission.</p>
+            </div>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-slate-50 to-red-50 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 gap-4 shadow-xs">
                 <div>
-                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">Organization Funding</h1>
-                    <p className="text-xs md:text-sm text-slate-500 mt-1">Review user contributions across pages or make a new secure donation.</p>
+                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">Contribute Now</h1>
                 </div>
 
                 <Button
                     onPress={() => setIsOpen(true)}
-                    className="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-red-600/20 self-start sm:self-auto"
+                    className="bg-[#db0000] hover:bg-red-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-red-600/20 self-start sm:self-auto"
                 >
                     Give Fund
                 </Button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Current Page Total</span>
-                    <span className="text-2xl font-extrabold text-red-600 mt-1 block">
-                        ${funds.reduce((sum, item) => sum + Number(item.amount || 0), 0).toLocaleString()}
-                    </span>
-                </div>
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Active Page</span>
-                    <span className="text-2xl font-extrabold text-slate-800 dark:text-white mt-1 block">Page {currentPage} of {totalPages}</span>
-                </div>
-            </div>
 
             {funds.length > 0 || loading ? (
                 <section className="space-y-4 relative">
@@ -152,7 +142,7 @@ const Fundingpage = () => {
                     {/* Mobile Card View */}
                     <div className="block sm:hidden space-y-4">
                         {loading ? (
-                            <div className="text-center p-8 text-slate-400">Loading funding logs...</div>
+                            <div className="text-center p-8 text-slate-400">Loading funding history...</div>
                         ) : (
                             funds.map((fund) => (
                                 <div key={fund._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
@@ -174,7 +164,7 @@ const Fundingpage = () => {
                             ))
                         )}
 
-                        {/* Mobile Pagination Trigger Controls */}
+                        
                         {totalPages > 1 && (
                             <div className="flex justify-center p-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800">
                                 <Pagination
@@ -196,7 +186,7 @@ const Fundingpage = () => {
                 </div>
             )}
 
-            {/* Modal Injection */}
+        
             <Funding isOpen={isOpen} onOpenChange={setIsOpen} />
         </div>
     );

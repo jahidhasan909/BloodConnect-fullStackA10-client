@@ -29,7 +29,7 @@ const Footer = () => {
                         <Link href="/" className="flex items-center gap- flex-shrink-0">
                             <Image width={60} height={70} alt='logo' className='mt-2 h-[70px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
                             <span className="text-3xl font-extrabold text-slate-900 tracking-tight ">
-                                <span className='text-[#E11D48]'>Blood</span>Connect </span>
+                                <span className='text-[#db0000]'>Blood</span>Connect </span>
                         </Link>
 
                         <p className="text-sm text-slate-500 leading-relaxed max-w-sm">

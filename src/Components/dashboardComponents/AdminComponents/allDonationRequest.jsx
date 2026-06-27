@@ -1,14 +1,15 @@
 "use client";
 
+import Loader from '@/Components/Shared/Loading';
 import { authClient } from '@/lib/auth-client';
 import { Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
-  
+
     const [requestData, setRequestData] = useState(donationRequest?.data || []);
-    const [statusFilter, setStatusFilter] = useState('all'); 
+    const [statusFilter, setStatusFilter] = useState('all');
     const [activeMenuId, setActiveMenuId] = useState(null);
 
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL || '';
@@ -31,12 +32,12 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-    
+
     const handleStatusUpdate = async (id, newStatus) => {
         let apiEndpoint = '';
         const { data: tokenData } = await authClient.token()
 
-        //  status action
+
         if (newStatus === 'pending') {
             apiEndpoint = `${baseurl}/api/donationrequest/pending/${id}`;
         } else if (newStatus === 'inprogress') {
@@ -60,8 +61,8 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    
-                    setRequestData(prev => 
+
+                    setRequestData(prev =>
                         prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
                     );
                 } else {
@@ -82,9 +83,15 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
         return request?.donationStatus?.toLowerCase() === statusFilter.toLowerCase();
     });
 
+    const { data, isPending } = authClient.useSession()
+    if (isPending) {
+        return <Loader></Loader>
+    }
+    const user = data?.user
+
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-
+            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"
@@ -92,17 +99,17 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                 />
             )}
 
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-slate-50 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-                        All Blood Donation Requests <span className="text-red-600 font-extrabold">(Volunteer Access)</span>
+                        All Blood Donation Requests <span className="text-red-600 font-extrabold"></span>
                     </h1>
                     <p className="text-xs md:text-sm text-slate-500 mt-1">Review requests and update the donation operations status.</p>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                     <label htmlFor="status-filter" className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                        Filter:
+                       
                     </label>
                     <select
                         id="status-filter"
@@ -280,30 +287,30 @@ const VolunteerActionMenu = ({ request, onStatusUpdate, isMobile = false }) => {
             <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700 mb-1">
                 Change Status
             </div>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'pending')} 
+
+            <button
+                onClick={() => onStatusUpdate(request._id, 'pending')}
                 className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-amber-50 dark:hover:bg-amber-950/20 text-amber-600 ${request?.donationStatus === 'pending' ? 'bg-amber-50/60 font-bold' : ''}`}
             >
                 Set to Pending
             </button>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'inprogress')} 
+
+            <button
+                onClick={() => onStatusUpdate(request._id, 'inprogress')}
                 className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/20 text-blue-600 ${request?.donationStatus === 'inprogress' ? 'bg-blue-50/60 font-bold' : ''}`}
             >
                 Set to In Progress
             </button>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'done')} 
+
+            <button
+                onClick={() => onStatusUpdate(request._id, 'done')}
                 className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/20 text-emerald-600 ${request?.donationStatus === 'done' ? 'bg-emerald-50/60 font-bold' : ''}`}
             >
                 Mark as Done
             </button>
-            
-            <button 
-                onClick={() => onStatusUpdate(request._id, 'canceled')} 
+
+            <button
+                onClick={() => onStatusUpdate(request._id, 'canceled')}
                 className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/20 text-rose-600 ${request?.donationStatus === 'canceled' ? 'bg-rose-50/60 font-bold' : ''}`}
             >
                 Mark as Canceled

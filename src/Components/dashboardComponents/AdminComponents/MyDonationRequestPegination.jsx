@@ -1,5 +1,6 @@
 "use client";
 
+import NoRequestsFound from '@/app/dashboard/admin/my-donation-requests/empty';
 import { Button, Pagination, Table, Dropdown } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -91,18 +92,18 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
 
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-
+            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
             <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
+                    <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                         Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-500 mt-1">Track and manage your submitted requests.</p>
+                    <p className="text-xs md:text-sm text-slate-500 mt-1">View and manage all your blood donation requests.</p>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                     <label htmlFor="status-filter" className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                        Filter:
+                
                     </label>
                     <select
                         id="status-filter"
@@ -245,8 +246,8 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
 
                 </section>
             ) : (
-                <div className="text-center p-12 border border-dashed rounded-xl text-slate-400">
-                    No blood donation requests found matching this criteria.
+                <div className="">
+                   <NoRequestsFound></NoRequestsFound>
                 </div>
             )}
 

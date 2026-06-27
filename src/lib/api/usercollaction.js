@@ -5,5 +5,8 @@ export const getUserCollactions = async () => {
     const res = await fetch(`${baseUrl}/api/users`)
     const users = await res.json()
 
+    
+
+
     return users;
 }

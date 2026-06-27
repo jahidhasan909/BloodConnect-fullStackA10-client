@@ -1,6 +1,6 @@
 
-import MyDonationRequestPeginationvolunteer from '@/Components/dashboardComponents/VolunteerComponents/MyDonationRequestPegination';
 
+import MyDonationRequestPeginationVolunteer from '@/Components/dashboardComponents/VolunteerComponents/MyDonationRequestPegination';
 import { auth } from '@/lib/auth';
 
 import { headers } from 'next/headers';
@@ -33,7 +33,7 @@ const MyDonationRequestpagevolunteer = async ({searchParams}) => {
 
     return (
         <div>
-            <MyDonationRequestPeginationvolunteer donationRequest={donationRequest} user={user}></MyDonationRequestPeginationvolunteer>
+            <MyDonationRequestPeginationVolunteer donationRequest={donationRequest} user={user}></MyDonationRequestPeginationVolunteer>
         </div>
     )
 }

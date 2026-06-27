@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from '@/Components/Shared/Loading';
 import { authClient } from '@/lib/auth-client';
 import { Avatar, Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
@@ -164,9 +165,15 @@ const AllUsersManagementPage = ({ Users }) => {
         return user.status === statusFilter;
     });
 
+    const { data, isPending } = authClient.useSession()
+    if (isPending) {
+        return <Loader></Loader>
+    }
+    const user = data?.user
+
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-
+            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"
@@ -174,30 +181,30 @@ const AllUsersManagementPage = ({ Users }) => {
                 />
             )}
 
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-50 text-black flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-xl md:text-2xl font-bold">
+                    <h1 className="text-xl md:text-3xl font-bold">
                         User Management Panel <span className="text-red-500 font-extrabold">(Admin)</span>
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-400 mt-1">Manage user roles, statuses, and permissions across the platform.</p>
+                    <p className="text-xs md:text-[1rem] text-gray-500 mt-1">Manage user roles, statuses, and permissions across the platform.</p>
                 </div>
 
-                <div className="flex bg-slate-800 p-1 rounded-xl border border-slate-700 self-start md:self-auto">
+                <div className="flex bg-[#db0000]/10 p-1 rounded-xl border border-red-50 self-start md:self-auto">
                     <button
                         onClick={() => setStatusFilter('all')}
-                        className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'all' ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                        className={`px-3 py-1.5 hover:cursor-pointer text-xs font-semibold rounded-lg transition-all ${statusFilter === 'all' ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'}`}
                     >
                         All ({usersList.length})
                     </button>
                     <button
                         onClick={() => setStatusFilter('active')}
-                        className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'active' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-emerald-400'}`}
+                        className={`px-3 py-1.5 text-xs hover:cursor-pointer font-semibold rounded-lg transition-all ${statusFilter === 'active' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-emerald-400'}`}
                     >
                         Active ({usersList.filter(u => u.status === 'active').length})
                     </button>
                     <button
                         onClick={() => setStatusFilter('blocked')}
-                        className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'blocked' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-amber-400'}`}
+                        className={`px-3 py-1.5 text-xs hover:cursor-pointer font-semibold rounded-lg transition-all ${statusFilter === 'blocked' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-amber-400'}`}
                     >
                         Blocked ({usersList.filter(u => u.status === 'blocked' || u.status === 'block').length})
                     </button>

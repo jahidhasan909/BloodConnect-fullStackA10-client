@@ -1,5 +1,5 @@
+'use client'
 
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -14,18 +14,24 @@ import {
 } from "lucide-react";
 
 import { Button, Drawer } from "@heroui/react";
-import { auth } from "@/lib/auth";
+
+import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import Loader from "@/Components/Shared/Loading";
 
 
-export default async function DashboardSidebar() {
+export default function DashboardSidebar() {
 
-   
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+    const pathname = usePathname();
+    const { data, isPending } = authClient.useSession()
 
+    if (isPending) {
+        return <div>
+            <Loader></Loader>
+        </div>
+    }
 
-    const user = session?.user;
+    const user = data?.user;
     const role = user?.role || 'donor';
 
 
@@ -35,24 +41,24 @@ export default async function DashboardSidebar() {
 
     const dashboardItems = {
         donor: [
-            { icon: Home, label: "Dashboard Home", link: "/dashboard/donor" },
-            { icon: User, label: "Profile Page", link: "/dashboard/donor/profile" },
+            { icon: Home, label: "Dashboard", link: "/dashboard/donor" },
+            { icon: User, label: "Profile", link: "/dashboard/donor/profile" },
             { icon: FileText, label: "My Requests", link: "/dashboard/donor/my-donation-requests" },
             { icon: PlusCircle, label: "Create Request", link: "/dashboard/donor/create-donation-request" },
         ],
 
         volunteer: [
-            { icon: Home, label: "Dashboard Home", link: "/dashboard/volunteer" },
-            { icon: User, label: "Profile Page", link: "/dashboard/volunteer/profile" },
-             { icon: FileText, label: "My Requests", link: "/dashboard/volunteer/my-donation-requests" },
+            { icon: Home, label: "Dashboard", link: "/dashboard/volunteer" },
+            { icon: User, label: "Profile", link: "/dashboard/volunteer/profile" },
+            { icon: FileText, label: "My Requests", link: "/dashboard/volunteer/my-donation-requests" },
             { icon: PlusCircle, label: "Create Request", link: "/dashboard/volunteer/create-donation-request" },
             { icon: Droplet, label: "Public Requests", link: "/dashboard/volunteer/all-blood-donation-request" },
         ],
 
         admin: [
-            { icon: Home, label: "Dashboard Home", link: "/dashboard/admin" },
-            { icon: User, label: "Profile Page", link: "/dashboard/admin/profile" },
-             { icon: FileText, label: "My Requests", link: "/dashboard/admin/my-donation-requests" },
+            { icon: Home, label: "Dashboard", link: "/dashboard/admin" },
+            { icon: User, label: "Profile", link: "/dashboard/admin/profile" },
+            { icon: FileText, label: "My Requests", link: "/dashboard/admin/my-donation-requests" },
             { icon: PlusCircle, label: "Create Request", link: "/dashboard/admin/create-donation-request" },
             { icon: Users, label: "All Users", link: "/dashboard/admin/all-users" },
             { icon: Droplet, label: "Public Requests", link: "/dashboard/admin/all-blood-donation-request" },
@@ -83,7 +89,7 @@ export default async function DashboardSidebar() {
                                         <Link href="/" className="flex items-center gap- flex-shrink-0">
                                             <Image width={34} height={33} alt='logo' className='w-full object-cover mt-2 h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
                                             <span className="text-xl font-bold text-slate-900 tracking-tight ">
-                                                <span className='text-[#E11D48]'>Blood</span>Connect </span>
+                                                <span className='text-[#db0000]'>Blood</span>Connect </span>
                                         </Link>
                                     </Drawer.Heading>
                                 </Drawer.Header>
@@ -91,14 +97,12 @@ export default async function DashboardSidebar() {
                                 <Drawer.Body className="px-0">
                                     <nav className="flex flex-col gap-1 w-full">
                                         {navItems.map((item) => (
-                                            <Link key={item.label} href={item.link} className="w-full">
-                                                <button
-                                                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900 w-full text-left"
-                                                    type="button"
-                                                >
-                                                    <item.icon className="w-4 h-4 text-slate-400" />
-                                                    {item.label}
-                                                </button>
+                                            <Link key={item.label} href={item.link} className={`block rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold  leading-tight text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2"
+                                                }`}>
+
+                                                <item.icon className="w-4 h-4 " />
+                                                {item.label}
+
                                             </Link>
                                         ))}
                                     </nav>
@@ -122,17 +126,15 @@ export default async function DashboardSidebar() {
 
 
 
-                    {/* Desktop Navigation Map */}
+
                     <nav className="flex flex-col gap-1">
                         {navItems.map((item) => (
-                            <Link key={item.label} href={item.link}>
-                                <button
-                                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900 w-full text-left"
-                                    type="button"
-                                >
-                                    <item.icon className="w-4 h-4 text-slate-400" />
-                                    {item.label}
-                                </button>
+                            <Link key={item.label} href={item.link} className={`block rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold  leading-tight text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2"
+                                }`}>
+
+                                <item.icon className="w-4 h-4 " />
+                                {item.label}
+
                             </Link>
                         ))}
                     </nav>

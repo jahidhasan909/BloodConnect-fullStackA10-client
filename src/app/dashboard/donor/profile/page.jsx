@@ -22,7 +22,8 @@ const ProfileDonorpage = async () => {
     
 
     return (
-        <div>
+        <div className=' container mx-auto mt-10 px-20'>
+            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
             <ProfileDonor userData={userData}></ProfileDonor>
         </div>
     );

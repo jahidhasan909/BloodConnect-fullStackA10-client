@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { Edit2, Save, X, ShieldAlert, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Loader from "@/Components/Shared/Loading";
 
 export default function ProfileDonor({ userData }) {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -28,16 +29,16 @@ export default function ProfileDonor({ userData }) {
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
     const genders = ["Male", "Female", "Other"];
 
-    
+
     const { register, handleSubmit, reset: update, control, watch, setValue, formState: { errors } } = useForm();
 
-    
+
     const selectedDistrictId = watch("district");
 
     useEffect(() => {
         const initializeProfileData = async () => {
             try {
-        
+
                 const [districtRes, upazilaRes] = await Promise.all([
                     fetch("/districts.json"),
                     fetch("/upazilas.json")
@@ -53,18 +54,18 @@ export default function ProfileDonor({ userData }) {
                 setUpazilas(fetchedUpazilas);
 
                 if (userData) {
-                   
+
                     const currentDistrictObj = fetchedDistricts.find(d => d.name === userData.district);
                     const currentUpazilaObj = fetchedUpazilas.find(u => u.name === userData.upazila);
 
-               
+
                     update({
                         name: userData.name || "",
                         bloodGroup: userData.bloodGroup || "",
                         gender: userData.gender || "",
                         image: userData.image || "",
                         district: currentDistrictObj ? currentDistrictObj.id : "",
-                        upazila: currentUpazilaObj ? currentUpazilaObj.id: "",
+                        upazila: currentUpazilaObj ? currentUpazilaObj.id : "",
                     });
                 }
 
@@ -80,7 +81,7 @@ export default function ProfileDonor({ userData }) {
         }
     }, [userData, update]);
 
-   
+
     const filteredUpazilas = upazilas.filter(
         (upazila) => upazila.district_id === selectedDistrictId
     );
@@ -89,7 +90,7 @@ export default function ProfileDonor({ userData }) {
     const onFormSubmit = async (data) => {
         setSubmitting(true);
 
-        
+
         const selectedDistrictObj = districts.find(d => d.id === data.district);
         const selectedUpazilaObj = upazilas.find(u => u.id === data.upazila);
 
@@ -102,7 +103,7 @@ export default function ProfileDonor({ userData }) {
         };
 
         try {
-            
+
             const res = await fetch(`${baseurl}/api/own/edit/users?email=${userData?.email}`, {
                 method: 'PATCH',
                 headers: {
@@ -125,13 +126,13 @@ export default function ProfileDonor({ userData }) {
     };
 
     if (loading) {
-        return <div className="text-center text-slate-500 py-12 font-medium">Loading profile information...</div>;
+        return <div ><Loader></Loader></div>;
     }
 
     return (
         <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm mt-10">
 
-            {/* Profile Header & Edit Controls */}
+
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-5 mb-6">
                 <div className="flex items-center gap-4">
                     <Avatar size="lg" className="w-16 h-16 ring-2 ring-red-100 dark:ring-slate-800">
@@ -141,7 +142,7 @@ export default function ProfileDonor({ userData }) {
                     <div>
                         <div className="flex items-center gap-2 flex-wrap">
                             <h1 className="text-xl font-bold text-slate-900 dark:text-white">{userData?.name}</h1>
-                            
+
                             <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-md">
                                 {userData?.role}
                             </span>
@@ -164,7 +165,7 @@ export default function ProfileDonor({ userData }) {
                     {!isEditable ? (
                         <Button
                             onPress={() => setIsEditable(true)}
-                            className="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold flex items-center gap-2 rounded-xl px-4 h-10 text-sm"
+                            className="bg-[#db0000] dark:bg-slate-100 text-white dark:text-slate-900 font-semibold flex items-center gap-2 rounded-xl px-4 h-10 text-sm"
                         >
                             <Edit2 className="w-4 h-4" />
                             Edit Profile
@@ -217,10 +218,10 @@ export default function ProfileDonor({ userData }) {
                         <Label className="text-xs font-bold dark:text-slate-300">District</Label>
                         <select
                             disabled={!isEditable}
-                            {...register("district", { 
+                            {...register("district", {
                                 required: "District is required",
                                 onChange: () => {
-                                    setValue("upazila", ""); 
+                                    setValue("upazila", "");
                                 }
                             })}
                             className="w-full h-[42px] border border-slate-200  rounded-lg p-2 bg-white"
@@ -300,7 +301,7 @@ export default function ProfileDonor({ userData }) {
                     </div>
                 </div>
 
-               
+
 
                 {/* Save Changes Button Area */}
                 {isEditable && (

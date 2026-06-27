@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button } from "@heroui/react";
 import Link from 'next/link';
 import { authClient } from '@/lib/auth-client';
+import Loader from '@/Components/Shared/Loading';
+import NoRequestsFound from './empty';
+
 
 const DonorDashboardPage = () => {
     const { data, isPending } = authClient.useSession()
@@ -30,11 +33,11 @@ const DonorDashboardPage = () => {
         setActiveMenuId(activeMenuId === id ? null : id);
     };
 
-   
+
     const handleStatusUpdate = async (id, newStatus) => {
         if (newStatus === 'done' || newStatus === 'canceled') {
             try {
-              
+
                 const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
                     method: 'PATCH',
                     headers: {
@@ -43,7 +46,7 @@ const DonorDashboardPage = () => {
                 });
 
                 if (res.ok) {
-                   
+
                     setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
                 } else {
                     console.error(`Failed to update status to ${newStatus} on the server.`);
@@ -52,7 +55,7 @@ const DonorDashboardPage = () => {
                 console.error(`Error updating status to ${newStatus}:`, error);
             }
         } else {
-       
+
             setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
         }
         setActiveMenuId(null);
@@ -85,12 +88,12 @@ const DonorDashboardPage = () => {
     };
 
     if (isPending) {
-        return <div>loading....</div>
+        return <div><Loader></Loader></div>
     }
 
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-
+            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"
@@ -98,19 +101,16 @@ const DonorDashboardPage = () => {
                 />
             )}
 
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700">
-                <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-                    Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
+            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700">
+                <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
+                    Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
                 </h1>
-                <p className="text-xs md:text-sm text-slate-500 mt-1">Track and manage your submitted requests.</p>
+                <p className="text-[1rem] md:text-sm text-slate-500 mt-1">View your three most recent blood donation requests and monitor their current status.</p>
             </header>
 
-            {donationRequests.length > 0 && (
+            {donationRequests.length === 0 ? <NoRequestsFound></NoRequestsFound> :
                 <section className="space-y-4 relative">
-                    <div className="flex justify-between items-center">
-                        <h2 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-200">Your Recent Donation Requests</h2>
-                        <span className="text-[11px] bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full text-slate-600">Recent 3</span>
-                    </div>
+                 
 
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
@@ -172,6 +172,7 @@ const DonorDashboardPage = () => {
                                 </Table.Content>
                             </Table.ScrollContainer>
                         </Table>
+
                     </div>
 
                     {/* MOBILE VIEW  */}
@@ -222,17 +223,17 @@ const DonorDashboardPage = () => {
                     <div className="flex justify-center pt-4">
                         <Link href={'/dashboard/donor/my-donation-requests'}>
                             <Button
-                                variant="secondary"
-                                className="w-full sm:w-auto font-medium transition-all"
+                                variant=""
+                                className="w-full bg-[#db0000] text-white font-semibold sm:w-auto font-medium transition-all"
                             >
-                                View My All Requests
+                                View All Requests
                             </Button>
                         </Link>
                     </div>
                 </section>
-            )}
+            }
 
-            {/* Modal Layout */}
+
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-4">
                     <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
@@ -249,7 +250,6 @@ const DonorDashboardPage = () => {
     );
 };
 
-// Action Menu Component
 const ActionMenu = ({ request, onStatusUpdate, onDelete, isMobile = false }) => {
     return (
         <div className={`absolute right-0 z-50 mt-2 w-44 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-lg focus:outline-hidden ${isMobile ? 'top-8' : ''}`}>

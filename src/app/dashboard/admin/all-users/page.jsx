@@ -15,7 +15,7 @@ const AllUserPage = async ({ searchParams }) => {
     const res = await fetch(`${baseurl}/api/pegination/users?page=${page}`)
     const users = await res.json()
 
-    console.log(users,'us');
+    
 
 
     return (

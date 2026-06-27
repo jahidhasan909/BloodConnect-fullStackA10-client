@@ -20,7 +20,7 @@ const CommunityImpactStats = () => {
                 const [usersRes, requestsRes, fundingRes] = await Promise.all([
                     fetch(`${backendUrl}/api/users`).then(res => res.json()).catch(() => []),
                     fetch(`${backendUrl}/api/donationrequest`).then(res => res.json()).catch(() => []),
-                    fetch(`${backendUrl}/api/pegination/funding?page=1&limit=1000000`).then(res => res.json()).catch(() => ({ data: [] }))
+                    fetch(`${backendUrl}/api/funding`).then(res => res.json()).catch(() => [])
                 ]);
 
 
@@ -30,8 +30,8 @@ const CommunityImpactStats = () => {
                 ).length;
 
 
-                const fundingRecords = fundingRes.data || [];
-                const computedGrandTotal = fundingRecords.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+                const fundingRecords = fundingRes;
+                const computedGrandTotal = fundingRecords.reduce((sum, item) => sum + parseFloat(item.amount), 0);
 
                 setStats({
                     totalDonors: activeDonorsCount,

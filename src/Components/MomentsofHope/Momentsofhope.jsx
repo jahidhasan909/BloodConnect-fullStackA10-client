@@ -23,9 +23,10 @@ const Momentsofhope = () => {
     return (
         <section className="py-20 px-4 bg-white">
             <motion.div
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                viewport={{ once: true }}
             >
 
                 <div className="max-w-7xl mx-auto">
