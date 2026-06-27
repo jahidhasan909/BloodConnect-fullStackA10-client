@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/Components/Shared/Navbar";
 import Footer from "@/Components/Shared/Footer";
 import SplashScreen from "@/Components/SplashScreen/SplashScreen";
+import LenisProvider from "@/Components/LanisProvider/LanisProvider";
 
 
 
@@ -26,8 +27,9 @@ export default function RootLayout({ children }) {
 
         <main className="grow">
           <SplashScreen>
-
+            <LenisProvider>
             {children}
+            </LenisProvider>
           </SplashScreen>
         </main>
         <Footer></Footer>

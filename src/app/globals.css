@@ -1,16 +1,35 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 
 
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
 
 @keyframes floating {
   0% {
     transform: translateY(15%) rotate(0deg);
   }
+
   50% {
     transform: translateY(5%) rotate(1.5deg);
   }
+
   100% {
     transform: translateY(15%) rotate(0deg);
   }
@@ -21,10 +40,10 @@
 }
 
 .react-type-animation::after {
-  color: #db0000; 
+  color: #db0000;
 }
 
 :root {
-  --swiper-navigation-color: #db0000; 
-  --swiper-theme-color: #db0000;     
+  --swiper-navigation-color: #db0000;
+  --swiper-theme-color: #db0000;
 }

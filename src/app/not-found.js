@@ -120,7 +120,7 @@ export default function NotFound() {
                     <motion.button
                         whileHover={{ scale: 1.06 }}
                         whileTap={{ scale: 0.95 }}
-                        className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#db0000] px-6 py-3 font-semibold text-white shadow-lg transition"
+                        className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#db0000] px-6 py-3 font-semibold text-white shadow-lg transition hover:cursor-pointer"
                     >
                         <Home size={20} />
                         Back to Home
