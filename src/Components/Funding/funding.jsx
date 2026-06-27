@@ -28,7 +28,7 @@ const Funding = ({ isOpen, onOpenChange }) => {
 
             const data = await response.json();
             if (data.url) {
-                window.location.href = data.url; 
+                window.location.href = data.url;
             } else {
                 alert("Something went wrong with Stripe session generation.");
             }
@@ -45,18 +45,16 @@ const Funding = ({ isOpen, onOpenChange }) => {
                 <Modal.Container>
                     <Modal.Dialog className="sm:max-w-[360px]">
                         <Modal.CloseTrigger />
-
-                        <Modal.Header>
-                            <Modal.Icon className="bg-red-50 text-red-600 dark:bg-red-950/40">
-                                <Rocket className="size-5" />
-                            </Modal.Icon>
-                            <Modal.Heading>Donate to Organization</Modal.Heading>
-                        </Modal.Header>
+                        <div className="text-center my-6">
+                            <h1 className="text-xl font-bold">Contribute Today</h1>
+                            <p className="text-sm text-gray-500 mt-1">Your contribution helps save lives.</p>
+                        </div>
 
                         <Modal.Body>
                             <Input
+                                className={'w-full'}
                                 type="number"
-                                placeholder="Amount (USD)"
+                                placeholder="$ Amount (USD)"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
                                 min="1"

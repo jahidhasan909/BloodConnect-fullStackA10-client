@@ -134,7 +134,7 @@ export default function ProfileAdmin({ userData }) {
     return (
         <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm mt-10">
 
-            {/* Profile Header & Edit Controls */}
+          
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-5 mb-6">
                 <div className="flex items-center gap-4">
                     <Avatar size="lg" className="w-16 h-16 ring-2 ring-red-100 dark:ring-slate-800">
@@ -305,7 +305,7 @@ export default function ProfileAdmin({ userData }) {
 
                
 
-                {/* Save Changes Button Area */}
+                
                 {isEditable && (
                     <div className="flex gap-2 mt-2 pt-4 border-t border-slate-100 dark:border-slate-800">
                         <Button

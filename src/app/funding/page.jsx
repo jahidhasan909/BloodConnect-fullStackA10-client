@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Pagination } from '@heroui/react';
 import Funding from '@/Components/Funding/funding';
+import { motion } from 'framer-motion'
+import { RiRefund2Line } from "react-icons/ri";
 
 const Fundingpage = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -55,23 +57,35 @@ const Fundingpage = () => {
                 <h1 className='text-4xl font-bold'>Community Funding History</h1>
                 <p className='text-[1rem] text-gray-500 mt-2'>View recent community donations and contribute to support our mission.</p>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-slate-50 to-red-50 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 gap-4 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-[#db0000]/20 to-red-50 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 gap-4 shadow-xs">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">Contribute Now</h1>
                 </div>
 
-                <Button
-                    onPress={() => setIsOpen(true)}
-                    className="bg-[#db0000] hover:bg-red-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-red-600/20 self-start sm:self-auto"
-                >
-                    Give Fund
-                </Button>
+
+
+                <div className="relative inline-block p-[2px] overflow-hidden rounded-xl group">
+                    <motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
+                    />
+
+
+                    <Button
+                        onPress={() => setIsOpen(true)}
+                        className="relative font-bold bg-[#db0000] hover:bg-[#db00008b] text-white text-base h-12 px-6 rounded-xl transition-all flex items-center justify-center  w-full "
+                    >
+                        <RiRefund2Line />
+                        Give Fund
+                    </Button>
+                </div>
             </div>
 
 
             {funds.length > 0 || loading ? (
                 <section className="space-y-4 relative">
-                    
+
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
@@ -98,14 +112,14 @@ const Fundingpage = () => {
                                     </Table.Body>
                                 </Table.Content>
                             </Table.ScrollContainer>
-                            
-                          
+
+
                             {totalPages > 1 && (
                                 <Table.Footer>
                                     <Pagination size="sm">
                                         <Pagination.Content>
                                             <Pagination.Item>
-                                                <button 
+                                                <button
                                                     disabled={currentPage === 1}
                                                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                                     className={`flex gap-1 items-center text-xs font-semibold px-2 py-1 rounded-md ${currentPage === 1 ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
@@ -124,7 +138,7 @@ const Fundingpage = () => {
                                                 </Pagination.Item>
                                             ))}
                                             <Pagination.Item>
-                                                <button 
+                                                <button
                                                     disabled={currentPage === totalPages}
                                                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                                     className={`flex gap-1 items-center text-xs font-semibold px-2 py-1 rounded-md ${currentPage === totalPages ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
@@ -164,7 +178,7 @@ const Fundingpage = () => {
                             ))
                         )}
 
-                        
+
                         {totalPages > 1 && (
                             <div className="flex justify-center p-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800">
                                 <Pagination
@@ -186,7 +200,7 @@ const Fundingpage = () => {
                 </div>
             )}
 
-        
+
             <Funding isOpen={isOpen} onOpenChange={setIsOpen} />
         </div>
     );

@@ -127,7 +127,7 @@ export default function AdminHomeAllCards() {
                                 >
 
 
-                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-10' : 'text-slate-900'
+                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-[0.14]' : 'text-slate-900'
                                         }`}>
                                         <IconComponent className="w-32 h-32" />
                                     </div>

@@ -16,7 +16,7 @@ const ProfileDonorpage = async () => {
     const res = await fetch(`${baseurl}/api/own/users?email=${user?.email}`)
 
     const userData = await res.json()
-    console.log(userData,'userdata');
+  
     
  
     

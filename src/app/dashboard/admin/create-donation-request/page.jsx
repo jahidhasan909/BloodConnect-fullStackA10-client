@@ -21,6 +21,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
+import Loader from "@/Components/Shared/Loading";
 
 
 export default function CreateDonationRequestAdmin() {
@@ -76,7 +77,7 @@ export default function CreateDonationRequestAdmin() {
     const { data: userData, isPending } = authClient.useSession()
 
     if (isPending) {
-        return <div>loading.....</div>
+        return <Loader></Loader>
     }
 
     const user = userData?.user

@@ -23,5 +23,5 @@ export default function LenisProvider({ children }) {
     };
   }, []);
 
-  return children;
+  return <div className="grow">{children}</div>;
 }

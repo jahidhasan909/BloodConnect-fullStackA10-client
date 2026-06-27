@@ -27,13 +27,13 @@ export default function SplashScreen({ children }) {
             transition={{ duration: 0.6 }}
           >
             
-            <div className="absolute w-[600px] h-[600px] rounded-full bg-red-500/10 blur-[120px]" />
+            <div className="absolute w-[600px] h-[600px] rounded-full bg-red-500/7 blur-[120px]" />
 
             
             {Array.from({ length: 20 }).map((_, i) => (
               <motion.span
                 key={i}
-                className="absolute rounded-full bg-red-400/20"
+                className="absolute rounded-full bg-red-400/15"
                 style={{
                   width: Math.random() * 14 + 6,
                   height: Math.random() * 14 + 6,
@@ -110,12 +110,12 @@ export default function SplashScreen({ children }) {
               />
 
               <motion.h1
-                className="mt-2 text-2xl font-black uppercase text-[#db0000]"
+                className="mt-2 text-2xl font-black uppercase "
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                BloodConnect
+                 <span className="text-[#db0000]">Blood</span>Connect
               </motion.h1>
 
               <motion.p
@@ -154,6 +154,7 @@ export default function SplashScreen({ children }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
+          className="grow"
         >
           {children}
         </motion.div>

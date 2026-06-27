@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getAllDonationRequest } from '@/lib/api/allDonationRequest';
 import { authClient } from '@/lib/auth-client';
 import Loader from '@/Components/Shared/Loading';
+import DashboardOverviewChart from './Chart';
 
 
 
@@ -52,7 +53,7 @@ export default function VolunteerAllCard() {
 
         fetchUsers();
     }, []);
- 
+
     const usersBaseRole = users.filter(user =>
         user?.role?.toLowerCase() === 'donor' &&
         user?.status?.toLowerCase() === 'active').length
@@ -92,9 +93,9 @@ export default function VolunteerAllCard() {
 
     return (
         <div className="w-full min-h-screen bg-white container mx-auto mt-10">
-            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13 px-10'>{user?.role}</h1>
 
-            <section className="bg-gradient-to-r from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-12 rounded-2xl mx-4 sm:mx-6 lg:mx-8 mt-6 shadow-sm">
+
+            <section className="bg-gradient-to-r max-w-7xl mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-12 rounded-2xl  mt-6 shadow-sm">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
@@ -102,7 +103,7 @@ export default function VolunteerAllCard() {
                         </h1>
                         <p className="text-[1rem] md:text-sm text-slate-500 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
                     </div>
-
+                    <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
                 </div>
             </section>
 
@@ -127,7 +128,7 @@ export default function VolunteerAllCard() {
                                 >
 
 
-                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-10' : 'text-slate-900'
+                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-[0.14]' : 'text-slate-900'
                                         }`}>
                                         <IconComponent className="w-32 h-32" />
                                     </div>
@@ -161,6 +162,11 @@ export default function VolunteerAllCard() {
                             );
                         })}
                     </div>
+                    <DashboardOverviewChart
+                        donors={usersBaseRole}
+                        requests={allBloodRequest}
+                        funding={totalFunding}
+                    />
 
                 </div>
             </section>

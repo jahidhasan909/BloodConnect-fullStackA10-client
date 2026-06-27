@@ -25,13 +25,13 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
 
-        <main className="grow">
-          <SplashScreen>
-            <LenisProvider>
-            {children}
-            </LenisProvider>
-          </SplashScreen>
-        </main>
+        <SplashScreen>
+          <LenisProvider>
+            <main className="grow">
+              {children}
+            </main>
+          </LenisProvider>
+        </SplashScreen>
         <Footer></Footer>
       </body>
     </html>

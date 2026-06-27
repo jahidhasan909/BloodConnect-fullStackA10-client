@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Button } from '@heroui/react';
 import NoRequestsFound from '@/app/searchdonor/empty';
+import { motion } from 'framer-motion'
 
 const SearchDonor = ({ donors = [] }) => {
 
@@ -71,7 +72,7 @@ const SearchDonor = ({ donors = [] }) => {
 
             <div className="mb-6 text-center">
                 <h2 className="text-xl md:text-4xl font-bold text-slate-800 dark:text-white gap-2">
-                    
+
                     Find a Blood Donor
                 </h2>
                 <p className="text-[1rem] md:text-[1rem] text-slate-400 mt-1">Select blood group and location details to search available active donors.</p>
@@ -134,14 +135,24 @@ const SearchDonor = ({ donors = [] }) => {
                             ))}
                         </select>
                     </div>
+                    <div className="relative inline-block p-[3px] overflow-hidden rounded-xl group">
+                        <motion.span
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
+                        />
 
 
-                    <Button
-                        type="submit"
-                        className="w-full h-[42px] bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-red-600/20"
-                    >
-                        Search Donors
-                    </Button>
+                        <Button
+                            type='submit'
+                            className="relative font-bold bg-[#db0000] hover:bg-[#db00008b] text-white  text-base h-10 px-2 rounded-xl transition-all flex items-center justify-center w-full"
+                        >
+
+                            Search Donors
+                        </Button>
+                    </div>
+
+
                 </form>
             </div>
 

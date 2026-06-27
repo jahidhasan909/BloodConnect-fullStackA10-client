@@ -83,7 +83,7 @@ const CommunityImpactStats = () => {
                             <Chip color="" className='bg-red-100 text-[#db0000] gap-2'><span className="h-2 w-2  rounded-full bg-red-600 animate-pulse"></span> Live Statistics</Chip>
                         </div>
                         <h3 className="text-4xl text-center font-black text-slate-900 tracking-tight">
-                            Community  <span className='text-[#db0000]'>Impact</span>
+                            <span className='text-[#db0000]'>Community </span>Impact
                         </h3>
                         <p className="text-[1rem] text-gray-500 mt-2 text-center">
                             Track the real-time impact of our community through active donors, blood requests, and <br /> life-saving contributions.
@@ -110,10 +110,10 @@ const CommunityImpactStats = () => {
                                     key={stat.id}
                                     className={`relative rounded-[2rem] p-8 transition-all duration-300 ease-out transform hover:-translate-y-1.5 overflow-hidden group ${stat.isHighlighted
                                         ? 'bg-[#E11D48] text-white shadow-lg shadow-rose-600/10 border border-[#E11D48]'
-                                        : 'bg-white text-slate-600 border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)]'
+                                        : 'bg-white text-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)]'
                                         }`}
                                 >
-                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-10' : 'text-slate-900'
+                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-[0.14]' : 'text-slate-900'
                                         }`}>
                                         <IconComponent className="w-32 h-32" />
                                     </div>
@@ -127,7 +127,7 @@ const CommunityImpactStats = () => {
                                             ? 'bg-rose-500/30 border-rose-400/20 text-white'
                                             : 'bg-slate-50 border-slate-100 text-slate-900'
                                             }`}>
-                                            <IconComponent className="w-5 h-5" />
+                                            <IconComponent  className="w-5 h-5" />
                                         </div>
                                     </div>
 
