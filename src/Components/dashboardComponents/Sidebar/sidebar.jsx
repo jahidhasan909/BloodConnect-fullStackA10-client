@@ -13,15 +13,16 @@ import {
     Activity
 } from "lucide-react";
 
-import { Button, Drawer } from "@heroui/react";
+import { Avatar, Button, Drawer } from "@heroui/react";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import Loader from "@/Components/Shared/Loading";
+import { ArrowRightToSquare } from "@gravity-ui/icons";
 
 
 export default function DashboardSidebar() {
-
+    const router = useRouter()
     const pathname = usePathname();
     const { data, isPending } = authClient.useSession()
 
@@ -36,6 +37,10 @@ export default function DashboardSidebar() {
 
 
 
+    const handleLogout = () => {
+        authClient.signOut()
+        router.push('/')
+    }
 
 
 
@@ -113,34 +118,45 @@ export default function DashboardSidebar() {
                 </Drawer>
             </div>
 
-            {/* laptop */}
-            <aside className="hidden lg:flex flex-col justify-between w-64 h-screen bg-white border-r border-slate-200/80 p-6 sticky top-0">
-                <div className="space-y-8">
+            <aside className="hidden lg:flex flex-col w-64 h-screen bg-white border-r border-slate-200/80 p-6 sticky top-0">
 
-                    <Link href="/" className="flex items-center gap- flex-shrink-0">
-                        <Image width={37} height={33} alt='logo' className='mt-2 h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
-                        <span className="text-xl font-extrabold text-slate-900 tracking-tight ">
-                            <span className='text-[#E11D48]'>Blood</span>Connect </span>
+                <div className="flex-shrink-0 mb-7 mt-1.5">
+                    <Link href="/" className="flex items-center gap-1">
+                        <Image width={45} height={45} alt='logo' className=' h-[45px]' src={'https://i.ibb.co.com/9H990mRT/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview-removebg-preview.png'} />
+                        <span className="text-xl mt-2.5 font-extrabold text-slate-900 tracking-tight ">
+                            <span className='text-[#E11D48]'>Blood</span>Connect
+                        </span>
                     </Link>
-
-
-
-
-
-                    <nav className="flex flex-col gap-1">
-                        {navItems.map((item) => (
-                            <Link key={item.label} href={item.link} className={`block rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold  leading-tight text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2"
-                                }`}>
-
-                                <item.icon className="w-4 h-4 " />
-                                {item.label}
-
-                            </Link>
-                        ))}
-                    </nav>
                 </div>
-            </aside>
 
+
+                <nav className="flex flex-col flex-grow gap-1">
+                    {navItems.map((item) => (
+                        <Link key={item.label} href={item.link} className={`block rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2 text-slate-600"}`}>
+                            <item.icon className="w-4 h-4 " />
+                            {item.label}
+                        </Link>
+                    ))}
+
+
+                    <div className="flex-grow"></div>
+
+
+                    <div className="mt-auto pt-4 border-t  border-slate-100 flex gap-2.5 w-full mx-auto mb-2">
+                        <Avatar>
+                            <Avatar.Image alt="John Doe" src={user?.image} />
+                            <Avatar.Fallback>JD</Avatar.Fallback>
+                        </Avatar>
+                        <div>
+                            <p className="font-bold text-slate-900">{user?.name}</p>
+                            <p className="text-xs text-slate-500">{user?.email}</p>
+                        </div>
+                    </div>
+                    <Button onClick={handleLogout} variant="" className={'bg-rose-100 rounded-xl text-[#db0000] font-semibold w-full'}>
+                        Log Out <ArrowRightToSquare></ArrowRightToSquare>
+                    </Button>
+                </nav>
+            </aside>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import NoRequestsFound from '@/app/dashboard/admin/my-donation-requests/empty';
 import { Button, Pagination, Table, Dropdown } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -90,25 +91,28 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     });
 
     return (
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20  relative">
+           
+            <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
-                        Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> ! 
+                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span> ! 
                     </h1>
                     <p className="text-xs md:text-sm text-slate-500 mt-1">View and manage all your blood donation requests.</p>
                 </div>
 
-                <div className="flex items-center gap-2 self-end sm:self-auto ">
-                   
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                    <label htmlFor="status-filter" className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                
+                    </label>
                     <select
                         id="status-filter"
                         value={statusFilter}
+                        
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[145px]"
+                        className="bg-white  border border-slate-200   rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[145px]"
                     >
-                        <option value="all">All ({requestData.length})</option>
+                        <option  value="all">All ({requestData.length})</option>
                         <option value="pending">Pending ({requestData.filter(r => r.donationStatus === 'pending').length})</option>
                         <option value="inprogress">In Progress ({requestData.filter(r => r.donationStatus === 'inprogress').length})</option>
                         <option value="done">Done ({requestData.filter(r => r.donationStatus === 'done').length})</option>
@@ -243,8 +247,8 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
 
                 </section>
             ) : (
-                <div className="text-center p-12 border border-dashed rounded-xl text-slate-400">
-                    No blood donation requests found matching this criteria.
+                <div className="">
+                   <NoRequestsFound></NoRequestsFound>
                 </div>
             )}
 

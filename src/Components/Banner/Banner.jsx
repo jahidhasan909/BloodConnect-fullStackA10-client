@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from 'react-type-animation';
 
 
+
 const HeroBanner = () => {
-    
-    
+
+
     return (
         <div className="relative w-full min-h-screen  overflow-hidden flex flex-col justify-between p-6 md:p-16 lg:p-20 font-sans">
 
+            
             <motion.div
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}

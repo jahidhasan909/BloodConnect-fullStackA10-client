@@ -49,7 +49,7 @@ export default function DonorLogin() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 font-sans">
 
-            <div className="relative flex w-full max-w-4xl overflow-hidden rounded-[2.5rem] bg-white shadow-xl max-md:flex-col">
+            <div className="relative flex w-full max-w-5xl overflow-hidden rounded-[2.5rem] bg-white shadow-sm max-md:flex-col">
 
 
 
@@ -58,14 +58,14 @@ export default function DonorLogin() {
 
 
 
-                    <div className="relative z-10 my-auto flex max-w-[320px] items-center justify-center">
+                    <div className="relative  z-10 ">
 
                         <Image
-                            height={200}
+                            height={300}
                             width={200}
-                            src="https://i.ibb.co.com/JwkhbzNx/Gemini-Generated-Image-8vrkm38vrkm38vrk-Photoroom.png"
+                            src="https://i.ibb.co.com/BVS6nPjG/1530-Photoroom-removebg-preview.png"
                             alt="Blood"
-                            className="w-full"
+                            className="w-full animate-floating"
                         />
                     </div>
                 </div>
@@ -83,7 +83,7 @@ export default function DonorLogin() {
 
 
                     <div
-                        className="absolute inset-0 z-0 bg-cover bg-center opacity-15 pointer-events-none mix-blend-multiply"
+                        className="absolute inset-0 z-0 bg-cover bg-center opacity-6 pointer-events-none mix-blend-multiply"
                         style={{
                             backgroundImage: "url('https://i.ibb.co.com/JjtCjy4m/Screenshot-2026-06-19-at-11-15-06-PM.png')"
                         }}
@@ -157,7 +157,7 @@ export default function DonorLogin() {
 
                         <Button
                             type="submit"
-                            className="mt-2 w-full bg-[#E32636] font-semibold text-white shadow-md shadow-red-200 hover:bg-[#c91e2c]"
+                            className="mt-2 w-full bg-[#db0000] font-semibold text-white shadow-md shadow-red-200 hover:bg-[#c91e2c]"
                             size="lg"
                             radius="md"
                         >
@@ -167,7 +167,7 @@ export default function DonorLogin() {
 
                         <div className="mt-4 text-center text-xs font-medium text-slate-500">
                             Don t have an account?{" "}
-                            <Link href="/registration" className="font-semibold text-[#E32636] hover:underline">
+                            <Link href="/registration" className="font-semibold text-[#db0000] hover:underline">
                                 Register to donate
                             </Link>
                         </div>

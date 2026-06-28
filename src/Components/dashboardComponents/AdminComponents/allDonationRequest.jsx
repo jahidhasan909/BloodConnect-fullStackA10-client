@@ -90,8 +90,8 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
     const user = data?.user
 
     return (
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
+        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative mt-10">
+            
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"
@@ -99,7 +99,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
                 />
             )}
 
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
                         All Blood Donation Requests <span className="text-red-600 font-extrabold"></span>

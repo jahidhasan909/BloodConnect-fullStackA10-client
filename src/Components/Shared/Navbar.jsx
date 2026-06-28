@@ -18,6 +18,15 @@ import { ArrowRightFromSquare } from '@gravity-ui/icons';
 
 import Loader from './Loading';
 
+
+
+
+
+
+
+
+
+
 const Navbar = () => {
 
 
@@ -31,18 +40,18 @@ const Navbar = () => {
 
     if (isPending) {
         return <div>
-           <Loader></Loader>
+            <Loader></Loader>
         </div>
     }
     const user = data?.user
 
 
-    if (pathname.includes('dashboard')) {
+    if (pathname.includes('dashboard') || pathname.includes('login')) {
         return null;
     }
 
-    console.log(user,'us');
-    
+    console.log(user, 'us');
+
 
 
     const linkClass = (path) =>
@@ -75,6 +84,8 @@ const Navbar = () => {
 
 
                     <div className="hidden md:flex items-center">
+                       
+
                         {!user ? (
                             <Link href={'/login'}>
                                 <Button
@@ -132,7 +143,7 @@ const Navbar = () => {
 
                     <div className="md:hidden flex items-center gap-4">
 
-                         {!user ? (
+                        {!user ? (
                             <Link href={'/login'}>
                                 <Button
                                     className="bg-[#db0000] text-white font-medium rounded-md px-6 shadow-sm hover:bg-[#db0000] transition-all flex items-center gap-2"
@@ -237,7 +248,7 @@ const Navbar = () => {
                         </Link>
                     )}
 
-                    
+
                 </div>
             )}
         </nav>

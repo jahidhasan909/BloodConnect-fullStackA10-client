@@ -2,6 +2,7 @@
 @import "@heroui/styles";
 
 
+
 html,
 body {
   width: 100%;
@@ -47,5 +48,6 @@ html.lenis body {
   --swiper-navigation-color: #db0000;
   --swiper-theme-color: #db0000;
 }
+
 
 

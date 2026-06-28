@@ -165,15 +165,11 @@ const AllUsersManagementPage = ({ Users }) => {
         return user.status === statusFilter;
     });
 
-    const { data, isPending } = authClient.useSession()
-    if (isPending) {
-        return <Loader></Loader>
-    }
-    const user = data?.user
+    
 
     return (
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
+        <div className="px-10 py-10 mt-10  lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
+           
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"

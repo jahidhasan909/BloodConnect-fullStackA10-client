@@ -7,6 +7,7 @@ import LenisProvider from "@/Components/LanisProvider/LanisProvider";
 
 
 
+
 const open_Sans = Open_Sans({
   subsets: ["latin"],
 });
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${open_Sans.className}  h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
@@ -28,7 +30,10 @@ export default function RootLayout({ children }) {
         <SplashScreen>
           <LenisProvider>
             <main className="grow">
-              {children}
+           
+                {children}
+            
+
             </main>
           </LenisProvider>
         </SplashScreen>

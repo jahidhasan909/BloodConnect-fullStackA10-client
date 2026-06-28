@@ -11,7 +11,7 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     const pathname = usePathname()
-    if (pathname.includes('dashboard')) {
+    if (pathname.includes('dashboard') || pathname.includes('login')) {
         return null;
     }
 

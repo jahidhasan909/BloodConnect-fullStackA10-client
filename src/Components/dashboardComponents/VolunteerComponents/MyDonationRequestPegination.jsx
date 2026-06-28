@@ -96,7 +96,7 @@ const MyDonationRequestPeginationVolunteer = ({ donationRequest, user }) => {
             <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
-                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
+                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span> !
                     </h1>
                     <p className="text-xs md:text-sm text-slate-500 mt-1">View and manage all your blood donation requests.</p>
                 </div>

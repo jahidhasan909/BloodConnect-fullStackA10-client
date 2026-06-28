@@ -92,8 +92,8 @@ const DonorDashboardPage = () => {
     }
 
     return (
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
+        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20 relative ">
+
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"
@@ -101,16 +101,26 @@ const DonorDashboardPage = () => {
                 />
             )}
 
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700">
-                <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
-                    Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
-                </h1>
-                <p className="text-[1rem] md:text-sm text-slate-500 mt-1">View your three most recent blood donation requests and monitor their current status.</p>
-            </header>
+            <section className="bg-gradient-to-r max-w-7xl mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-12 rounded-2xl  shadow-sm">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
+                            Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
+                        </h1>
+                        <p className="text-[1rem] md:text-sm text-slate-500 mt-1">View your three most recent blood donation requests and monitor their current status.</p>
+                    </div>
+                    <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
+                </div>
+            </section>
+
+
+
+
+
 
             {donationRequests.length === 0 ? <NoRequestsFound></NoRequestsFound> :
                 <section className="space-y-4 relative">
-                 
+
 
                     <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">

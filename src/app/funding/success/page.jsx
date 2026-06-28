@@ -83,7 +83,7 @@ export default async function Success({ searchParams }) {
     }
 
     return (
-      <section className="max-w-md mx-auto mt-40 p-6 bg-white dark:bg-slate-900 border rounded-2xl text-center shadow-xl">
+      <section className="max-w-md mx-auto mb-10 mt-40 p-6 bg-white dark:bg-slate-900 border rounded-2xl text-center shadow-xl">
         <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg
             className="w-8 h-8"
@@ -126,7 +126,7 @@ export default async function Success({ searchParams }) {
 
         <a
           href="/funding"
-          className="inline-block bg-slate-800 hover:bg-slate-900 text-white font-semibold px-6 py-2 rounded-xl text-sm transition-colors"
+          className="inline-block bg-[#db0000] hover:bg-slate-900 text-white font-semibold px-6 py-2 rounded-xl text-sm transition-colors"
         >
           Go Back to Funding Page
         </a>

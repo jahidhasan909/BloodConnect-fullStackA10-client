@@ -91,12 +91,12 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
     });
 
     return (
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-            <h1 className=' uppercase text-right text-[#db0000] font-bold mb-13'>{user?.role}</h1>
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-22  relative">
+           
+            <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
-                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span>! 👋
+                        Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span> ! 
                     </h1>
                     <p className="text-xs md:text-sm text-slate-500 mt-1">View and manage all your blood donation requests.</p>
                 </div>
@@ -108,10 +108,11 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
                     <select
                         id="status-filter"
                         value={statusFilter}
+                        
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[145px]"
+                        className="bg-white  border border-slate-200   rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[145px]"
                     >
-                        <option value="all">All ({requestData.length})</option>
+                        <option  value="all">All ({requestData.length})</option>
                         <option value="pending">Pending ({requestData.filter(r => r.donationStatus === 'pending').length})</option>
                         <option value="inprogress">In Progress ({requestData.filter(r => r.donationStatus === 'inprogress').length})</option>
                         <option value="done">Done ({requestData.filter(r => r.donationStatus === 'done').length})</option>
