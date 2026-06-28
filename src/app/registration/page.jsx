@@ -18,6 +18,7 @@ import { uploadImagebb } from "@/lib/action/uploadimgbb";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const GENDERS = ["Male", "Female", "Other"];
@@ -55,7 +56,7 @@ export default function RegistrationForm() {
                 setDistricts(districtData?.[2]?.data || []);
                 setUpazilas(upazilaData?.[2]?.data || []);
             } catch (error) {
-                console.error("Failed to load location data", error);
+                toast.error("Failed to load location data", error)
             }
         };
 
@@ -73,10 +74,10 @@ export default function RegistrationForm() {
 
 
     const onSubmit = async (data) => {
-     
-        
+
+
         if (data.password !== data.confirmPassword) {
-            alert("Passwords do not match!");
+            toast.error("Passwords do not match!")
             return;
         }
 
@@ -113,7 +114,7 @@ export default function RegistrationForm() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                
+
             },
             body: JSON.stringify({
                 userId: resdata?.user?.id,
@@ -131,11 +132,13 @@ export default function RegistrationForm() {
 
 
         if (resdata) {
+            toast.success('Verification complete. Welcome to Bloodconnect')
             redirect('/')
         }
+        if (error) {
+            toast.error(error)
+        }
 
-        console.log("Form Submitted:", resdata);
-        console.log(error, 'error');
 
     };
 

@@ -5,9 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import {
     Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem,
     Avatar,
     Button,
     Label
@@ -18,6 +15,7 @@ import { ArrowRightFromSquare } from '@gravity-ui/icons';
 
 import Loader from './Loading';
 import ThemeSwitch from '@/Components/themeprovider/ThemeSwitch';
+import { motion } from 'framer-motion'
 
 
 
@@ -86,14 +84,24 @@ const Navbar = () => {
 
                     <div className="hidden md:flex items-center gap-4">
                         <ThemeSwitch />
-                       
+
 
                         {!user ? (
-                            <Link href={'/login'}>
-                                <Button
-                                    className="bg-[#db0000] text-white  rounded-md px-6 shadow-sm hover:bg-[#db0000] font-bold transition-all flex items-center gap-2"
-                                >
+                            <Link
+                                href={'/login'}
+                                className="group relative inline-flex overflow-hidden rounded-md p-[2px]"
+                            >
 
+                                <motion.span
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                    className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
+                                />
+
+
+                                <Button
+                                    className="relative z-10 flex w-full items-center gap-2 rounded-md bg-[#db0000] px-6 font-bold text-white shadow-sm transition-all hover:bg-[#b00000]"
+                                >
                                     Login
                                 </Button>
                             </Link>
@@ -147,11 +155,21 @@ const Navbar = () => {
                         <ThemeSwitch />
 
                         {!user ? (
-                            <Link href={'/login'}>
-                                <Button
-                                    className="bg-[#db0000] text-white font-medium rounded-md px-6 shadow-sm hover:bg-[#db0000] transition-all flex items-center gap-2"
-                                >
+                            <Link
+                                href={'/login'}
+                                className="group relative inline-flex overflow-hidden rounded-md p-[2px]"
+                            >
+                             
+                                <motion.span
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                    className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
+                                />
 
+                   
+                                <Button
+                                    className="relative z-10 flex w-full items-center gap-2 rounded-md bg-[#db0000] px-6 font-bold text-white shadow-sm transition-all hover:bg-[#b00000]"
+                                >
                                     Login
                                 </Button>
                             </Link>

@@ -5,6 +5,7 @@ import Footer from "@/Components/Shared/Footer";
 import SplashScreen from "@/Components/SplashScreen/SplashScreen";
 import LenisProvider from "@/Components/LanisProvider/LanisProvider";
 import Providers from "@/Components/themeprovider/Providers";
+import { Toaster } from "react-hot-toast";
 
 const open_Sans = Open_Sans({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
             </LenisProvider>
           </SplashScreen>
           <Footer></Footer>
+          <Toaster />
         </Providers>
       </body>
     </html>

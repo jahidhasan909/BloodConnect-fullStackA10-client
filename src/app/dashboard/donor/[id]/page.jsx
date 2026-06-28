@@ -140,7 +140,7 @@ const DonationDetailspage = async ({ params }) => {
                     </p>
 
                     <p className="italic text-gray-700 mt-2">
-                        "{donationRequest.requestMessage}"
+                        {donationRequest.requestMessage}
                     </p>
 
                 </div>

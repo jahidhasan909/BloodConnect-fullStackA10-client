@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe";
+import toast from "react-hot-toast";
 
 export default async function Success({ searchParams }) {
   const params = await searchParams;
@@ -30,7 +31,7 @@ export default async function Success({ searchParams }) {
   try {
     session = await stripe.checkout.sessions.retrieve(sessionId);
   } catch (error) {
-    console.error("Stripe session error:", error);
+    toast.error("session error:", error)
 
     return (
       <section className="max-w-md mx-auto mt-40 p-6 bg-white dark:bg-slate-900 border rounded-2xl text-center shadow-xl">
@@ -79,7 +80,7 @@ export default async function Success({ searchParams }) {
         }),
       });
     } catch (error) {
-      console.error("Funding save failed:", error);
+      toast.error("Funding save failed:", error)
     }
 
     return (

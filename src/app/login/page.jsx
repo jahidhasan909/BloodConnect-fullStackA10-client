@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 export default function DonorLogin() {
@@ -37,12 +38,16 @@ export default function DonorLogin() {
             ...userData,
         })
 
+
         if (resdata) {
+            toast.success('Welcome back, Mr/MST ! Great to see you again.')
             router.push('/')
         }
 
-        console.log(error);
-        console.log(resdata);
+        if (error) {
+            toast.error(error)
+        }
+
 
     };
 

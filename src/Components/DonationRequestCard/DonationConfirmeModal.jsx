@@ -7,6 +7,7 @@ import Loader from "../Shared/Loading";
 import { motion } from 'framer-motion'
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export function DonationConfirmeModal({ donationRequest }) {
 
@@ -37,11 +38,14 @@ export function DonationConfirmeModal({ donationRequest }) {
 
             const updatedData = await res.json();
 
-            console.log(updatedData);
+            if (updatedData) {
+                toast.success('Thank you! Your blood donation has been confirmed successfully.')
+            }
+           
 
 
         } catch (err) {
-            console.error(err);
+            toast.error(err)
             setIsSubmitting(false);
         }
     };
