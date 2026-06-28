@@ -9,7 +9,7 @@ const NoRequestsFound = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="py-20 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center gap-4"
+            className="py-20 text-center bg-white dark:bg-white/20 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center gap-4"
         >
 
             <div className="relative flex items-center justify-center w-24 h-24 mb-2">
@@ -34,7 +34,7 @@ const NoRequestsFound = () => {
                 <h3 className="text-lg  text-gray-600 dark:text-slate-100">
                     Ready to Find a Donor?
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-slate-400">
+                <p className="text-sm text-gray-500 dark:text-gray-300">
                     Choose the required blood group and location above, then click
                     <span className="font-medium text-red-600"> Search Donors </span>
                     to see matching donors.

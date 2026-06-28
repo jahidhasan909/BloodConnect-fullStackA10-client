@@ -5,6 +5,7 @@ import { authClient } from '@/lib/auth-client';
 import { Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
 
@@ -61,17 +62,18 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
                 const data = await response.json();
 
                 if (response.ok) {
-
+                   toast.success('Status Update suceesfully !')
                     setRequestData(prev =>
                         prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req)
                     );
                 } else {
-                    console.error("Backend Error:", data);
-                    alert(`Failed to update status: ${data.error || 'Unknown error'}`);
+                    toast.error(`Failed to update status: ${data.error || 'Unknown error'}`)
+            
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                alert("Something went wrong with the network. Please try again.");
+                toast.error("Something went wrong with the network. Please try again.")
+                // console.error("Network Error:", error);
+           
             }
         }
 
@@ -90,7 +92,9 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
     const user = data?.user
 
     return (
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative mt-10">
+        <div className='bg-white/10'>
+
+        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative ">
             
             {activeMenuId !== null && (
                 <div
@@ -99,12 +103,12 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
                 />
             )}
 
-            <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100  flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
                         All Blood Donation Requests <span className="text-red-600 font-extrabold"></span>
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-500 mt-1">Review requests and update the donation operations status.</p>
+                    <p className="text-xs md:text-sm text-slate-500 mt-1 dark:text-gray-300">Review requests and update the donation operations status.</p>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -115,7 +119,7 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
                         id="status-filter"
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs focus:outline-hidden cursor-pointer min-w-[140px]"
+                        className="bg-white  border border-slate-200  rounded-xl px-3 py-2 text-xs font-semibold text-slate-700  shadow-xs focus:outline-hidden cursor-pointer min-w-[140px]"
                     >
                         <option value="all">All ({requestData.length})</option>
                         <option value="pending">Pending ({requestData.filter(r => r.donationStatus === 'pending').length})</option>
@@ -276,6 +280,7 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
                     No blood donation requests found matching this criteria.
                 </div>
             )}
+        </div>
         </div>
     );
 };

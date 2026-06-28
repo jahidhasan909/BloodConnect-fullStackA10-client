@@ -49,24 +49,24 @@ const Navbar = () => {
         return null;
     }
 
-    console.log(user, 'us');
+   
 
 
 
     const linkClass = (path) =>
         pathname === path
             ? "text-[#db0000] font-bold transition-colors"
-            : "text-slate-700 hover:text-[#db0000] font-medium transition-colors";
+            : "text-slate-700 hover:text-[#db0000] dark:text-white/85 font-medium transition-colors";
 
     return (
         <nav className="absolute    fixed top-0 z-50   w-full">
-            <div className=" px-4 container border border-gray-100 my-4 bg-white/40 shadow-md rounded-2xl backdrop-blur-md mx-auto sm:px-6 lg:px-8">
+            <div className=" px-4 container border border-gray-100 my-4 bg-white/40 dark:bg-white/15 dark:border-gray-50/40 shadow-md rounded-2xl backdrop-blur-md mx-auto sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center">
 
 
                     <Link href="/" className="flex items-center  flex-shrink-0 ">
                         <Image width={34} height={33} alt='logo' className='w-full object-cover mt-2 h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
-                        <span className="text-xl font-bold text-slate-900 tracking-tight ">
+                        <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight ">
                             <span className='text-[#db0000]'>Blood</span>Connect </span>
                     </Link>
 
@@ -219,7 +219,7 @@ const Navbar = () => {
 
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-slate-700 hover:text-[#db0000] focus:outline-none p-2 rounded-md hover:bg-slate-50 transition-colors"
+                            className="text-slate-700 dark:text-white hover:text-[#db0000] focus:outline-none p-2 rounded-md hover:bg-slate-50 transition-colors"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                 {isMenuOpen ? (
@@ -236,25 +236,25 @@ const Navbar = () => {
 
 
             {isMenuOpen && (
-                <div className="md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-4 space-y-2 shadow-inner animate-in fade-in slide-in-from-top-5 duration-200">
+                <div className="md:hidden bg-white dark:bg-white/4 border-b border-slate-100 px-4 pt-2 pb-4 space-y-2 shadow-inner animate-in fade-in slide-in-from-top-5 duration-200">
                     <Link
                         href="/"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/' ? 'bg-rose-50 dark:bg-white/20 text-[#db0000] font-semibold' : 'text-slate-700 dark:text-white/80 hover:bg-slate-50'}`}
                     >
                         Home
                     </Link>
                     <Link
                         href="/donationrequest"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/donationrequest' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/donationrequest' ? 'bg-rose-50 text-[#db0000] dark:bg-white/20 font-semibold' : 'text-slate-700 dark:text-white/80 hover:bg-slate-50'}`}
                     >
                         Donation Requests
                     </Link>
                     <Link
                         href="/searchdonor"
                         onClick={() => setIsMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/searchdonor' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                        className={`block px-3 py-2.5 rounded-xl ${pathname === '/searchdonor' ? 'bg-rose-50 text-[#db0000] dark:bg-white/20 font-semibold' : 'text-slate-700 dark:text-white/80 hover:bg-slate-50'}`}
                     >
                         Search Donor
                     </Link>
@@ -263,7 +263,7 @@ const Navbar = () => {
                         <Link
                             href="/funding"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`block px-3 py-2.5 rounded-xl ${pathname === '/funding' ? 'bg-rose-50 text-[#db0000] font-semibold' : 'text-slate-700 hover:bg-slate-50'}`}
+                            className={`block px-3 py-2.5 rounded-xl ${pathname === '/funding' ? 'bg-rose-50  dark:bg-white/20 text-[#db0000] font-semibold' : 'text-slate-700 dark:text-white/80 hover:bg-slate-50'}`}
                         >
                             Funding
                         </Link>

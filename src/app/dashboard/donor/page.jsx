@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { authClient } from '@/lib/auth-client';
 import Loader from '@/Components/Shared/Loading';
 import NoRequestsFound from './empty';
+import toast from 'react-hot-toast';
 
 
 const DonorDashboardPage = () => {
@@ -46,13 +47,14 @@ const DonorDashboardPage = () => {
                 });
 
                 if (res.ok) {
-
+                    toast.success('Status updated Successfully ! ')
                     setMyRequest(prev => prev.map(req => req._id === id ? { ...req, donationStatus: newStatus } : req));
                 } else {
-                    console.error(`Failed to update status to ${newStatus} on the server.`);
+                    toast.error(`Failed to update status to ${newStatus} on the server.`)
                 }
             } catch (error) {
-                console.error(`Error updating status to ${newStatus}:`, error);
+                toast.error(`Error updating status to ${newStatus}:`, error)
+
             }
         } else {
 
@@ -77,10 +79,12 @@ const DonorDashboardPage = () => {
 
             const deleletData = await res.json()
             if (res.ok && deleletData) {
+                toast.error('Delete Donation Request Successfully ! ')
                 setMyRequest(prev => prev.filter(req => req._id !== selectedRequestToDelete));
             }
         } catch (error) {
-            console.error("Error deleting request:", error);
+            toast.error("Error deleting request:", error)
+
         } finally {
             setIsModalOpen(false);
             setSelectedRequestToDelete(null);
@@ -92,6 +96,8 @@ const DonorDashboardPage = () => {
     }
 
     return (
+        <div className='dark:bg-white/10'>
+
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20 relative ">
 
             {activeMenuId !== null && (
@@ -256,6 +262,7 @@ const DonorDashboardPage = () => {
                     </div>
                 </div>
             )}
+        </div>
         </div>
     );
 };

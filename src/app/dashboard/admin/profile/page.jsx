@@ -25,7 +25,7 @@ const AdminProfilepage = async () => {
 
 
     return (
-        <div className='mt-10'>
+        <div className='pt-10 min-h-screen bg-white/10'>
             <section className="bg-gradient-to-r max-w-7xl  mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-10 rounded-2xl   mt-6 shadow-sm">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>

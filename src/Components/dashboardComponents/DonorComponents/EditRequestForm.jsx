@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Loader from '@/Components/Shared/Loading';
 import { ArrowLeft } from '@gravity-ui/icons';
 import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const EditRequestForm = ({ id }) => {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -94,7 +95,7 @@ const EditRequestForm = ({ id }) => {
 
                 setLoading(false);
             } catch (error) {
-                console.error("Failed to load initial data:", error);
+                toast.error("Failed to load initial data:", error)
                 setLoading(false);
             }
         };
@@ -137,13 +138,16 @@ const EditRequestForm = ({ id }) => {
             });
 
             if (res.ok) {
+                toast.success('Donation request updated successfully!')
                 router.push(`/dashboard/${user.role}/my-donation-requests`)
                 router.refresh();
             } else {
-                console.error("Failed to update donation request.");
+                toast.error('"Failed to update donation request."')
+                
             }
         } catch (error) {
-            console.error("Error updating request:", error);
+            toast.error("Error updating request:", error)
+            
         } finally {
             setSubmitting(false);
         }
@@ -170,7 +174,7 @@ const EditRequestForm = ({ id }) => {
                         <Label className="text-xs font-bold dark:text-slate-300">Recipient Name</Label>
                         <Input
                             {...register("recipientName", { required: "Recipient name is required" })}
-                            placeholder="Enter recipient name"
+                            placeholder="Enter recipient name" className={'dark:bg-white/17'}
                         />
                         <FieldError>{errors.recipientName?.message}</FieldError>
                     </TextField>
@@ -180,7 +184,7 @@ const EditRequestForm = ({ id }) => {
                         <Label className="text-xs font-bold dark:text-slate-300">Blood Group</Label>
                         <select
                             {...register("bloodGroup", { required: "Blood group is required" })}
-                            className="w-full h-[42px] border dark:border-slate-100 rounded-xl p-2 bg-white dark:bg-slate-800 text-sm focus:outline-hidden"
+                            className="w-full h-[42px] border dark:border-none rounded-xl p-2 bg-white text-sm focus:outline-hidden dark:bg-white/17"
                         >
                             <option value="">Select Blood Group</option>
                             {bloodGroups.map((group) => (
@@ -207,7 +211,7 @@ const EditRequestForm = ({ id }) => {
                                     value={field.value || null}
                                     onChange={field.onChange}
                                 >
-                                    <DateField.Group className="border rounded-xl border-gray-100">
+                                    <DateField.Group className="border rounded-xl dark:bg-white/17 border-gray-100 dark:border-none">
                                         <DateField.Input>
                                             {(segment) => <DateField.Segment segment={segment} />}
                                         </DateField.Input>
@@ -240,7 +244,7 @@ const EditRequestForm = ({ id }) => {
                                 {...register("donationTime", {
                                     required: "Donation time is required",
                                 })}
-                                className="w-full h-[42px] px-3 rounded-xl bg-white dark:bg-slate-800 border dark:border-slate-100 text-sm focus:outline-hidden"
+                                className="w-full h-[42px] px-3 rounded-xl bg-white dark:bg-white/17 border dark:border-none text-sm focus:outline-hidden"
                             />
                         </TextField>
                         {errors.donationTime && <span className="text-xs text-red-500">{errors.donationTime.message}</span>}
@@ -260,7 +264,7 @@ const EditRequestForm = ({ id }) => {
                                     setValue("upazila", "");
                                 }
                             })}
-                            className="w-full h-[42px] border dark:border-slate-100 rounded-xl p-2 bg-white dark:bg-slate-800 text-sm focus:outline-hidden"
+                            className="w-full h-[42px] border dark:border-none dark:bg-white/17 rounded-xl p-2 bg-white text-sm focus:outline-hidden"
                         >
                             <option value="">Select district</option>
                             {districts.map((district) => (
@@ -277,7 +281,7 @@ const EditRequestForm = ({ id }) => {
                         <Label className="text-xs font-bold dark:text-slate-300">Upazila</Label>
                         <select
                             {...register("upazila", { required: "Upazila is required" })}
-                            className="w-full h-[42px] border dark:border-slate-100 rounded-xl p-2 bg-white dark:bg-slate-800 text-sm focus:outline-hidden"
+                            className="w-full h-[42px] border dark:border-none rounded-xl p-2 bg-white dark:bg-white/17 text-sm focus:outline-hidden"
                         >
                             <option value="">Select upazila</option>
                             {filteredUpazilas.map((upazila) => (
@@ -297,6 +301,7 @@ const EditRequestForm = ({ id }) => {
                         <Input
                             {...register("hospitalName", { required: "Hospital name is required" })}
                             placeholder="Enter hospital name"
+                            className={'dark:bg-white/17'}
                         />
                         <FieldError>{errors.hospitalName?.message}</FieldError>
                     </TextField>
@@ -307,6 +312,7 @@ const EditRequestForm = ({ id }) => {
                         <Input
                             {...register("fullAddressLine", { required: "Full address is required" })}
                             placeholder="Specific location details"
+                            className={'dark:bg-white/17'}
                         />
                         <FieldError>{errors.fullAddressLine?.message}</FieldError>
                     </TextField>
@@ -318,6 +324,7 @@ const EditRequestForm = ({ id }) => {
                     <Input
                         {...register("requestMessage", { required: "Message is required" })}
                         placeholder="Explain why blood is needed..."
+                        className={'dark:bg-white/17'}
                     />
                     <FieldError>{errors.requestMessage?.message}</FieldError>
                 </TextField>
@@ -332,7 +339,7 @@ const EditRequestForm = ({ id }) => {
                         Update Donation Request
                     </Button>
                     <Button
-                        className={'text-black'}
+                        className={'text-black dark:text-white'}
                         type="button"
                         variant="secondary"
                         onClick={() => router.push(`/dashboard/${user.role}/my-donation-requests`)}

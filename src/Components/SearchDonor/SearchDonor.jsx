@@ -68,30 +68,32 @@ const SearchDonor = ({ donors = [] }) => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8 min-h-screen mt-30">
+        <div className='dark:bg-white/10'>
+
+        <div className="max-w-6xl mx-auto p-4 md:py-40 space-y-8 min-h-screen ">
 
             <div className="mb-6 text-center">
                 <h2 className="text-xl md:text-4xl font-bold text-slate-800 dark:text-white gap-2">
 
                     Find a Blood Donor
                 </h2>
-                <p className="text-[1rem] md:text-[1rem] text-slate-400 mt-1">Select blood group and location details to search available active donors.</p>
+                <p className="text-[1rem] md:text-[1rem] text-slate-400 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
             </div>
 
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md p-6 md:p-8">
+            <div className="bg-white dark:bg-white/20 rounded-2xl border border-slate-200  shadow-sm p-6 md:p-8">
 
 
                 <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
 
 
                     <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Blood Group</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-gray-300 uppercase tracking-wider">Blood Group</label>
                         <select
                             required
                             value={bloodGroup}
                             onChange={(e) => setBloodGroup(e.target.value)}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-red-500 focus:outline-hidden cursor-pointer"
+                            className="w-full bg-slate-50 dark:bg-white/16 border border-slate-200  rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-red-500 focus:outline-hidden cursor-pointer"
                         >
                             <option value="">Select Blood Group</option>
                             {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((group) => (
@@ -102,7 +104,7 @@ const SearchDonor = ({ donors = [] }) => {
 
 
                     <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">District</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-gray-300 uppercase tracking-wider">District</label>
                         <select
                             required
                             value={selectedDistrict}
@@ -110,7 +112,7 @@ const SearchDonor = ({ donors = [] }) => {
                                 setSelectedDistrict(e.target.value);
                                 setSelectedUpazila('');
                             }}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-red-500 focus:outline-hidden cursor-pointer"
+                            className="w-full bg-slate-50  border border-slate-200 dark:bg-white/16 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-red-500 focus:outline-hidden cursor-pointer"
                         >
                             <option value="">Select District</option>
                             {districts.map((district) => (
@@ -121,13 +123,13 @@ const SearchDonor = ({ donors = [] }) => {
 
 
                     <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Upazila</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-gray-300 uppercase tracking-wider">Upazila</label>
                         <select
                             required
                             value={selectedUpazila}
                             onChange={(e) => setSelectedUpazila(e.target.value)}
                             disabled={!selectedDistrict}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-red-500 focus:outline-hidden cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-slate-50 dark:bg-white/16 border border-slate-200  rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-red-500 focus:outline-hidden cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <option value="">Select Upazila</option>
                             {availableUpazilas.map((upazila) => (
@@ -158,8 +160,8 @@ const SearchDonor = ({ donors = [] }) => {
 
             {hasSearched ? (
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                    <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/17 pb-2">
+                        <h3 className="text-lg font-bold text-slate-800 dark:text-white ">
                             Search Results ({searchedDonors.length})
                         </h3>
                     </div>
@@ -169,7 +171,7 @@ const SearchDonor = ({ donors = [] }) => {
                             {searchedDonors.map((donor) => (
                                 <div
                                     key={donor._id}
-                                    className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
+                                    className="bg-white dark:bg-white/20 rounded-2xl border border-slate-200  p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
                                 >
 
                                     <div className="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-sm tracking-wide shadow-xs">
@@ -206,7 +208,7 @@ const SearchDonor = ({ donors = [] }) => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center p-16 border border-dashed rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 text-slate-400">
+                        <div className="text-center p-16 border border-dashed rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-white/12 text-slate-400 dark:text-gray-300">
                             <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -220,6 +222,7 @@ const SearchDonor = ({ donors = [] }) => {
                     <NoRequestsFound></NoRequestsFound>
                 </div>
             )}
+        </div>
         </div>
     );
 };

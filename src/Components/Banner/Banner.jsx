@@ -75,7 +75,7 @@ const HeroBanner = () => {
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
 
-                <div className="w-full ml-10 mt-4 md:mt-10 text-black z-10 relative">
+                <div className="w-full ml-10 mt-4 md:mt-10 text-black dark:text-white z-10 relative">
                     <h1 className="text-4xl sm:text-4xl md:text-8xl font-medium tracking-tight leading-[1.05]">
                         One drop can <br />
                         <span className="text-[#db0000]">save</span> a life.
@@ -92,7 +92,7 @@ const HeroBanner = () => {
 
                 <div className="w-full flex items-center justify-center py-2 md:py-4 -mt-8 mx-auto z-10 relative">
                     <div className="relative w-full text-center pointer-events-none z-0 flex items-center justify-center">
-                        <span className="text-[11vw] font-black tracking-tighter text-rose-900/[0.06] uppercase block leading-none translate-y-[15%] select-none animate-floating">
+                        <span className="text-[11vw] font-black tracking-tighter  text-rose-900/[0.06] uppercase dark:text-rose-300/[0.10] block leading-none translate-y-[15%] select-none animate-floating">
                             BloodConnect
                         </span>
                     </div>
@@ -111,7 +111,7 @@ const HeroBanner = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <span className='text-black font-semibold'><span className='text-[#db0000]'>Bloodconnect</span> connects donors with people</span>
+                        <span className='text-black dark:text-white font-semibold'><span className='text-[#db0000]'>Bloodconnect</span> connects donors with people</span>
                     </motion.div>
 
                     <motion.div
@@ -121,7 +121,7 @@ const HeroBanner = () => {
                     >
 
                         <TypeAnimation
-                            className="react-type-animation text-base sm:text-md text-black  leading-relaxed max-w-sm block font-semibold"
+                            className="react-type-animation text-base sm:text-md text-black  leading-relaxed dark:text-white max-w-sm block font-semibold"
                             sequence={[
                                 'in urgent need of blood.',
                                 1500,
@@ -148,7 +148,7 @@ const HeroBanner = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
 
-                        <h2 className="text-4xl sm:text-4xl text-black md:text-8xl font-medium tracking-tight leading-[1.05]">
+                        <h2 className="text-4xl sm:text-4xl text-black dark:text-white md:text-8xl font-medium tracking-tight leading-[1.05]">
                             Every drop<br /> Every life <span className='text-[#db0000]'>.</span>
                         </h2>
                     </motion.div>
@@ -185,7 +185,7 @@ const HeroBanner = () => {
 
 
                                     variant="bordered"
-                                    className="border-2 border-black hover:bg-[#f4f4f4] hover:text-[#1c1c1c] text-black font-semibold text-base h-14 px-8 rounded-md transition-all flex items-center justify-center gap-2 w-full sm:w-auto group"
+                                    className="border-2 border-black hover:bg-[#f4f4f4] hover:text-[#1c1c1c] text-black dark:border-white dark:text-white font-semibold text-base h-14 px-8 rounded-md transition-all flex items-center justify-center gap-2 w-full sm:w-auto group"
                                 >
                                     <svg className="w-5 h-5  stroke-current fill-none transition-transform group-hover:rotate-12" strokeWidth="2" viewBox="0 0 24 24">
                                         <circle cx="11" cy="11" r="8"></circle>

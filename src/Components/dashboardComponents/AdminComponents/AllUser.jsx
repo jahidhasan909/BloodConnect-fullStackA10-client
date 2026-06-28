@@ -5,6 +5,7 @@ import { authClient } from '@/lib/auth-client';
 import { Avatar, Button, Pagination, Table } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const AllUsersManagementPage = ({ Users }) => {
 
@@ -53,16 +54,19 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
+                    toast.success('Block user successfully !')
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, status: 'blocked' } : user)
                     );
                 } else {
-                    console.error("Backend Error:", data);
-                    alert(`Failed to block user: ${data.error || 'Unknown error'}`);
+                    toast.error(`Failed to block user: ${data.error || 'Unknown error'}`)
+
+
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                alert("Something went wrong with the network. Please try again.");
+                toast.error("Something went wrong with the network. Please try again.")
+
+
             }
         }
 
@@ -81,16 +85,17 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
+                    toast.success('Unblock user Successfully !')
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, status: 'active' } : user)
                     );
                 } else {
-                    console.error("Backend Error:", data);
-                    alert(`Failed to unblock user: ${data.error || 'Unknown error'}`);
+                    toast.error(`Failed to unblock user: ${data.error || 'Unknown error'}`)
+
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                alert("Something went wrong with the network. Please try again.");
+                toast.error("Something went wrong with the network. Please try again.")
+
             }
         }
 
@@ -118,16 +123,17 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
+                    toast.success('User role update successfully !')
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
                     );
                 } else {
-                    console.error("Backend Error:", data);
-                    alert(`Failed to update role: ${data.error || 'Unknown error'}`);
+                    toast.error(`Failed to update role: ${data.error || 'Unknown error'}`)
+
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                alert("Something went wrong with the network. Please try again.");
+                toast.error("Something went wrong with the network. Please try again.");
+
             }
         }
 
@@ -144,16 +150,17 @@ const AllUsersManagementPage = ({ Users }) => {
                 const data = await response.json();
 
                 if (response.ok) {
+                    toast.success('User role update successfully !')
                     setUsersList(prev =>
                         prev.map(user => user._id === userId ? { ...user, role: newRole } : user)
                     );
                 } else {
-                    console.error("Backend Error:", data);
-                    alert(`Failed to make admin: ${data.error || 'Unknown error'}`);
+                    toast.error(`Failed to make admin: ${data.error || 'Unknown error'}`)
+
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                alert("Something went wrong with the network. Please try again.");
+                toast.error("Something went wrong with the network. Please try again.")
+
             }
         }
 
@@ -165,11 +172,13 @@ const AllUsersManagementPage = ({ Users }) => {
         return user.status === statusFilter;
     });
 
-    
+
 
     return (
-        <div className="px-10 py-10 mt-10  lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
-           
+        <div className='dark:bg-white/10'>
+
+        <div className="px-10 py-10    lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
+
             {activeMenuId !== null && (
                 <div
                     className="fixed inset-0 z-20 bg-transparent cursor-default"
@@ -364,6 +373,7 @@ const AllUsersManagementPage = ({ Users }) => {
                     No users found matching this criteria.
                 </div>
             )}
+        </div>
         </div>
     );
 };

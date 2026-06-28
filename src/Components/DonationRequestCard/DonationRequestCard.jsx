@@ -8,7 +8,7 @@ const DonationRequestCard = ({ request }) => {
     return (
         <Card
             variant="transparent"
-            className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-3xl p-5  flex flex-col justify-between hover:shadow-md transition-all duration-200 relative overflow-hidden shadow-lg"
+            className="bg-white dark:bg-white/14 border border-slate-100 dark:border-slate-800/80 rounded-3xl p-5  flex flex-col justify-between hover:shadow-md transition-all duration-200 relative overflow-hidden shadow-lg"
         >
             <div className="space-y-4">
 

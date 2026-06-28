@@ -21,7 +21,7 @@ export default function SplashScreen({ children }) {
       <AnimatePresence>
         {loading && (
           <motion.div
-            className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-white"
+            className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-white dark:bg-white/60"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
@@ -110,7 +110,7 @@ export default function SplashScreen({ children }) {
               />
 
               <motion.h1
-                className="mt-2 text-2xl font-black uppercase "
+                className="mt-2 text-2xl font-black uppercase dark:text-white"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}

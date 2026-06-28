@@ -21,7 +21,7 @@ const DonorMarquee = () => {
     }, [baseurl]);
 
     return (
-        <div className="w-full py-2 bg-red-50 ">
+        <div className="w-full py-2 bg-red-50 dark:bg-white/20 ">
 
             <motion.div
                 initial={{ opacity: 0, y: 60 }}
@@ -33,7 +33,7 @@ const DonorMarquee = () => {
                     {activeDonors.map((donor) => (
                         <div
                             key={donor._id}
-                            className="flex relative overflow-hidden items-center gap-1  mx-3 max-w-[250px]  p-4 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+                            className="flex relative overflow-hidden items-center gap-2  mx-3 max-w-[250px]  p-4 bg-slate-50 dark:bg-white/30 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
                         >
 
                             <img

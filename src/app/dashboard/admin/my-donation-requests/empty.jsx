@@ -9,7 +9,7 @@ const NoRequestsFound = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="py-20 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center gap-4"
+            className="py-20 text-center bg-white dark:bg-white/20 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center gap-4"
         >
 
             <div className="relative flex items-center justify-center w-24 h-24 mb-2">

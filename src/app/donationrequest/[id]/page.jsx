@@ -26,25 +26,26 @@ const DonationDetailspage = async ({ params }) => {
 
 
     return (
-        <div className="min-h-screen p-4 md:p-8 lg:p-12 bg-slate-50/50 dark:bg-slate-950   container mx-auto mt-30">
+        <div className="min-h-screen p-4 md:py-40 bg-slate-50/50 dark:bg-white/10">
 
-            <div className='text-center'>
+           <div className='mx-auto container'>
+             <div className='text-center'>
                 <h1 className='text-4xl font-bold'>Request Overview</h1>
-                <p className='text-[1rem] mt-2 text-gray-500'>View complete details before confirming your blood donation.</p>
+                <p className='text-[1rem] mt-2 text-gray-500 dark:text-gray-300'>View complete details before confirming your blood donation.</p>
             </div>
 
-            <Card className="mx-auto mt-8 rounded-[32px] relative  overflow-hidden border border-slate-200 bg-white p-8 shadow-sm">
+            <Card className="mx-auto mt-8 rounded-[32px] relative  overflow-hidden border border-slate-200 bg-white dark:bg-white/20 p-8 shadow-sm">
 
             
-                <div className="flex flex-col md:flex-row justify-between gap-6 border-b pb-6">
+                <div className="flex flex-col md:flex-row justify-between gap-6 border-b dark:border-white/30 pb-6">
                     <div className="flex items-center gap-4">
-                        <div className="h-16 w-16 rounded-2xl bg-red-50 flex items-center justify-center">
+                        <div className="h-16 w-16 rounded-2xl bg-red-50 dark:bg-white/16 flex items-center justify-center">
                             <UserRound className="h-8 w-8 text-[#db0000]" />
                         </div>
 
                         <div>
                             <h2 className="text-2xl font-black">{donationRequest.recipientName}</h2>
-                            <p className="text-gray-500 mt-2 uppercase tracking-widest text-xs">
+                            <p className="text-gray-500 mt-2 dark:text-gray-300 uppercase tracking-widest text-xs">
                                 Recipient • Patient
                             </p>
                         </div>
@@ -67,7 +68,7 @@ const DonationDetailspage = async ({ params }) => {
                         <div className="flex gap-4">
                             <Hospital className="text-green-600 mt-1" />
                             <div>
-                                <p className="text-xs uppercase text-gray-400 font-bold">
+                                <p className="text-xs uppercase text-gray-400 dark:text-gray-300 font-bold">
                                     Hospital
                                 </p>
 
@@ -75,7 +76,7 @@ const DonationDetailspage = async ({ params }) => {
                                     {donationRequest.hospitalName}
                                 </h3>
 
-                                <p className="text-gray-500">
+                                <p className="text-gray-500 dark:text-gray-300">
                                     {donationRequest.recipientDistrict}
                                 </p>
                             </div>
@@ -85,7 +86,7 @@ const DonationDetailspage = async ({ params }) => {
                             <MapPin className="text-red-500 mt-1" />
 
                             <div>
-                                <p className="text-xs uppercase text-gray-400 font-bold">
+                                <p className="text-xs uppercase text-gray-400 dark:text-gray-300 font-bold">
                                     Address
                                 </p>
 
@@ -103,7 +104,7 @@ const DonationDetailspage = async ({ params }) => {
                             <CalendarDays className="text-pink-500 mt-1" />
 
                             <div>
-                                <p className="text-xs uppercase text-gray-400 font-bold">
+                                <p className="text-xs uppercase text-gray-400 dark:text-gray-300 font-bold">
                                     Required Date
                                 </p>
 
@@ -117,7 +118,7 @@ const DonationDetailspage = async ({ params }) => {
                             <Clock3 className="mt-1" />
 
                             <div>
-                                <p className="text-xs uppercase text-gray-400 font-bold">
+                                <p className="text-xs uppercase text-gray-400 dark:text-gray-300 font-bold">
                                     Time
                                 </p>
 
@@ -133,13 +134,13 @@ const DonationDetailspage = async ({ params }) => {
 
                
 
-                <div className="rounded-2xl bg-amber-50 border border-amber-100 p-5">
+                <div className="rounded-2xl bg-amber-50 dark:bg-white/18 border border-amber-100 p-5">
 
                     <p className="text-xs uppercase font-bold tracking-widest text-amber-700">
                         Request Message
                     </p>
 
-                    <p className="italic text-gray-700 mt-2">
+                    <p className="italic text-gray-700 mt-2 dark:text-white">
                         {donationRequest.requestMessage}
                     </p>
 
@@ -151,7 +152,7 @@ const DonationDetailspage = async ({ params }) => {
 
                     <div>
 
-                        <p className="text-xs uppercase tracking-widest text-gray-400">
+                        <p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-300">
                             Requested By
                         </p>
 
@@ -159,7 +160,7 @@ const DonationDetailspage = async ({ params }) => {
                             {donationRequest.requesterName}
                         </h3>
 
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500 text-sm dark:text-gray-300">
                             {donationRequest.requesterEmail}
                         </p>
 
@@ -170,6 +171,7 @@ const DonationDetailspage = async ({ params }) => {
                 </div>
 
             </Card>
+           </div>
 
         </div>
     );

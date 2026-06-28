@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import Loader from "@/Components/Shared/Loading";
 import { uploadImagebb } from "@/lib/action/uploadimgbb";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function ProfileDonor({ userData }) {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -73,7 +74,8 @@ export default function ProfileDonor({ userData }) {
 
                 setLoading(false);
             } catch (error) {
-                console.error("Failed to load profile settings:", error);
+                toast.error("Failed to load profile settings:", error)
+
                 setLoading(false);
             }
         };
@@ -121,13 +123,16 @@ export default function ProfileDonor({ userData }) {
             });
 
             if (res.ok) {
+                toast.success('Profile updated successfully!')
                 setIsEditable(false);
                 router.refresh()
             } else {
-                console.error("Failed to update profile request.");
+                toast.error("Failed to update profile request.")
+
             }
         } catch (error) {
-            console.error("Error updating profile database:", error);
+            toast.error("Error updating profile database:", error)
+
         } finally {
             setSubmitting(false);
         }
@@ -138,14 +143,14 @@ export default function ProfileDonor({ userData }) {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm mt-7 relative  overflow-hidden">
+        <div className="max-w-7xl mx-auto p-6 bg-white dark:bg-white/20 rounded-2xl border border-slate-100  shadow-sm mt-7 relative  overflow-hidden">
 
 
 
             <div className="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-sm tracking-wide shadow-xs">
                 Blood Gourp : {userData?.bloodGroup}
             </div>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-5 mb-6 ">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-white/10 pb-5 mb-6 ">
 
 
                 <div className="flex items-center gap-4">
@@ -155,10 +160,10 @@ export default function ProfileDonor({ userData }) {
                     </Avatar>
                     <div>
                         <div className="flex items-center gap-1 flex-col">
-                            <h1 className="text-xl font-bold text-slate-900 dark:text-white">{userData?.name}</h1>
+                            <h1 className="text-xl font-bold text-slate-900 dark:text-white ">{userData?.name}</h1>
 
-                            <div className="flex pl-4">
-                                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 bg-[#db0000]/20 dark:bg-slate-800 text-rose-700 dark:text-slate-400 rounded-md">
+                            <div className="flex gap-2">
+                                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 bg-[#db0000]/20 dark:bg-white/16 text-rose-700 dark:text-white rounded-md">
                                     {userData?.role}
                                 </span>
 
@@ -181,7 +186,7 @@ export default function ProfileDonor({ userData }) {
                     {!isEditable ? (
                         <Button
                             onPress={() => setIsEditable(true)}
-                            className="bg-[#db0000] dark:bg-slate-100 mt-3 text-white dark:text-slate-900 font-semibold flex items-center gap-2 rounded-xl px-4 h-10 text-sm"
+                            className="bg-[#db0000] dark:bg-white/14 mt-3 text-white dark:text-white font-semibold flex items-center gap-2 rounded-xl px-4 h-10 text-sm"
                         >
                             <Edit2 className="w-4 h-4" />
                             Edit Profile
@@ -207,8 +212,9 @@ export default function ProfileDonor({ userData }) {
 
 
                 <TextField className={''} isInvalid={!!errors.name}>
-                    <Label className="text-xs font-bold dark:text-slate-300">Full Name</Label>
+                    <Label className="text-xs font-bold dark:text-gray-300">Full Name</Label>
                     <Input
+                        className={ 'dark:bg-white/14'}
                         disabled={!isEditable}
                         {...register("name", { required: "Name is required" })}
                         placeholder="Enter your full name"
@@ -222,10 +228,11 @@ export default function ProfileDonor({ userData }) {
                     <TextField>
                         <Label className="text-xs font-bold ">Email Address (Locked)</Label>
                         <Input
+                        
                             type="email"
                             disabled={true}
                             value={userData?.email || ""}
-                            className="w-full h-[42px] px-3 rounded-lg   border  text-sm focus:outline-hidden"
+                            className="w-full h-[42px] dark:bg-white/14 px-3 rounded-xl   border  text-sm focus:outline-hidden"
                         />
                     </TextField>
                 </div>
@@ -233,7 +240,7 @@ export default function ProfileDonor({ userData }) {
                 <div className="w-full">
                     <TextField isRequired type="file" variant="secondary" className={''}>
                         <Label>Image</Label>
-                        <input disabled={!isEditable} className="border p-2 border-gray-100 rounded-xl " name="image" type="file" placeholder="Quantity" {...register("image", { required: true })} />
+                        <input disabled={!isEditable} className="border p-2 border-gray-100 dark:bg-white/16 dark:border-none rounded-xl " name="image" type="file" placeholder="Quantity" {...register("image", { required: true })} />
                     </TextField>
                 </div>
 
@@ -251,7 +258,7 @@ export default function ProfileDonor({ userData }) {
                                     setValue("upazila", "");
                                 }
                             })}
-                            className="w-full h-[42px] border border-slate-100  rounded-xl p-2 bg-white"
+                            className="w-full h-[42px] border border-slate-100 dark:bg-white/16 dark:border-none  rounded-xl p-2 bg-white"
                         >
                             <option defaultValue={userData?.district} value="">Select district</option>
                             {districts.map((district) => (
@@ -269,7 +276,7 @@ export default function ProfileDonor({ userData }) {
                         <select
                             disabled={!isEditable}
                             {...register("upazila", { required: "Upazila is required" })}
-                            className="w-full h-[42px] border border-slate-100  rounded-xl p-2 bg-white"
+                            className="w-full h-[42px] border border-slate-100  rounded-xl p-2 bg-white dark:bg-white/16 dark:border-none"
                         >
                             <option value="">Select upazila</option>
                             {filteredUpazilas.map((upazila) => (
@@ -290,7 +297,7 @@ export default function ProfileDonor({ userData }) {
                         <select
                             disabled={!isEditable}
                             {...register("bloodGroup", { required: "Blood group is required" })}
-                            className="w-full h-[42px] border border-slate-100 rounded-xl p-2 bg-white "
+                            className="w-full h-[42px] border border-slate-100 rounded-xl p-2 bg-white dark:bg-white/16 dark:border-none"
                         >
                             <option value="">Select Blood Group</option>
                             {bloodGroups.map((group) => (
@@ -313,7 +320,7 @@ export default function ProfileDonor({ userData }) {
                                 <select
                                     {...field}
                                     disabled={!isEditable}
-                                    className="w-full h-[42px] border border-slate-100 rounded-xl px-1"
+                                    className="w-full h-[42px] border border-slate-100 rounded-xl px-1 dark:bg-white/16 dark:border-none"
                                 >
                                     <option value="">Select gender</option>
                                     {genders.map((gender) => (
@@ -333,7 +340,7 @@ export default function ProfileDonor({ userData }) {
 
 
                 {isEditable && (
-                    <div className="flex gap-2 mt-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <div className="flex gap-2 mt-2 pt-4 border-t dark:border-white/10 border-slate-100 ">
                         <Button
                             type="submit"
                             className="bg-[#db0000] text-white font-semibold hover:bg-red-700 transition-colors rounded-xl px-5 h-10 text-sm"

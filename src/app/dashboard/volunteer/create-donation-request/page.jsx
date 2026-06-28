@@ -20,10 +20,12 @@ import { Controller, useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import Loader from "@/Components/Shared/Loading";
+import toast from "react-hot-toast";
 
 
 
 export default function CreateDonationRequestvolunteer() {
+
 
 
     const {
@@ -62,7 +64,7 @@ export default function CreateDonationRequestvolunteer() {
                 setDistricts(districtData?.[2]?.data || []);
                 setUpazilas(upazilaData?.[2]?.data || []);
             } catch (error) {
-                console.error("Failed to load location data", error);
+                toast.error("Failed to load location", error);
             }
         };
 
@@ -147,7 +149,7 @@ export default function CreateDonationRequestvolunteer() {
 
         if (requestData.insertedId) {
 
-            console.log('success', requestData);
+            toast.success('Blood donation request created successfully!')
             reset();
         }
 
@@ -171,15 +173,17 @@ export default function CreateDonationRequestvolunteer() {
 
 
     return (
-        <div className="relative  max-w-7xl mx-auto mt-10">
+        <div className="bg-white/10 min-h-screen py-10">
+
+        <div className="relative  max-w-7xl mx-auto ">
 
 
-            <div className="relative z-10 w-full  rounded-[2rem] bg-white p-8 shadow-xl border border-slate-100 md:p-12">
+            <div className="relative z-10 w-full  rounded-[2rem] bg-white dark:bg-white/20 p-8 shadow-xl border border-slate-100 md:p-12">
                 <div className="mb-8 border-b border-slate-100 pb-5">
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
                         Create Blood Donation Request
                     </h1>
-                    <p className="mt-2 text-sm text-slate-500">
+                    <p className="mt-2 text-sm text-slate-500 dark:text-gray-300">
                         Please update the structural recipient and medical terminal attributes to locate compatible donors.
                     </p>
                 </div>
@@ -201,34 +205,36 @@ export default function CreateDonationRequestvolunteer() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2  p-4 rounded-xl border border-slate-100 z-50">
                         <TextField isReadOnly name="requesterName" defaultValue={user?.name}>
                             <Label className="text-xs font-semibold ">Requester Name</Label>
-                            <Input className=" cursor-not-allowed" variant="bordered" radius="md" />
+                            <Input className=" cursor-not-allowed dark:bg-white/17" variant="bordered" radius="md" />
                         </TextField>
 
                         <TextField isReadOnly name="requesterEmail" defaultValue={user?.email}>
                             <Label className="text-xs font-semibold ">Requester Email</Label>
-                            <Input className=" cursor-not-allowed" variant="bordered" radius="md" />
+                            <Input className=" cursor-not-allowed dark:bg-white/17" variant="bordered" radius="md" />
                         </TextField>
                     </div>
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 z-50">
                         <TextField isRequired name="recipientName">
-                            <Label className="text-xs font-semibold text-slate-700">Recipient Name</Label>
-                            <Input {...register("recipientName", { required: true })} placeholder="Enter patient name" variant="bordered" radius="md" />
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Recipient Name</Label>
+                            <Input {...register("recipientName", { required: true })} placeholder="Enter patient name" className={'dark:bg-white/17'} variant="bordered" radius="md" />
                             <FieldError className="text-xs text-red-500 mt-1" />
                         </TextField>
 
 
                         <div className="flex flex-col gap-1 z-50">
-                            <Label className="text-xs font-semibold text-slate-700">Blood Group</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Blood Group</Label>
                             <Controller
+                            
                                 name="bloodGroup"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field }) => (
                                     <Select
+                                    
                                         selectedKey={field.value}
                                         onSelectionChange={field.onChange}
-                                        className="w-full"
+                                        className="w-full "
                                         placeholder="Select blood group"
                                         variant="bordered"
                                         radius="md"
@@ -238,13 +244,13 @@ export default function CreateDonationRequestvolunteer() {
                                             portalContainer: typeof document !== 'undefined' ? document.body : undefined
                                         }}
                                     >
-                                        <Select.Trigger>
+                                        <Select.Trigger className={'dark:bg-white/17'}>
                                             <Select.Value />
                                             <Select.Indicator />
                                         </Select.Trigger>
 
                                         <Select.Popover>
-                                            <ListBox>
+                                            <ListBox className="dark:bg-white/17">
                                                 {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
                                                     <ListBox.Item key={group} id={group}>
                                                         {group}
@@ -270,7 +276,7 @@ export default function CreateDonationRequestvolunteer() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="w-full border border-gray-100 rounded-xl  p-2 bg-white"
+                                        className="w-full border border-gray-100 rounded-xl  p-2 bg-white dark:bg-white/17"
                                         onChange={(e) => {
                                             field.onChange(e.target.value);
                                             setValue("upazila", "");
@@ -296,7 +302,7 @@ export default function CreateDonationRequestvolunteer() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="w-full border rounded-xl border-gray-100 p-2 bg-white"
+                                        className="w-full border rounded-xl dark:bg-white/17     border-gray-100 p-2 bg-white"
                                     >
                                         <option value="">Select upazila</option>
                                         {filteredUpazilas.map((upazila) => (
@@ -313,14 +319,14 @@ export default function CreateDonationRequestvolunteer() {
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 z-50">
                         <TextField isRequired name="hospitalName">
-                            <Label className="text-xs font-semibold text-slate-700">Hospital Name</Label>
-                            <Input {...register("hospitalName", { required: true })} placeholder="e.g., Dhaka Medical College Hospital" variant="bordered" radius="md" />
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Hospital Name</Label>
+                            <Input {...register("hospitalName", { required: true })} placeholder="e.g., Dhaka Medical College Hospital" className={'dark:bg-white/17'} variant="bordered" radius="md" />
                             <FieldError className="text-xs text-red-500 mt-1" />
                         </TextField>
 
                         <TextField isRequired name="fullAddressLine">
-                            <Label className="text-xs font-semibold text-slate-700">Full Address Line</Label>
-                            <Input {...register("fullAddressLine", { required: true })} placeholder="e.g., Zahir Raihan Rd, Dhaka" variant="bordered" radius="md" />
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Full Address Line</Label>
+                            <Input {...register("fullAddressLine", { required: true })} placeholder="e.g., Zahir Raihan Rd, Dhaka" className={'dark:bg-white/17'} variant="bordered" radius="md" />
                             <FieldError className="text-xs text-red-500 mt-1" />
                         </TextField>
                     </div>
@@ -329,7 +335,7 @@ export default function CreateDonationRequestvolunteer() {
 
                         <div className="flex flex-col gap-1 z-50">
 
-                            <Label className="text-xs font-semibold text-slate-700">Donation Date</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Donation Date</Label>
 
                             <Controller
                                 name="donationDate"
@@ -342,7 +348,7 @@ export default function CreateDonationRequestvolunteer() {
                                         onChange={field.onChange}
                                     >
 
-                                        <DateField.Group className="border rounded-lg h-[42px] px-3 flex items-center bg-white">
+                                        <DateField.Group className="border dark:bg-white/17 rounded-lg h-[42px] px-3 flex items-center bg-white">
                                             <DateField.Input>
                                                 {(segment) => <DateField.Segment segment={segment} />}
                                             </DateField.Input>
@@ -371,13 +377,13 @@ export default function CreateDonationRequestvolunteer() {
 
                         <TextField className={'z-50'}>
 
-                            <Label className="text-xs font-semibold text-slate-700">Donation Time</Label>
+                            <Label className="text-xs font-semibold dark:text-gray-300 text-slate-700">Donation Time</Label>
                             <input
                                 type="time"
                                 {...register("donationTime", {
                                     required: "Donation time is required",
                                 })}
-                                className="w-full h-[42px] px-3 rounded-xl bg-white border border-gray-100 z-50"
+                                className="w-full h-[42px] px-3 rounded-xl dark:bg-white/17 bg-white border border-gray-100 z-50"
                             />
                         </TextField>
 
@@ -400,7 +406,7 @@ export default function CreateDonationRequestvolunteer() {
 
 
                     <div className="flex flex-col gap-1.5 z-50">
-                        <label htmlFor="requestMessage" className="text-xs font-semibold text-slate-700">
+                        <label htmlFor="requestMessage" className="text-xs font-semibold dark:text-gray-300 text-slate-700">
                             Request Message (Detailed Medical Necessity Reason)
                         </label>
                         <TextArea
@@ -410,7 +416,7 @@ export default function CreateDonationRequestvolunteer() {
                             name="requestMessage"
                             rows={4}
                             placeholder="Provide situational details on why emergency blood is requested..."
-                            className="w-full p-3 rounded-xl border border-slate-100 bg-transparent text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all resize-none z-50 bg-white"
+                            className="w-full p-3 rounded-xl border dark:bg-white/17 border-slate-100 bg-transparent text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all resize-none z-50 bg-white"
                         />
                     </div>
 
@@ -427,6 +433,7 @@ export default function CreateDonationRequestvolunteer() {
                 </Form>
 
             </div>
+        </div>
         </div>
     );
 }

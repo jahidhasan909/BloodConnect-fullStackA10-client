@@ -69,7 +69,7 @@ export function DonationConfirmeModal({ donationRequest }) {
 
     return (
         <Modal>
-            <div className="relative inline-block p-[2px] overflow-hidden rounded-md group">
+            <div className="relative inline-block p-[2px]  overflow-hidden rounded-md group">
                 <motion.span
                     animate={{ rotate: 360 }}
                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
@@ -92,12 +92,12 @@ export function DonationConfirmeModal({ donationRequest }) {
                         <Modal.CloseTrigger />
                         <div className="text-center my-5">
                             <h1 className="text-center  text-xl font-bold">Confirm Blood Donation</h1>
-                            <p className="text-gray-500 text-sm mt-1.5  text-center">You're about to become the donor.</p>
+                            <p className="text-gray-500 text-sm mt-1.5 dark:text-gray-300 text-center">You're about to become the donor.</p>
 
                         </div>
                         <Modal.Body className=" space-y-2">
-                            <Input readOnly type="text" className="w-full" defaultValue={user?.name}></Input>
-                            <Input readOnly type="text" className="w-full" defaultValue={user?.email}></Input>
+                            <Input readOnly type="text" className="w-full dark:bg-white/10" defaultValue={user?.name}></Input>
+                            <Input readOnly type="text" className="w-full dark:bg-white/10" defaultValue={user?.email}></Input>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button

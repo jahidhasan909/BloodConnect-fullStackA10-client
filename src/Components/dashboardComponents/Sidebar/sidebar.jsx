@@ -77,7 +77,7 @@ export default function DashboardSidebar() {
         <div className="flex">
 
 
-            <div className="lg:hidden fixed top-4 left-4 z-50">
+            <div className="lg:hidden fixed top-4 left-4 z-50 ">
                 <Drawer>
                     <Drawer.Trigger>
                         <Button isIconOnly variant="bordered" className="bg-white border-slate-200 rounded-xl shadow-sm">
@@ -86,14 +86,14 @@ export default function DashboardSidebar() {
                     </Drawer.Trigger>
 
                     <Drawer.Backdrop>
-                        <Drawer.Content placement="left" className="bg-white max-w-[260px] p-6 flex flex-col gap-6">
+                        <Drawer.Content placement="left" className="bg-white dark:bg-white/20 max-w-[260px] p-6 flex flex-col gap-6">
                             <Drawer.Dialog>
                                 <Drawer.CloseTrigger />
                                 <Drawer.Header className="px-2">
                                     <Drawer.Heading className="flex items-center gap-2">
                                         <Link href="/" className="flex items-center gap- flex-shrink-0">
                                             <Image width={34} height={33} alt='logo' className='w-full object-cover mt-2 h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
-                                            <span className="text-xl font-bold text-slate-900 tracking-tight ">
+                                            <span className="text-xl font-bold text-slate-900  dark:text-white tracking-tight ">
                                                 <span className='text-[#db0000]'>Blood</span>Connect </span>
                                         </Link>
                                     </Drawer.Heading>
@@ -102,7 +102,7 @@ export default function DashboardSidebar() {
                                 <Drawer.Body className="px-0">
                                     <nav className="flex flex-col gap-1 w-full">
                                         {navItems.map((item) => (
-                                            <Link key={item.label} href={item.link} className={`block rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold  leading-tight text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2"
+                                            <Link key={item.label} href={item.link} className={`block   hover:bg-white/15 rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold  leading-tight text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2"
                                                 }`}>
 
                                                 <item.icon className="w-4 h-4 " />
@@ -118,12 +118,12 @@ export default function DashboardSidebar() {
                 </Drawer>
             </div>
 
-            <aside className="hidden lg:flex flex-col w-64 h-screen bg-white border-r border-slate-200/80 p-6 sticky top-0">
+            <aside className="hidden lg:flex flex-col w-64  bg-white dark:bg-white/20 border-r border-slate-200/80 p-6 sticky top-0 min-h-screen">
 
                 <div className="flex-shrink-0 mb-7 mt-1.5">
                     <Link href="/" className="flex items-center gap-1">
-                        <Image width={45} height={45} alt='logo' className=' h-[45px]' src={'https://i.ibb.co.com/9H990mRT/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview-removebg-preview.png'} />
-                        <span className="text-xl mt-2.5 font-extrabold text-slate-900 tracking-tight ">
+                        <Image width={45} height={45} alt='logo' className=' h-[43px]' src={'https://i.ibb.co.com/9H990mRT/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview-removebg-preview.png'} />
+                        <span className="text-xl mt-2.5 font-extrabold text-slate-900 dark:text-white tracking-tight ">
                             <span className='text-[#E11D48]'>Blood</span>Connect
                         </span>
                     </Link>
@@ -132,7 +132,7 @@ export default function DashboardSidebar() {
 
                 <nav className="flex flex-col flex-grow gap-1">
                     {navItems.map((item) => (
-                        <Link key={item.label} href={item.link} className={`block rounded-xl w-full ${pathname === item.link ? "bg-[#db0000] font-semibold text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2 text-slate-600"}`}>
+                        <Link key={item.label} href={item.link} className={`block  rounded-xl hover:bg-white/16 w-full ${pathname === item.link ? "bg-[#db0000] font-semibold text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2 dark:text-white/85 text-slate-600"}`}>
                             <item.icon className="w-4 h-4 " />
                             {item.label}
                         </Link>
@@ -142,17 +142,17 @@ export default function DashboardSidebar() {
                     <div className="flex-grow"></div>
 
 
-                    <div className="mt-auto pt-4 border-t  border-slate-100 flex gap-2.5 w-full mx-auto mb-2">
+                    <div className="mt-auto pt-4 border-t  border-slate-100 dark:border-white/20 flex gap-2.5 w-full mx-auto mb-2">
                         <Avatar>
                             <Avatar.Image alt="John Doe" src={user?.image} />
                             <Avatar.Fallback>JD</Avatar.Fallback>
                         </Avatar>
                         <div>
-                            <p className="font-bold text-slate-900">{user?.name}</p>
-                            <p className="text-xs text-slate-500">{user?.email}</p>
+                            <p className="font-bold text-slate-900 dark:text-white">{user?.name}</p>
+                            <p className="text-xs text-slate-500 dark:text-gray-300">{user?.email}</p>
                         </div>
                     </div>
-                    <Button onClick={handleLogout} variant="" className={'bg-rose-100 rounded-xl text-[#db0000] font-semibold w-full'}>
+                    <Button onClick={handleLogout} variant="" className={'bg-rose-100 dark:bg-white/10 rounded-xl text-[#db0000] font-semibold w-full mb-4'}>
                         Log Out <ArrowRightToSquare></ArrowRightToSquare>
                     </Button>
                 </nav>
