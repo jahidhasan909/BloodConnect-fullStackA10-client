@@ -4,9 +4,7 @@ import Navbar from "@/Components/Shared/Navbar";
 import Footer from "@/Components/Shared/Footer";
 import SplashScreen from "@/Components/SplashScreen/SplashScreen";
 import LenisProvider from "@/Components/LanisProvider/LanisProvider";
-
-
-
+import Providers from "@/Components/themeprovider/Providers";
 
 const open_Sans = Open_Sans({
   subsets: ["latin"],
@@ -25,19 +23,21 @@ export default function RootLayout({ children }) {
       className={`${open_Sans.className}  h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar></Navbar>
+        <Providers>
+          <Navbar></Navbar>
 
-        <SplashScreen>
-          <LenisProvider>
-            <main className="grow">
-           
-                {children}
-            
+          <SplashScreen>
+            <LenisProvider>
+              <main className="grow">
+             
+                  {children}
+              
 
-            </main>
-          </LenisProvider>
-        </SplashScreen>
-        <Footer></Footer>
+              </main>
+            </LenisProvider>
+          </SplashScreen>
+          <Footer></Footer>
+        </Providers>
       </body>
     </html>
   );

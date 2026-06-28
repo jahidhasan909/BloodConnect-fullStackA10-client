@@ -17,6 +17,7 @@ import { authClient } from '@/lib/auth-client';
 import { ArrowRightFromSquare } from '@gravity-ui/icons';
 
 import Loader from './Loading';
+import ThemeSwitch from '@/Components/themeprovider/ThemeSwitch';
 
 
 
@@ -83,7 +84,8 @@ const Navbar = () => {
                     </div>
 
 
-                    <div className="hidden md:flex items-center">
+                    <div className="hidden md:flex items-center gap-4">
+                        <ThemeSwitch />
                        
 
                         {!user ? (
@@ -142,6 +144,7 @@ const Navbar = () => {
 
 
                     <div className="md:hidden flex items-center gap-4">
+                        <ThemeSwitch />
 
                         {!user ? (
                             <Link href={'/login'}>
