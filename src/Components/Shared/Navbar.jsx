@@ -45,11 +45,11 @@ const Navbar = () => {
     const user = data?.user
 
 
-    if (pathname.includes('dashboard') || pathname.includes('login')) {
+    if (pathname.includes('dashboard') || pathname.includes('login') || pathname.includes('registration')) {
         return null;
     }
 
-   
+
 
 
 
@@ -159,14 +159,14 @@ const Navbar = () => {
                                 href={'/login'}
                                 className="group relative inline-flex overflow-hidden rounded-md p-[2px]"
                             >
-                             
+
                                 <motion.span
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                                     className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
                                 />
 
-                   
+
                                 <Button
                                     className="relative z-10 flex w-full items-center gap-2 rounded-md bg-[#db0000] px-6 font-bold text-white shadow-sm transition-all hover:bg-[#b00000]"
                                 >
