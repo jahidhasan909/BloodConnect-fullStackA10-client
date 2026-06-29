@@ -32,16 +32,13 @@ export default function ProfileDonor({ userData }) {
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
     const genders = ["Male", "Female", "Other"];
 
-
     const { register, handleSubmit, reset: update, control, watch, setValue, formState: { errors } } = useForm();
-
 
     const selectedDistrictId = watch("district");
 
     useEffect(() => {
         const initializeProfileData = async () => {
             try {
-
                 const [districtRes, upazilaRes] = await Promise.all([
                     fetch("/districts.json"),
                     fetch("/upazilas.json")
@@ -57,10 +54,8 @@ export default function ProfileDonor({ userData }) {
                 setUpazilas(fetchedUpazilas);
 
                 if (userData) {
-
                     const currentDistrictObj = fetchedDistricts.find(d => d.name === userData.district);
                     const currentUpazilaObj = fetchedUpazilas.find(u => u.name === userData.upazila);
-
 
                     update({
                         name: userData.name || "",
@@ -74,8 +69,7 @@ export default function ProfileDonor({ userData }) {
 
                 setLoading(false);
             } catch (error) {
-                toast.error("Failed to load profile settings:", error)
-
+                toast.error("Failed to load profile settings:", error);
                 setLoading(false);
             }
         };
@@ -85,74 +79,76 @@ export default function ProfileDonor({ userData }) {
         }
     }, [userData, update]);
 
-
     const filteredUpazilas = upazilas.filter(
         (upazila) => upazila.district_id === selectedDistrictId
     );
 
-
     const onFormSubmit = async (data) => {
         setSubmitting(true);
 
-
         const selectedDistrictObj = districts.find(d => d.id === data.district);
         const selectedUpazilaObj = upazilas.find(u => u.id === data.upazila);
-        const imageFile = data.image[0];
-        const image = await uploadImagebb(imageFile);
-        const { data: tokenData } = await authClient.token()
+
+        
+        let imageUrl = userData?.image || ""; 
+
+        if (data.image && typeof data.image !== 'string' && data.image.length > 0) {
+            try {
+                const imageFile = data.image[0];
+                const image = await uploadImagebb(imageFile);
+                imageUrl = image.url;
+            } catch (err) {
+                toast.error("Failed to upload new image.");
+                setSubmitting(false);
+                return;
+            }
+        }
+
+        const { data: tokenData } = await authClient.token();
 
         const finalPayload = {
             name: data.name,
             bloodGroup: data.bloodGroup,
             gender: data.gender,
-            image: image.url,
+            image: imageUrl,
             district: selectedDistrictObj ? selectedDistrictObj.name : data.district,
             upazila: selectedUpazilaObj ? selectedUpazilaObj.name : data.upazila,
         };
 
         try {
-
             const res = await fetch(`${baseurl}/api/own/edit/users?email=${userData?.email}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     authorization: `Bearer ${tokenData?.token}`,
-
                 },
                 body: JSON.stringify(finalPayload),
             });
 
             if (res.ok) {
-                toast.success('Profile updated successfully!')
+                toast.success('Profile updated successfully!');
                 setIsEditable(false);
-                router.refresh()
+                router.refresh();
             } else {
-                toast.error("Failed to update profile request.")
-
+                toast.error("Failed to update profile request.");
             }
         } catch (error) {
-            toast.error("Error updating profile database:", error)
-
+            toast.error("Error updating profile database:", error);
         } finally {
             setSubmitting(false);
         }
     };
 
     if (loading) {
-        return <Loader></Loader>
+        return <Loader />;
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6 bg-white dark:bg-white/20 rounded-2xl border border-slate-100  shadow-sm mt-7 relative  overflow-hidden">
-
-
-
+        <div className="max-w-7xl mx-auto p-6 bg-white dark:bg-white/20 rounded-2xl border border-slate-100 shadow-sm mt-7 relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-sm tracking-wide shadow-xs">
-                Blood Gourp : {userData?.bloodGroup}
+                Blood Group : {userData?.bloodGroup}
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-white/10 pb-5 mb-6 ">
-
-
                 <div className="flex items-center gap-4">
                     <Avatar size="lg" className="w-16 h-16 ring-2 ring-red-100 dark:ring-slate-800">
                         <Avatar.Image alt="userimage" src={userData?.image} />
@@ -161,12 +157,10 @@ export default function ProfileDonor({ userData }) {
                     <div>
                         <div className="flex items-center gap-1 flex-col">
                             <h1 className="text-xl font-bold text-slate-900 dark:text-white ">{userData?.name}</h1>
-
                             <div className="flex gap-2">
                                 <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 bg-[#db0000]/20 dark:bg-white/16 text-rose-700 dark:text-white rounded-md">
                                     {userData?.role}
                                 </span>
-
                                 {userData?.status === "active" ? (
                                     <span className="flex items-center gap-1 text-[10px] uppercase font-bold px-2 py-0.5 bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 rounded-md">
                                         <CheckCircle className="w-3 h-3" /> {userData?.status}
@@ -178,10 +172,8 @@ export default function ProfileDonor({ userData }) {
                                 )}
                             </div>
                         </div>
-
                     </div>
                 </div>
-
                 <div>
                     {!isEditable ? (
                         <Button
@@ -207,60 +199,58 @@ export default function ProfileDonor({ userData }) {
                 </div>
             </div>
 
-
             <Form className="space-y-5" onSubmit={handleSubmit(onFormSubmit)}>
-
-
                 <TextField className={''} isInvalid={!!errors.name}>
                     <Label className="text-xs font-bold dark:text-gray-300">Full Name</Label>
                     <Input
-                        className={ 'dark:bg-white/14'}
+                        className={'dark:bg-white/14'}
                         disabled={!isEditable}
                         {...register("name", { required: "Name is required" })}
                         placeholder="Enter your full name"
-
                     />
                     <FieldError>{errors.name?.message}</FieldError>
                 </TextField>
-
 
                 <div className="flex flex-col gap-1">
                     <TextField>
                         <Label className="text-xs font-bold ">Email Address (Locked)</Label>
                         <Input
-                        
                             type="email"
                             disabled={true}
                             value={userData?.email || ""}
-                            className="w-full h-[42px] dark:bg-white/14 px-3 rounded-xl   border  text-sm focus:outline-hidden"
+                            className="w-full h-[42px] dark:bg-white/14 px-3 rounded-xl border text-sm focus:outline-hidden"
                         />
                     </TextField>
                 </div>
 
                 <div className="w-full">
-                    <TextField isRequired type="file" variant="secondary" className={''}>
-                        <Label>Image</Label>
-                        <input disabled={!isEditable} className="border p-2 border-gray-100 dark:bg-white/16 dark:border-none rounded-xl " name="image" type="file" placeholder="Quantity" {...register("image", { required: true })} />
+                  
+                    <TextField type="file" variant="secondary" className={''}>
+                        <Label>Image (Optional)</Label>
+                        <input 
+                            disabled={!isEditable} 
+                            className="border p-2 border-gray-100 dark:bg-white/16 dark:border-none rounded-xl w-full" 
+                            name="image" 
+                            type="file" 
+                            {...register("image")} 
+                        />
                     </TextField>
                 </div>
 
-
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-
                     <div className="flex flex-col gap-1">
                         <Label className="text-xs font-bold dark:text-slate-300">District</Label>
                         <select
                             disabled={!isEditable}
                             {...register("district", {
                                 required: "District is required",
-
                                 onChange: () => {
                                     setValue("upazila", "");
                                 }
                             })}
-                            className="w-full h-[42px] border border-slate-100 dark:bg-white/16 dark:border-none  rounded-xl p-2 bg-white"
+                            className="w-full h-[42px] border border-slate-100 dark:bg-white/16 dark:border-none rounded-xl p-2 bg-white"
                         >
-                            <option defaultValue={userData?.district} value="">Select district</option>
+                            <option value="">Select district</option>
                             {districts.map((district) => (
                                 <option key={district.id} value={String(district.id)}>
                                     {district.name}
@@ -270,13 +260,12 @@ export default function ProfileDonor({ userData }) {
                         {errors.district && <span className="text-xs text-red-500">{errors.district.message}</span>}
                     </div>
 
-
                     <div className="flex flex-col gap-1">
                         <Label className="text-xs font-bold dark:text-slate-300">Upazila</Label>
                         <select
                             disabled={!isEditable}
                             {...register("upazila", { required: "Upazila is required" })}
-                            className="w-full h-[42px] border border-slate-100  rounded-xl p-2 bg-white dark:bg-white/16 dark:border-none"
+                            className="w-full h-[42px] border border-slate-100 rounded-xl p-2 bg-white dark:bg-white/16 dark:border-none"
                         >
                             <option value="">Select upazila</option>
                             {filteredUpazilas.map((upazila) => (
@@ -289,9 +278,7 @@ export default function ProfileDonor({ userData }) {
                     </div>
                 </div>
 
-
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-
                     <div className="flex flex-col gap-1">
                         <Label className="text-xs font-bold dark:text-slate-300">Blood Group</Label>
                         <select
@@ -308,7 +295,6 @@ export default function ProfileDonor({ userData }) {
                         </select>
                         {errors.bloodGroup && <span className="text-xs text-red-500">{errors.bloodGroup.message}</span>}
                     </div>
-
 
                     <div className="flex flex-col gap-1">
                         <Label className="text-xs font-bold dark:text-slate-300">Gender</Label>
@@ -333,11 +319,7 @@ export default function ProfileDonor({ userData }) {
                         />
                         {errors.gender && <span className="text-xs text-red-500">{errors.gender.message}</span>}
                     </div>
-
                 </div>
-
-
-
 
                 {isEditable && (
                     <div className="flex gap-2 mt-2 pt-4 border-t dark:border-white/10 border-slate-100 ">
