@@ -22,12 +22,12 @@ export default function DashboardOverviewChart({
     {
       name: "Requests",
       value: requests,
-      fill: "#F66565",
+      fill: "#F99090",
     },
     {
       name: "Funding",
       value: funding,
-      fill: "#FBBCBC",
+      fill: "#880808",
     },
   ];
 
