@@ -42,7 +42,7 @@ export function DonationConfirmeModal({ donationRequest }) {
             const updatedData = await res.json();
 
             if (updatedData) {
-                router.refresh('/donationrequest')
+                router.refresh()
                 toast.success('Thank you! Your blood donation has been confirmed successfully.')
             }
 

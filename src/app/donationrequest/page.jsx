@@ -5,14 +5,14 @@ import MotionWtihCard from '@/Components/DonationRequestCard/MotionWtihCard';
 
 const DonationRequestpage = async () => {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL
-    const res = await fetch(`${baseurl}/api/donationrequest`)
+    const res = await fetch(`${baseurl}/api/donationrequest`, { cache: "no-store", })
     const donationRequest = await res.json()
 
 
     const pendingRequests = donationRequest.filter(req => req.donationStatus === 'pending')
 
-    
-    
+
+
 
 
 
