@@ -53,11 +53,11 @@ const Fundingpage = () => {
     return (
         <div className='bg-white/10'>
 
-        <div className="max-w-7xl  mx-auto p-4 md:py-40 space-y-6 md:space-y-8 min-h-screen pb-24 relative">
+        <div className="max-w-7xl  mx-auto py-28 md:py-40 space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
             <div className='text-center'>
-                <h1 className='text-4xl font-bold'>Community Funding History</h1>
-                <p className='text-[1rem] text-gray-500 dark:text-gray-300 mt-2'>View recent community donations and contribute to support our mission.</p>
+                <h1 className='text-2xl md:text-4xl font-bold'>Community Funding History</h1>
+                <p className='text-xs md:text-[1rem] text-gray-500 dark:text-gray-300 mt-2'>View recent community donations and contribute to support our mission.</p>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-[#db0000]/20 to-red-50 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 gap-4 shadow-xs">
                 <div>

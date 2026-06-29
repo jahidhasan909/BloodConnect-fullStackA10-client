@@ -128,7 +128,7 @@ export default function RegistrationForm() {
     };
 
     return (
-        <div className="flex min-h-screen w-full bg-white font-sans">
+        <div className="flex min-h-screen w-full bg-white dark:bg-white/20 font-sans">
 
             {/* Left Side */}
             <div className="relative flex w-full flex-col justify-center px-8 py-12 md:w-1/2 lg:px-24">
@@ -142,10 +142,10 @@ export default function RegistrationForm() {
                 />
 
                 <div className="mx-auto w-full max-w-xl text-left z-50">
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                         Join the Community
                     </h1>
-                    <p className="mt-2 text-sm text-slate-500">
+                    <p className="mt-2 text-sm text-slate-500 dark:text-gray-300">
                         Create your account to connect with donors and help save lives.
                     </p>
                 </div>
@@ -157,12 +157,13 @@ export default function RegistrationForm() {
                 >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Full Name</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Full Name</Label>
                             <TextField isRequired isInvalid={!!errors.fullName} className="w-full">
                                 <Input
                                     variant="bordered"
                                     radius="md"
                                     placeholder="John Doe"
+                                    className={'dark:bg-white/20'}
                                     {...register("fullName", { required: true })}
                                 />
                                 {errors.fullName && <FieldError className="mt-1 text-xs text-red-500">Name required</FieldError>}
@@ -170,7 +171,7 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Email Address</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Email Address</Label>
                             <TextField
                                 isRequired
                                 isInvalid={!!errors.email}
@@ -187,6 +188,7 @@ export default function RegistrationForm() {
                                     variant="bordered"
                                     radius="md"
                                     placeholder="user@example.com"
+                                    className={'dark:bg-white/20'}
                                     {...register("email", { required: true })}
                                 />
                                 {errors.email && <FieldError className="mt-1 text-xs text-red-500">Email required</FieldError>}
@@ -197,10 +199,10 @@ export default function RegistrationForm() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Profile Image</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Profile Image</Label>
                             <TextField isRequired className="w-full">
                                 <input
-                                    className="w-full border border-gray-200 px-3 py-2 text-sm rounded-xl focus:outline-none  focus:ring-2 focus:ring-[#db0000]"
+                                    className="w-full border border-gray-200 dark:border-none dark:bg-white/20 px-3 py-2 text-sm rounded-xl focus:outline-none  focus:ring-2 focus:ring-[#db0000]"
                                     name="image"
                                     type="file"
                                     {...register("image", { required: true })}
@@ -209,7 +211,7 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Gender</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Gender</Label>
                             <Controller
                                 isRequired
                                 name="gender"
@@ -217,7 +219,7 @@ export default function RegistrationForm() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="w-full border border-gray-200 bg-transparent px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#db0000]"
+                                        className="w-full border border-gray-200 dark:border-none dark:bg-white/20 bg-transparent px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#db0000]"
                                     >
                                         <option value="">Select gender</option>
                                         {GENDERS.map((gender) => (
@@ -233,7 +235,7 @@ export default function RegistrationForm() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">District</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">District</Label>
                             <Controller
                                 isRequired
                                 name="district"
@@ -241,7 +243,7 @@ export default function RegistrationForm() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="w-full border border-gray-200 bg-transparent px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#db0000]"
+                                        className="w-full border border-gray-200 dark:border-none dark:bg-white/20 bg-transparent px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#db0000]"
                                         onChange={(e) => {
                                             field.onChange(e.target.value);
                                             setValue("upazila", "");
@@ -259,7 +261,7 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Upazila</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Upazila</Label>
                             <Controller
                                 isRequired
                                 name="upazila"
@@ -267,7 +269,7 @@ export default function RegistrationForm() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="w-full border border-gray-200 bg-transparent px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#db0000]"
+                                        className="w-full border border-gray-200 dark:border-none dark:bg-white/20 bg-transparent px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#db0000]"
                                     >
                                         <option value="">Select upazila</option>
                                         {filteredUpazilas.map((upazila) => (
@@ -282,7 +284,7 @@ export default function RegistrationForm() {
                     </div>
 
                     <div className="flex flex-col gap-1.5 w-full">
-                        <Label className="text-xs font-semibold text-slate-700">Blood Group</Label>
+                        <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Blood Group</Label>
                         <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 mt-1">
                             {BLOOD_GROUPS.map((bloodgroup) => (
                                 <button
@@ -290,8 +292,8 @@ export default function RegistrationForm() {
                                     type="button"
                                     onClick={() => setValue("bloodGroup", bloodgroup)}
                                     className={`rounded-md border py-2 text-center text-sm font-semibold transition-all hover:cursor-pointer ${selectedBloodGroup === bloodgroup
-                                        ? "border-[#114b5f] bg-[#114b5f] text-white"
-                                        : "border-gray-200 bg-white text-slate-600 hover:border-[#114b5f] hover:text-[#114b5f]"
+                                        ? "border-[#db0000] bg-[#db0000] text-white"
+                                        : "border-gray-200 bg-white dark:bg-white/20 dark:text-white/85 text-gray-600 hover:border-[#db0000] hover:text-[#db0000]"
                                         }`}
                                 >
                                     {bloodgroup}
@@ -302,7 +304,7 @@ export default function RegistrationForm() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full mt-2">
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Password</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Password</Label>
                             <TextField
                                 isRequired
                                 minLength={8}
@@ -319,6 +321,7 @@ export default function RegistrationForm() {
                                     type="password"
                                     variant="bordered"
                                     radius="md"
+                                    className={'dark:bg-white/20'}
                                     placeholder="Enter password"
                                     {...register("password", { required: true })}
                                 />
@@ -329,12 +332,13 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <Label className="text-xs font-semibold text-slate-700">Confirm Password</Label>
+                            <Label className="text-xs font-semibold text-slate-700 dark:text-gray-300">Confirm Password</Label>
                             <TextField isRequired className="w-full">
                                 <Input
                                     type="password"
                                     variant="bordered"
                                     radius="md"
+                                    className={'dark:bg-white/20'}
                                     placeholder="Confirm password"
                                     {...register("confirmPassword", { required: true })}
                                 />
@@ -357,7 +361,7 @@ export default function RegistrationForm() {
                         </Button>
                     </div>
 
-                    <div className="mt-2 text-center text-xs font-medium text-slate-500">
+                    <div className="mt-2 text-center text-xs font-medium text-slate-500 dark:text-gray-300">
                         Already have an account?{" "}
                         <Link href="/login" className="font-semibold text-[#db0000] hover:underline">
                             Log In

@@ -236,7 +236,7 @@ const Navbar = () => {
 
 
             {isMenuOpen && (
-                <div className="md:hidden bg-white dark:bg-white/4 border-b border-slate-100 px-4 pt-2 pb-4 space-y-2 shadow-inner animate-in fade-in slide-in-from-top-5 duration-200">
+                <div className="md:hidden bg-white dark:bg-black border-b border-slate-100 px-4 pt-2 pb-4 space-y-2 shadow-inner animate-in fade-in slide-in-from-top-5 duration-200">
                     <Link
                         href="/"
                         onClick={() => setIsMenuOpen(false)}

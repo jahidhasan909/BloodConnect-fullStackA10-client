@@ -132,7 +132,7 @@ export default function DashboardSidebar() {
 
                 <nav className="flex flex-col flex-grow gap-1">
                     {navItems.map((item) => (
-                        <Link key={item.label} href={item.link} className={`block  rounded-xl hover:bg-white/16 w-full ${pathname === item.link ? "bg-[#db0000] font-semibold text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2 dark:text-white/85 text-slate-600"}`}>
+                        <Link key={item.label} href={item.link} className={`block  rounded-xl dark:hover:bg-white/16 hover:bg-red-300 w-full ${pathname === item.link ? "bg-[#db0000] font-semibold text-white py-2 px-3 flex items-center gap-1" : "flex gap-1 items-center px-3 py-2 dark:text-white/85 text-slate-600"}`}>
                             <item.icon className="w-4 h-4 " />
                             {item.label}
                         </Link>

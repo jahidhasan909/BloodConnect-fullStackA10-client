@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export function DonationConfirmeModal({ donationRequest }) {
 
@@ -18,6 +19,8 @@ export function DonationConfirmeModal({ donationRequest }) {
     const user = data?.user
 
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL
+
+    const router = useRouter()
 
 
     const handleDonorConfrim = async (id) => {
@@ -39,9 +42,10 @@ export function DonationConfirmeModal({ donationRequest }) {
             const updatedData = await res.json();
 
             if (updatedData) {
+                router.refresh('/donationrequest')
                 toast.success('Thank you! Your blood donation has been confirmed successfully.')
             }
-           
+
 
 
         } catch (err) {
@@ -78,6 +82,7 @@ export function DonationConfirmeModal({ donationRequest }) {
 
 
                 <Button
+
                     className="relative font-bold bg-[#db0000] hover:bg-[#db00008b] text-white font-semibold text-base h-12 px-8 rounded-md transition-all flex items-center justify-center gap-2 w-full "
                 >
                     <svg className="w-5 animate-pulse h-5 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">

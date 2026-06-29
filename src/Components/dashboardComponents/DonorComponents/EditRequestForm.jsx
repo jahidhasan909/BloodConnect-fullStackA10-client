@@ -9,6 +9,7 @@ import Loader from '@/Components/Shared/Loading';
 import { ArrowLeft } from '@gravity-ui/icons';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion'
 
 const EditRequestForm = ({ id }) => {
     const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -143,11 +144,11 @@ const EditRequestForm = ({ id }) => {
                 router.refresh();
             } else {
                 toast.error('"Failed to update donation request."')
-                
+
             }
         } catch (error) {
             toast.error("Error updating request:", error)
-            
+
         } finally {
             setSubmitting(false);
         }
@@ -165,22 +166,23 @@ const EditRequestForm = ({ id }) => {
     }
 
     return (
-        <div>
-            <Form className="space-y-5" onSubmit={handleSubmit(onFormSubmit)}>
+        <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
+            <Form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit(onFormSubmit)}>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                    <TextField isInvalid={!!errors.recipientName}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                    {/* Recipient Name */}
+                    <TextField className="w-full" isInvalid={!!errors.recipientName}>
                         <Label className="text-xs font-bold dark:text-slate-300">Recipient Name</Label>
                         <Input
                             {...register("recipientName", { required: "Recipient name is required" })}
-                            placeholder="Enter recipient name" className={'dark:bg-white/17'}
+                            placeholder="Enter recipient name" 
+                            className={'w-full dark:bg-white/17'}
                         />
                         <FieldError>{errors.recipientName?.message}</FieldError>
                     </TextField>
 
                     {/* Blood Group */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-full">
                         <Label className="text-xs font-bold dark:text-slate-300">Blood Group</Label>
                         <select
                             {...register("bloodGroup", { required: "Blood group is required" })}
@@ -198,8 +200,8 @@ const EditRequestForm = ({ id }) => {
                 </div>
 
                 {/* Date and Time */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 items-end z-50">
-                    <div className="flex flex-col gap-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 items-end z-50">
+                    <div className="flex flex-col gap-1 w-full">
                         <Label className="text-xs font-bold dark:text-slate-300">Donation Date</Label>
                         <Controller
                             name="donationDate"
@@ -211,7 +213,7 @@ const EditRequestForm = ({ id }) => {
                                     value={field.value || null}
                                     onChange={field.onChange}
                                 >
-                                    <DateField.Group className="border rounded-xl dark:bg-white/17 border-gray-100 dark:border-none">
+                                    <DateField.Group className="w-full border rounded-xl dark:bg-white/17 border-gray-100 dark:border-none">
                                         <DateField.Input>
                                             {(segment) => <DateField.Segment segment={segment} />}
                                         </DateField.Input>
@@ -236,9 +238,9 @@ const EditRequestForm = ({ id }) => {
                         {errors.donationDate && <span className="text-xs text-red-500">{errors.donationDate.message}</span>}
                     </div>
 
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-full">
                         <Label className="text-xs font-bold dark:text-slate-300">Donation Time</Label>
-                        <TextField className={'z-50'}>
+                        <TextField className={'w-full z-50'}>
                             <input
                                 type="time"
                                 {...register("donationTime", {
@@ -252,15 +254,14 @@ const EditRequestForm = ({ id }) => {
                 </div>
 
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                     {/* District Dropdown */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-full">
                         <Label className="text-xs font-bold dark:text-slate-300">District</Label>
                         <select
                             {...register("district", {
                                 required: "District is required",
                                 onChange: () => {
-
                                     setValue("upazila", "");
                                 }
                             })}
@@ -277,7 +278,7 @@ const EditRequestForm = ({ id }) => {
                     </div>
 
                     {/* Upazila Dropdown */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-full">
                         <Label className="text-xs font-bold dark:text-slate-300">Upazila</Label>
                         <select
                             {...register("upazila", { required: "Upazila is required" })}
@@ -294,58 +295,68 @@ const EditRequestForm = ({ id }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                     {/* Hospital Name */}
-                    <TextField isInvalid={!!errors.hospitalName}>
+                    <TextField className="w-full" isInvalid={!!errors.hospitalName}>
                         <Label className="text-xs font-bold dark:text-slate-300">Hospital Name</Label>
                         <Input
                             {...register("hospitalName", { required: "Hospital name is required" })}
                             placeholder="Enter hospital name"
-                            className={'dark:bg-white/17'}
+                            className={'w-full dark:bg-white/17'}
                         />
                         <FieldError>{errors.hospitalName?.message}</FieldError>
                     </TextField>
 
                     {/* Full Address Line */}
-                    <TextField isInvalid={!!errors.fullAddressLine}>
+                    <TextField className="w-full" isInvalid={!!errors.fullAddressLine}>
                         <Label className="text-xs font-bold dark:text-slate-300">Full Address</Label>
                         <Input
                             {...register("fullAddressLine", { required: "Full address is required" })}
                             placeholder="Specific location details"
-                            className={'dark:bg-white/17'}
+                            className={'w-full dark:bg-white/17'}
                         />
                         <FieldError>{errors.fullAddressLine?.message}</FieldError>
                     </TextField>
                 </div>
 
                 {/* Request Message */}
-                <TextField isInvalid={!!errors.requestMessage}>
+                <TextField className="w-full" isInvalid={!!errors.requestMessage}>
                     <Label className="text-xs font-bold dark:text-slate-300">Request Message</Label>
                     <Input
                         {...register("requestMessage", { required: "Message is required" })}
                         placeholder="Explain why blood is needed..."
-                        className={'dark:bg-white/17'}
+                        className={'w-full dark:bg-white/17'}
                     />
                     <FieldError>{errors.requestMessage?.message}</FieldError>
                 </TextField>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-slate-100 mt-2">
+                <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-100 dark:border-slate-800 mt-4">
+                    
+                    <div className='relative group p-1 rounded-lg overflow-hidden w-full sm:w-auto'>
+                        <motion.span
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
+                        />
+                        <Button
+                            type="submit"
+                            className="relative bg-[#db0000] hover:bg-[#db00008b] text-white font-semibold text-base h-12 px-8 rounded-lg transition-all flex items-center justify-center gap-2 w-full"
+                            isLoading={submitting}
+                        >
+                            Update Request
+                        </Button>
+                    </div>
+
                     <Button
-                        type="submit"
-                        className="bg-[#db0000] text-white font-semibold hover:bg-red-700 transition-colors"
-                        isLoading={submitting}
-                    >
-                        Update Donation Request
-                    </Button>
-                    <Button
-                        className={'text-black dark:text-white'}
+                        className={'text-black dark:text-white rounded-lg h-12 px-8 w-full sm:w-auto border border-slate-200 dark:border-slate-700 bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800'}
                         type="button"
                         variant="secondary"
                         onClick={() => router.push(`/dashboard/${user.role}/my-donation-requests`)}
                     >
                         Cancel
                     </Button>
+
                 </div>
             </Form>
         </div>

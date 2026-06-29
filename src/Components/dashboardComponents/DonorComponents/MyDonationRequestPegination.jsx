@@ -95,7 +95,7 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     return (
         <div className='bg-white/10'>
 
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20  relative">
+        <div className="py-20 md:py-6 lg:py-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20  relative">
 
             <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100   flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>

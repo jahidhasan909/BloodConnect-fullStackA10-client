@@ -18,7 +18,7 @@ const Footer = () => {
 
     return (
 
-        <footer className="relative w-full bg-[#f8fafc] dark:bg-white/20  text-slate-600 pt-12 pb-8 font-sans overflow-hidden select-none">
+        <footer className="relative w-full bg-[#f8fafc] dark:bg-white/20  text-slate-600 pt-12 md:pb-8 font-sans overflow-hidden select-none">
 
             <motion.div
                 initial={{ opacity: 0, y: 40 }}

@@ -95,7 +95,7 @@ export default function AdminHomeAllCards() {
     return (
         <div className='dark:bg-white/20 bg-white'>
 
-            <div className="w-full min-h-screen   mx-auto py-6 ">
+            <div className="w-full min-h-screen   mx-auto py-20 md:py-6 ">
 
 
                 <section className="bg-gradient-to-r max-w-7xl  mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-10 rounded-2xl  shadow-sm">
@@ -104,7 +104,7 @@ export default function AdminHomeAllCards() {
                             <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                                 Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
                             </h1>
-                            <p className="text-[1rem] md:text-sm text-slate-500 dark:text-gray-300 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
+                            <p className="md:text-[1rem] text-sm text-slate-500 dark:text-gray-300 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
                         </div>
                         <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
                     </div>

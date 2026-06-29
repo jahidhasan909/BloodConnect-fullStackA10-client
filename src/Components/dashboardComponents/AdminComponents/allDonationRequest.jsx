@@ -94,7 +94,7 @@ const AllDonationRequestAdminDashboard = ({ donationRequest }) => {
     return (
         <div className='bg-white/10'>
 
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative ">
+        <div className="py-17 md:py-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative ">
             
             {activeMenuId !== null && (
                 <div

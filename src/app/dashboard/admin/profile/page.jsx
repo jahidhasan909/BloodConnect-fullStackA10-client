@@ -32,7 +32,7 @@ const AdminProfilepage = async () => {
                         <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                             Profile Settings
                         </h1>
-                        <p className="text-[1rem] md:text-sm text-slate-500 mt-1">View and update your personal information and account details.</p>
+                        <p className="md:text-[1rem]  text-sm text-slate-500 dark:text-gray-300 mt-1">View and update your personal information and account details.</p>
                     </div>
 
                     <h1 className='  uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>

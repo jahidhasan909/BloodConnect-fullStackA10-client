@@ -26,12 +26,12 @@ const DonationDetailspage = async ({ params }) => {
 
 
     return (
-        <div className="min-h-screen p-4 md:py-10 bg-slate-50/50 dark:bg-white/10">
+        <div className="min-h-screen py-22 md:py-10 bg-slate-50/50 dark:bg-white/10">
 
            <div className='mx-auto max-w-7xl'>
              <div className='text-center'>
                 <h1 className='text-4xl font-bold'>Request Overview</h1>
-                <p className='text-[1rem] mt-2 text-gray-500 dark:text-gray-300'>View complete details before confirming your blood donation.</p>
+                <p className='text-xs md:text-[1rem] mt-2 text-gray-500 dark:text-gray-300'>View complete details before confirming your blood donation.</p>
             </div>
 
             <Card className="mx-auto mt-8 rounded-[32px] relative  overflow-hidden border border-slate-200 bg-white dark:bg-white/20 p-8 shadow-sm">

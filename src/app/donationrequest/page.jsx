@@ -15,7 +15,7 @@ const DonationRequestpage = async () => {
 
 
     return (
-        <div className="min-h-screen p-4 md:py-40 bg-slate-50/50 dark:bg-white/10 pb-30">
+        <div className="min-h-screen py-28 md:py-40 bg-slate-50/50 dark:bg-white/10 pb-30">
             <div className="max-w-7xl mx-auto space-y-8">
 
 
@@ -23,7 +23,7 @@ const DonationRequestpage = async () => {
                     <h1 className="text-2xl md:text-4xl  font-black text-slate-900 dark:text-white tracking-tight">
                       Blood Donation Requests
                     </h1>
-                    <p className="text-[1rem] text-gray-500 dark:text-gray-300">
+                    <p className="text-xs px-2 md:text-[1rem] text-gray-500 dark:text-gray-300">
                        Find active blood donation requests, review the details, and donate blood to support <br /> patients in urgent need.
                     </p>
                 </div>

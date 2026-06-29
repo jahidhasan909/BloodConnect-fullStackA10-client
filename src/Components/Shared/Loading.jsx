@@ -39,17 +39,17 @@ export default function Loader() {
         </div>
 
         <motion.h1
-          className="text-2xl font-bold tracking-wide text-gray-900"
+          className="text-2xl font-bold tracking-wide text-gray-900 dark:text-white"
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="text-[#db0000]">Blood</span>Connect
+          <span className="text-[#db0000] ">Blood</span>Connect
         </motion.h1>
 
         
         <motion.p
-          className="text-sm text-gray-600 uppercase"
+          className="text-sm text-gray-600 dark:text-gray-300 uppercase"
           animate={{
             opacity: [0.6, 1, 0.6],
           }}

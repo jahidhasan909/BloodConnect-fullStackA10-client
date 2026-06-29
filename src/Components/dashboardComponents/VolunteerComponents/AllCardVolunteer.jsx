@@ -93,7 +93,7 @@ export default function VolunteerAllCard() {
     }
 
     return (
-        <div className="w-full min-h-screen dark:bg-white/20 bg-white  pt-10">
+        <div className="w-full min-h-screen dark:bg-white/20 bg-white py-22  md:pt-10">
 
 
             <section className="bg-gradient-to-r max-w-7xl mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-12 rounded-2xl   shadow-sm">
@@ -102,7 +102,7 @@ export default function VolunteerAllCard() {
                         <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                             Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
                         </h1>
-                        <p className="text-[1rem] md:text-sm text-slate-500 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
+                        <p className= "text-xs dark:text-gray-300 md:text-[1rem] md:text-sm text-slate-500 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
                     </div>
                     <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
                 </div>

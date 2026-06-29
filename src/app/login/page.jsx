@@ -43,7 +43,7 @@ export default function DonorLogin() {
     };
 
     return (
-        <div className="flex min-h-screen w-full bg-white font-sans">
+        <div className="flex min-h-screen w-full bg-white dark:bg-white/20 font-sans">
 
             {/* Left Side */}
             <div className="relative flex w-full flex-col justify-center px-8 md:w-1/2 lg:px-24">
@@ -57,10 +57,10 @@ export default function DonorLogin() {
                 />
 
                 <div className="mx-auto w-full max-w-sm text-left z-50">
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                         Welcome Back!
                     </h1>
-                    <p className="mt-2 text-sm text-slate-500">
+                    <p className="mt-2 text-sm text-slate-500 dark:text-gray-300">
                         Sign in to access your donor dashboard and continue your life-saving journey.
                     </p>
                 </div>
@@ -71,7 +71,7 @@ export default function DonorLogin() {
                     validationBehavior="native"
                 >
                     <div className="flex flex-col gap-1.5 w-full">
-                        <Label htmlFor="email" className="text-xs font-semibold text-slate-700">
+                        <Label htmlFor="email" className="text-xs font-semibold text-slate-700 dark:text-gray-300">
                             Email Address
                         </Label>
                         <TextField
@@ -90,7 +90,7 @@ export default function DonorLogin() {
                                 placeholder="user@example.com"
                                 variant="bordered"
                                 radius="md"
-                                className="w-full"
+                                className="w-full dark:bg-white/13"
                                 {...register("email", { required: true })}
                             />
                             <FieldError className="mt-1 text-xs text-red-500" />
@@ -99,7 +99,7 @@ export default function DonorLogin() {
 
                     <div className="flex flex-col gap-1.5 w-full">
                         <div className="flex items-center justify-between">
-                            <Label htmlFor="password" className="text-xs font-semibold text-slate-700">
+                            <Label htmlFor="password" className="text-xs font-semibold dark:text-gray-300 text-slate-700">
                                 Password
                             </Label>
 
@@ -124,7 +124,7 @@ export default function DonorLogin() {
                                 placeholder="Enter your password"
                                 variant="bordered"
                                 radius="md"
-                                className="w-full"
+                                className="w-full dark:bg-white/13"
                                 {...register("password", { required: true })}
                             />
                             <FieldError className="mt-1 text-xs text-red-500" />
@@ -162,7 +162,7 @@ export default function DonorLogin() {
 
 
 
-                    <div className="mt-4 text-center text-xs font-medium text-slate-500">
+                    <div className="mt-4 text-center text-xs font-medium text-slate-500 dark:text-gray-300">
                         Don't have an account?{" "}
                         <Link href="/registration" className="font-semibold text-[#db0000] hover:underline">
                             Registration

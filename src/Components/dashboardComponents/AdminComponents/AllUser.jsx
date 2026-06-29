@@ -177,7 +177,7 @@ const AllUsersManagementPage = ({ Users }) => {
     return (
         <div className='dark:bg-white/10'>
 
-        <div className="px-10 py-10    lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
+        <div className="px-10 py-17 md:py-10    lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
 
             {activeMenuId !== null && (
                 <div
@@ -191,7 +191,7 @@ const AllUsersManagementPage = ({ Users }) => {
                     <h1 className="text-xl md:text-3xl font-bold">
                         User Management Panel <span className="text-red-500 font-extrabold">(Admin)</span>
                     </h1>
-                    <p className="text-xs md:text-[1rem] text-gray-500 mt-1">Manage user roles, statuses, and permissions across the platform.</p>
+                    <p className="text-xs md:text-[1rem] text-gray-500 dark:text-white mt-1">Manage user roles, statuses, and permissions across the platform.</p>
                 </div>
 
                 <div className="flex bg-[#db0000]/10 p-1 rounded-xl border border-red-50 self-start md:self-auto">

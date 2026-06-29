@@ -70,14 +70,14 @@ const SearchDonor = ({ donors = [] }) => {
     return (
         <div className='dark:bg-white/10'>
 
-        <div className="max-w-6xl mx-auto p-4 md:py-40 space-y-8 min-h-screen ">
+        <div className="max-w-6xl mx-auto py-28 md:py-40 space-y-8 min-h-screen ">
 
             <div className="mb-6 text-center">
                 <h2 className="text-xl md:text-4xl font-bold text-slate-800 dark:text-white gap-2">
 
                     Find a Blood Donor
                 </h2>
-                <p className="text-[1rem] md:text-[1rem] text-slate-400 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
+                <p className=" text-xs   md:text-[1rem] text-slate-400 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
             </div>
 
 

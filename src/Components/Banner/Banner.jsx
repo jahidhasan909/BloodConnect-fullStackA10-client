@@ -11,7 +11,7 @@ const HeroBanner = () => {
 
 
     return (
-        <div className="relative w-full min-h-screen  overflow-hidden flex flex-col justify-between p-6 md:p-16 lg:p-20 font-sans">
+        <div className="relative w-full min-h-screen  overflow-hidden flex flex-col justify-between p-6 md:p-16 lg:p-20 font-sans mt-17 md:mt-0">
 
             
             <motion.div
@@ -29,7 +29,7 @@ const HeroBanner = () => {
                     </svg>
 
 
-                    <svg className="absolute animate-floating top-32 right-32 w-28 h-28 text-rose-200 stroke-current opacity-40" fill="none" viewBox="0 0 24 24" strokeWidth="0.5">
+                    <svg className="absolute hidden md:block animate-floating top-32 right-32 w-28 h-28 text-rose-200 stroke-current opacity-40" fill="none" viewBox="0 0 24 24" strokeWidth="0.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M7 12h2l2-4 2 8 2-4h2" />
                     </svg>
@@ -40,7 +40,7 @@ const HeroBanner = () => {
                     </svg>
 
 
-                    <svg className="absolute animate-floating top-1/4 left-1/2 ml-10 w-16 h-16 text-rose-200 stroke-current -rotate-45 opacity-50" fill="none" viewBox="0 0 24 24" strokeWidth="1">
+                    <svg className="absolute hidden md:block animate-floating top-1/4 left-1/2 ml-10 w-16 h-16 text-rose-200 stroke-current -rotate-45 opacity-50" fill="none" viewBox="0 0 24 24" strokeWidth="1">
                         <rect x="5" y="8" width="14" height="8" rx="4" />
                         <line x1="12" y1="8" x2="12" y2="16" />
                     </svg>
@@ -75,7 +75,7 @@ const HeroBanner = () => {
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
 
-                <div className="w-full ml-10 mt-4 md:mt-10 text-black dark:text-white z-10 relative">
+                <div className="w-full md:ml-10 mt-4 md:mt-10 text-black dark:text-white z-10 relative">
                     <h1 className="text-4xl sm:text-4xl md:text-8xl font-medium tracking-tight leading-[1.05]">
                         One drop can <br />
                         <span className="text-[#db0000]">save</span> a life.
@@ -90,7 +90,7 @@ const HeroBanner = () => {
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
 
-                <div className="w-full flex items-center justify-center py-2 md:py-4 -mt-8 mx-auto z-10 relative">
+                <div className="w-full flex items-center justify-center py-2 md:py-4 mx-auto z-10 relative mt-5 md:-mt-8 ">
                     <div className="relative w-full text-center pointer-events-none z-0 flex items-center justify-center">
                         <span className="text-[11vw] font-black tracking-tighter  text-rose-900/[0.06] uppercase dark:text-rose-300/[0.10] block leading-none translate-y-[15%] select-none animate-floating">
                             BloodConnect
@@ -161,7 +161,7 @@ const HeroBanner = () => {
 
                         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
 
-                            <Link href="/registration" className="relative inline-block p-[2px] overflow-hidden rounded-md group">
+                            <Link href="/registration" className="relative inline-block p-[2px] overflow-hidden rounded-lg group">
 
                                 <motion.span
                                     animate={{ rotate: 360 }}
@@ -171,7 +171,7 @@ const HeroBanner = () => {
 
 
                                 <Button
-                                    className="relative bg-[#db0000] hover:bg-[#db00008b] text-white font-semibold text-base h-12 px-8 rounded-md transition-all flex items-center justify-center gap-2 w-full "
+                                    className="relative bg-[#db0000] hover:bg-[#db00008b] text-white font-semibold text-base h-12 px-8 rounded-lg transition-all flex items-center justify-center gap-2 w-full "
                                 >
                                     <svg className="w-5 animate-pulse h-5 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />

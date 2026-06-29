@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card, Button } from "@heroui/react";
 import Link from 'next/link';
+import { motion } from "framer-motion";
 
 const DonationRequestCard = ({ request }) => {
     return (
@@ -53,9 +54,14 @@ const DonationRequestCard = ({ request }) => {
 
 
             <div className="pt-5 mt-auto">
-                <Link href={`/donationrequest/${request._id}`} passHref className="w-full block">
+                <Link href={`/donationrequest/${request._id}`} passHref className="w-full block relative overflow-hidden p-1 rounded-lg">
+                    <motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#E11D48_50%,#E2E8F0_100%)]"
+                    />
                     <Button
-                        className="w-full bg-[#db0000] hover:bg-red-300 text-white dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 rounded-xl text-xs font-semibold h-9 shadow-xs"
+                        className="relative bg-[#db0000] hover:bg-[#db00008b] text-white font-semibold text-base h-12 px-8 rounded-lg transition-all flex items-center justify-center gap-2 w-full "
                     >
                         View Details
                     </Button>
