@@ -11,6 +11,8 @@ const DonationRequestpage = async () => {
 
     const pendingRequests = donationRequest.filter(req => req.donationStatus === 'pending')
 
+    
+    
 
 
 
@@ -21,10 +23,10 @@ const DonationRequestpage = async () => {
 
                 <div className="space-y-2 text-center mb-12">
                     <h1 className="text-2xl md:text-4xl  font-black text-slate-900 dark:text-white tracking-tight">
-                      Blood Donation Requests
+                        Blood Donation Requests
                     </h1>
                     <p className="text-xs px-2 md:text-[1rem] text-gray-500 dark:text-gray-300">
-                       Find active blood donation requests, review the details, and donate blood to support <br /> patients in urgent need.
+                        Find active blood donation requests, review the details, and donate blood to support <br /> patients in urgent need.
                     </p>
                 </div>
 
@@ -32,9 +34,9 @@ const DonationRequestpage = async () => {
                     <NoRequestsFound></NoRequestsFound>
                 ) : (
 
-                    
-                       <MotionWtihCard pendingRequests={pendingRequests}></MotionWtihCard>
-                   
+
+                    <MotionWtihCard pendingRequests={pendingRequests}></MotionWtihCard>
+
                 )}
 
             </div>

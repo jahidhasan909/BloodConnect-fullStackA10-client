@@ -23,6 +23,7 @@ import Loader from "@/Components/Shared/Loading";
 import toast from "react-hot-toast";
 import BlockedUser from "@/Components/Shared/Blockuser";
 import { motion } from 'framer-motion'
+import { useRouter } from "next/navigation";
 
 
 
@@ -39,6 +40,7 @@ export default function CreateDonationRequestAdmin() {
         reset
     } = useForm();
 
+    const router = useRouter()
 
 
 
@@ -149,7 +151,7 @@ export default function CreateDonationRequestAdmin() {
         const requestData = await res.json()
 
         if (requestData.insertedId) {
-
+            router.refresh('/donationrequest')
             toast.success('Blood donation request created successfully!')
             reset();
         }
