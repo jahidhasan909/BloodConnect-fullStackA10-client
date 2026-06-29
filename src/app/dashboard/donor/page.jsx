@@ -36,12 +36,14 @@ const DonorDashboardPage = () => {
 
 
     const handleStatusUpdate = async (id, newStatus) => {
+        const { data: tokenData } = await authClient.token()
         if (newStatus === 'done' || newStatus === 'canceled') {
             try {
 
                 const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
                     method: 'PATCH',
                     headers: {
+                        authorization: `Bearer ${tokenData?.token}`,
                         'Content-Type': 'application/json'
                     }
                 });

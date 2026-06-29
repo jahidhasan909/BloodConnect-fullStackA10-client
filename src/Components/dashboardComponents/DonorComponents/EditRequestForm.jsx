@@ -134,7 +134,7 @@ const EditRequestForm = ({ id }) => {
             const res = await fetch(`${baseurl}/api/donationrequest/edit/${id}`, {
                 method: 'PATCH',
                 headers: {
-                    authorization: `Bearar ${tokenData?.token}`,
+                    authorization: `Bearer ${tokenData?.token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(finalPayload),

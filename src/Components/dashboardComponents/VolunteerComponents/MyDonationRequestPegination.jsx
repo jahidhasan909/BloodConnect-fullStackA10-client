@@ -39,7 +39,7 @@ const MyDonationRequestPeginationVolunteer = ({ donationRequest, user }) => {
                 const res = await fetch(`${baseurl}/api/donationrequest/${newStatus}/${id}`, {
                     method: 'PATCH',
                     headers: {
-                        authorization: `Bearar ${tokenData?.token}`,
+                        authorization: `Bearer ${tokenData?.token}`,
                         'Content-Type': 'application/json'
                     }
                 });
