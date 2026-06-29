@@ -111,6 +111,7 @@ const EditRequestForm = ({ id }) => {
     );
 
     const onFormSubmit = async (data) => {
+        const { data: tokenData } = await authClient.token()
         setSubmitting(true);
 
 
@@ -133,6 +134,7 @@ const EditRequestForm = ({ id }) => {
             const res = await fetch(`${baseurl}/api/donationrequest/edit/${id}`, {
                 method: 'PATCH',
                 headers: {
+                    authorization: `Bearar ${tokenData?.token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(finalPayload),
@@ -175,7 +177,7 @@ const EditRequestForm = ({ id }) => {
                         <Label className="text-xs font-bold dark:text-slate-300">Recipient Name</Label>
                         <Input
                             {...register("recipientName", { required: "Recipient name is required" })}
-                            placeholder="Enter recipient name" 
+                            placeholder="Enter recipient name"
                             className={'w-full dark:bg-white/17'}
                         />
                         <FieldError>{errors.recipientName?.message}</FieldError>
@@ -332,7 +334,7 @@ const EditRequestForm = ({ id }) => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-100 dark:border-slate-800 mt-4">
-                    
+
                     <div className='relative group p-1 rounded-lg overflow-hidden w-full sm:w-auto'>
                         <motion.span
                             animate={{ rotate: 360 }}
