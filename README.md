@@ -1,6 +1,6 @@
  * * * * * 🩸 BloodConnect - Blood Donation Platform 
 
-🔗 Live Site:                                                                 
+🔗 Live Site: https://blood-connect-full-stack-a10-client-3c0fux6xt.vercel.app                                                                
 
 * * Project Overview
 BloodConnect is a modern Full Stack Blood Donation Management Platform built with the MERN Stack.
