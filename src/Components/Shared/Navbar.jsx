@@ -65,12 +65,12 @@ const Navbar = () => {
 
 
                     <Link href="/" className="flex items-center  flex-shrink-0 ">
-                        <Image width={34} height={33} alt='logo' className='w-full object-cover mt-2 h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
-                        <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight ">
+                        <Image width={34} height={33} alt='logo' className='w-full object-cover mt-2 h-[35px] md:h-[50px]' src={'https://i.ibb.co.com/Jj3R0f8L/blood-donation-logo-template-vector-35411128-Photoroom-removebg-preview.png'}></Image>
+                        <span className="text-sm lg:text-xl font-bold text-slate-900 dark:text-white tracking-tight ">
                             <span className='text-[#db0000]'>Blood</span>Connect </span>
                     </Link>
 
-                    <div className="hidden lg:flex items-center gap-8">
+                    <div className="hidden lg:flex items-center  gap-8">
                         <Link href="/" className={linkClass('/')}>Home</Link>
                         <Link href="/donationrequest" className={linkClass('/donationrequest')}>Donation Requests</Link>
                         <Link href="/searchdonor" className={linkClass('/searchdonor')}>Search Donor</Link>
@@ -151,7 +151,7 @@ const Navbar = () => {
                     </div>
 
 
-                    <div className="lg:hidden flex items-center gap-4">
+                    <div className="lg:hidden flex items-center gap-2">
                         <ThemeSwitch />
 
                         {!user ? (

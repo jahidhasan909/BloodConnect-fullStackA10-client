@@ -77,7 +77,7 @@ const SearchDonor = ({ donors = [] }) => {
 
                     Find a Blood Donor
                 </h2>
-                <p className=" text-xs    md:text-[1rem] text-gray-500 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
+                <p className=" text-xs   md:text-[1rem] text-gray-500 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
             </div>
 
 
