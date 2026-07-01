@@ -93,89 +93,91 @@ export default function VolunteerAllCard() {
     }
 
     return (
-        <div className="w-full min-h-screen dark:bg-white/20 bg-white py-22  md:pt-10">
+        <div className="w-full min-h-screen dark:bg-white/20  bg-white py-17 px-2 lg:py-10">
 
+            <div className='max-w-11/12 mx-auto'>
 
-            <section className="bg-gradient-to-r max-w-7xl mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-12 rounded-2xl   shadow-sm">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                        <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
-                            Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
-                        </h1>
-                        <p className= "text-xs dark:text-gray-300 md:text-[1rem] md:text-sm text-slate-500 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
+                <section className="bg-gradient-to-r  from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-12 rounded-2xl   shadow-sm">
+                    <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div>
+                            <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
+                                Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
+                            </h1>
+                            <p className="text-xs  dark:text-gray-300 md:text-[1rem] lg:text-[1rem] text-slate-500 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
+                        </div>
+                        <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
                     </div>
-                    <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
-                </div>
-            </section>
+                </section>
 
 
-            <section className="text-slate-600 py-10 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
-                <div className="max-w-7xl mx-auto">
+                <section className="text-slate-600 py-10   select-none font-sans antialiased ">
+                    <div className="">
 
 
 
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {statsData.map((stat, index) => {
-                            const IconComponent = stat.icon;
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {statsData.map((stat, index) => {
+                                const IconComponent = stat.icon;
 
-                            return (
-                                <motion.div
-                                    key={stat.id}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: index * 0.15 }}
-                                    viewport={{ once: true }}
-                                    whileHover={{ y: -5, scale: 1.03 }}
-                                >
+                                return (
+                                    <motion.div
+                                        key={stat.id}
+                                        initial={{ opacity: 0, y: 40 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.5, delay: index * 0.15 }}
+                                        viewport={{ once: true }}
+                                        whileHover={{ y: -5, scale: 1.03 }}
+                                    >
 
-                                   <Card
-                                    key={stat.id}
-                                    className={`relative rounded-[2rem] p-8 transition-all duration-300 ease-out transform hover:-translate-y-1.5 overflow-hidden group ${stat.isHighlighted
-                                        ? 'bg-[#E11D48] dark:bg-white/10 text-white shadow-lg shadow-rose-600/10 border border-[#E11D48]'
-                                        : 'bg-white dark:bg-white/10 dark:text-white text-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)]'
-                                        }`}
-                                >
-                                    <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-[0.14]' : 'dark:text-white text-slate-900'
-                                        }`}>
-                                        <IconComponent className="w-32 h-32" />
-                                    </div>
+                                        <Card
+                                            key={stat.id}
+                                            className={`relative rounded-[2rem] p-8 transition-all duration-300 ease-out transform hover:-translate-y-1.5 overflow-hidden group ${stat.isHighlighted
+                                                ? 'bg-[#E11D48] dark:bg-white/10 text-white shadow-lg shadow-rose-600/10 border border-[#E11D48]'
+                                                : 'bg-white dark:bg-white/10 dark:text-white text-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)]'
+                                                }`}
+                                        >
+                                            <div className={`absolute -top-4 -right-4 p-4 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 ${stat.isHighlighted ? 'text-white opacity-[0.14]' : 'dark:text-white text-slate-900'
+                                                }`}>
+                                                <IconComponent className="w-32 h-32" />
+                                            </div>
 
-                                    <div className="flex items-center justify-between gap-4 mb-4">
-                                        <span className={`text-xs font-bold uppercase tracking-wider ${stat.isHighlighted ? 'text-rose-200 dark:text-white' : 'text-slate-400 dark:text-white'
-                                            }`}>
-                                            {stat.label}
-                                        </span>
-                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm border ${stat.isHighlighted
-                                            ? 'bg-rose-500/30 border-rose-400/20 text-white'
-                                            : 'bg-slate-50 dark:bg-white/20 dark:text-white  border-slate-100 text-slate-900'
-                                            }`}>
-                                            <IconComponent  className="w-5 h-5" />
-                                        </div>
-                                    </div>
+                                            <div className="flex items-center justify-between gap-4 mb-4">
+                                                <span className={`text-xs font-bold uppercase tracking-wider ${stat.isHighlighted ? 'text-rose-200 dark:text-white' : 'text-slate-400 dark:text-white'
+                                                    }`}>
+                                                    {stat.label}
+                                                </span>
+                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm border ${stat.isHighlighted
+                                                    ? 'bg-rose-500/30 border-rose-400/20 text-white'
+                                                    : 'bg-slate-50 dark:bg-white/20 dark:text-white  border-slate-100 text-slate-900'
+                                                    }`}>
+                                                    <IconComponent className="w-5 h-5" />
+                                                </div>
+                                            </div>
 
-                                    <div className="mt-2">
-                                        <h4 className={`text-3xl sm:text-4xl font-black tracking-tight leading-none ${stat.isHighlighted ? 'text-white' :  ' dark:text-white text-slate-900'
-                                            }`}>
-                                            {stat.count}
-                                        </h4>
-                                    </div>
+                                            <div className="mt-2">
+                                                <h4 className={`text-3xl sm:text-4xl font-black tracking-tight leading-none ${stat.isHighlighted ? 'text-white' : ' dark:text-white text-slate-900'
+                                                    }`}>
+                                                    {stat.count}
+                                                </h4>
+                                            </div>
 
-                                    <div className={`absolute bottom-0 left-8 right-8 h-[3px] rounded-t-full transition-opacity duration-300 opacity-0 group-hover:opacity-100 ${stat.isHighlighted ? 'bg-white/40' : 'bg-[#db0000]'
-                                        }`} />
-                                </Card>
-                                </motion.div>
-                            );
-                        })}
+                                            <div className={`absolute bottom-0 left-8 right-8 h-[3px] rounded-t-full transition-opacity duration-300 opacity-0 group-hover:opacity-100 ${stat.isHighlighted ? 'bg-white/40' : 'bg-[#db0000]'
+                                                }`} />
+                                        </Card>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                        <DashboardOverviewChart
+                            donors={usersBaseRole}
+                            requests={allBloodRequest}
+                            funding={totalFunding}
+                        />
+
                     </div>
-                    <DashboardOverviewChart
-                        donors={usersBaseRole}
-                        requests={allBloodRequest}
-                        funding={totalFunding}
-                    />
-
-                </div>
-            </section>
+                </section>
+            </div>
 
         </div>
     );

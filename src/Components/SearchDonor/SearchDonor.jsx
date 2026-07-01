@@ -70,18 +70,18 @@ const SearchDonor = ({ donors = [] }) => {
     return (
         <div className='dark:bg-white/10'>
 
-        <div className="max-w-6xl mx-auto py-28 md:py-40 space-y-8 min-h-screen ">
+        <div className="max-w-11/12 mx-auto py-28 md:py-40 space-y-8 min-h-screen ">
 
             <div className="mb-6 text-center">
-                <h2 className="text-xl md:text-4xl font-bold text-slate-800 dark:text-white gap-2">
+                <h2 className="text-2xl lg:text-4xl font-bold text-slate-800 dark:text-white gap-2">
 
                     Find a Blood Donor
                 </h2>
-                <p className=" text-xs   md:text-[1rem] text-slate-400 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
+                <p className=" text-xs    md:text-[1rem] text-gray-500 dark:text-gray-300 mt-2">Select blood group and location details to search available active donors.</p>
             </div>
 
 
-            <div className="bg-white dark:bg-white/20 rounded-2xl border border-slate-200  shadow-sm p-6 md:p-8">
+            <div className="bg-white dark:bg-white/20 rounded-2xl border border-slate-200  shadow-xs p-6 md:p-8">
 
 
                 <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">

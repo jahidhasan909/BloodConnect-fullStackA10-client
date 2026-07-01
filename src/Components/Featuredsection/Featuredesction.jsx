@@ -82,7 +82,7 @@ const FeaturedSection = () => {
 
     return (
         <section className="bg-slate-50 dark:bg-white/10 dark:mt-4 dark:rounded-t-2xl text-slate-600 py-24 px-4 sm:px-6 lg:px-8 select-none font-sans overflow-hidden antialiased">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-11/12 mx-auto">
 
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
@@ -92,10 +92,10 @@ const FeaturedSection = () => {
                 >
 
                 <div className="mb-10 space-y-3  text-center">
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                    <h2 className="lg:text-4xl text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
                         Why Choose BloodConnect
                     </h2>
-                    <p className="text-base sm:text-[1rem] text-gray-500 dark:text-gray-300  font-normal leading-relaxed">
+                    <p className="text-xs lg:text-[1rem] text-gray-500 dark:text-gray-300  font-normal leading-relaxed">
                         Connect with verified donors and get blood support when it matters most.
                     </p>
                 </div>
@@ -110,10 +110,10 @@ const FeaturedSection = () => {
                     viewport={{ once: true }}
                 >
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[280px] md:auto-rows-[300px]">
+                    <div className="grid grid-cols-1  lg:grid-cols-4 gap-6 auto-rows-[280px] md:auto-rows-[300px]">
 
 
-                        <div className="relative md:col-span-2 row-span-1 bg-white dark:bg-white/15 border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 flex flex-col justify-between overflow-hidden group">
+                        <div className="relative lg:col-span-2 row-span-1 bg-white dark:bg-white/15 border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 flex flex-col justify-between overflow-hidden group">
                             <div className="max-w-md space-y-3">
                                 <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 dark:text-white dark:bg-white/10 shadow-sm">
                                     <Search className="w-5 h-5" />
@@ -199,13 +199,13 @@ const FeaturedSection = () => {
                         </div>
 
 
-                        <div className="relative md:col-span-2 dark:bg-white/15 row-span-1 bg-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center gap-8 overflow-hidden">
+                        <div className="relative lg:col-span-2 dark:bg-white/15 row-span-1 bg-white border border-slate-200/60 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center gap-2 md:gap-8 overflow-hidden">
 
                             
                             <motion.div
                                 whileHover={{ scale: 1.05, rotate: 5 }}
                                 transition={{ type: "spring", stiffness: 300 }}
-                                className="relative flex-shrink-0 w-32 h-32 rounded-full border-4 border-slate-50 bg-slate-50/50 dark:bg-white/10 flex items-center justify-center p-2"
+                                className="relative overflow-hidden flex-shrink-0 md:w-32 md:h-32 rounded-full border-4 border-slate-50 bg-slate-50/50 dark:bg-white/10 flex items-center justify-center p-2"
                             >
                                 <div className="w-full h-full rounded-full bg-rose-50/50 border border-rose-100 dark:bg-white/5 flex flex-col items-center justify-center text-center">
                                     
@@ -229,13 +229,13 @@ const FeaturedSection = () => {
                                 <span className="inline-flex items-center gap-1 text-[10px] text-[#E11D48] bg-rose-50 dark:bg-white/13 font-bold uppercase tracking-wider px-2 py-0.5 rounded-md">
                                     Donation Requests
                                 </span>
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Explore Blood Requests</h3>
-                                <p className="text-xs text-slate-500 dark:text-gray-300 leading-relaxed max-w-md">
+                                <h3 className="text-md md:text-xl font-bold text-slate-900 dark:text-white tracking-tight">Explore Blood Requests</h3>
+                                <p className="text-[0.58rem] md:text-xs  text-slate-500 dark:text-gray-300 leading-relaxed max-w-md">
                                     Browse all active blood donation requests, check their current status, and find opportunities to help those in need.
                                 </p>
                             </div>
 
-                            <div className="absolute bottom-0 right-0 bg-slate-50 dark:bg-white/20 pl-4 pt-4 rounded-tl-[2rem] border-t border-l border-slate-100">
+                            <div className="absolute bottom-0  right-0 bg-slate-50 dark:bg-white/20 pl-4 pt-4 rounded-tl-[2rem] border-t border-l border-slate-100">
                                 <Link href={'/donationrequest'}>
                                     <button className="bg-white dark:bg-white/20 dark:text-white border border-slate-200 hover:border-rose-400 text-slate-700 text-xs font-bold px-5 py-3 rounded-[1.25rem] hover:text-rose-400 transition-all duration-300 shadow-sm hover:cursor-pointer">
                                         View Request

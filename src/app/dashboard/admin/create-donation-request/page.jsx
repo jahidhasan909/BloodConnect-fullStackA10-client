@@ -176,17 +176,17 @@ export default function CreateDonationRequestAdmin() {
 
 
     return (
-        <div className="bg-white/10 min-h-screen py-17 md:py-10">
+        <div className="bg-white/10 min-h-screen py-17 px-2 lg:py-10">
 
-            <div className="relative  max-w-7xl mx-auto ">
+            <div className="relative  max-w-11/12 mx-auto ">
 
 
                 <div className="relative z-10 w-full  rounded-[2rem] bg-white dark:bg-white/20 p-8 shadow-xl border border-slate-100 md:p-12">
                     <div className="mb-8 border-b border-slate-100 pb-5">
-                        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+                        <h1 className="text-xl lg:text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
                             Create Blood Donation Request
                         </h1>
-                        <p className="mt-2 text-sm text-slate-500 dark:text-gray-300">
+                        <p className="mt-2 text-xs lg:text-[1rem] text-slate-500 dark:text-gray-300">
                             Please update the structural recipient and medical terminal attributes to locate compatible donors.
                         </p>
                     </div>

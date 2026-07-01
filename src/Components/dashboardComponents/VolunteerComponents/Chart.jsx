@@ -32,7 +32,7 @@ export default function DashboardOverviewChart({
   ];
 
   return (
-    <div className="mt-10 rounded-[28px] border border-slate-200 bg-white dark:bg-white/20 p-6 shadow-sm">
+    <div className="mt-7 rounded-[28px] border border-slate-200 bg-white dark:bg-white/20 p-6 shadow-sm">
       <div className="mb-5">
         <h2 className="text-xl font-bold text-slate-900">
           Platform Overview

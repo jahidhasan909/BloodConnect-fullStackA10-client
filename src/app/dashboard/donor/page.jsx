@@ -100,7 +100,7 @@ const DonorDashboardPage = () => {
     return (
         <div className='dark:bg-white/10'>
 
-            <div className="py-20 md:py-6 lg:py-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20 relative ">
+            <div className="py-17 px-2 lg:py-8 max-w-11/12 mx-auto space-y-6 md:space-y-8 min-h-screen pb-20 relative ">
 
                 {activeMenuId !== null && (
                     <div
@@ -115,7 +115,7 @@ const DonorDashboardPage = () => {
                             <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                                 Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
                             </h1>
-                            <p className="text-[1rem] md:text-sm text-slate-500 dark:text-gray-300 mt-1">View your three most recent blood donation requests and monitor their current status.</p>
+                            <p className="lg:text-[1rem] text-xs text-slate-500 dark:text-gray-300 mt-1">View your three most recent blood donation requests and monitor their current status.</p>
                         </div>
                         <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
                     </div>

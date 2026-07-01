@@ -177,7 +177,7 @@ const AllUsersManagementPage = ({ Users }) => {
     return (
         <div className='dark:bg-white/10'>
 
-        <div className="px-10 py-17 md:py-10    lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative">
+        <div className="py-17 px-2   lg:py-10 max-w-11/12 mx-auto space-y-6 md:space-y-8 min-h-screen relative">
 
             {activeMenuId !== null && (
                 <div
@@ -186,12 +186,12 @@ const AllUsersManagementPage = ({ Users }) => {
                 />
             )}
 
-            <header className="p-5 md:p-6 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-50 text-black flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <header className="px-8 py-8 lg:py-13 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-50 text-black flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-xl md:text-3xl font-bold">
+                    <h1 className="text-xl lg:text-3xl font-bold">
                         User Management Panel <span className="text-red-500 font-extrabold">(Admin)</span>
                     </h1>
-                    <p className="text-xs md:text-[1rem] text-gray-500 dark:text-white mt-1">Manage user roles, statuses, and permissions across the platform.</p>
+                    <p className="text-xs lg:text-[1rem] text-gray-500 dark:text-white mt-1">Manage user roles, statuses, and permissions across the platform.</p>
                 </div>
 
                 <div className="flex bg-[#db0000]/10 p-1 rounded-xl border border-red-50 self-start md:self-auto">
@@ -220,7 +220,7 @@ const AllUsersManagementPage = ({ Users }) => {
                 <section className="space-y-4 relative">
 
                     {/* Desktop Table View */}
-                    <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                    <div className="hidden lg:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                         <Table className="overflow-visible">
                             <Table.ScrollContainer className="overflow-visible">
                                 <Table.Content aria-label="Users management table" className="min-w-[800px] md:min-w-[1000px] overflow-visible">
@@ -321,7 +321,7 @@ const AllUsersManagementPage = ({ Users }) => {
                     </div>
 
                     {/* Mobile Card View */}
-                    <div className="block sm:hidden space-y-4">
+                    <div className="block lg:hidden space-y-4">
                         {filteredUsers.map((user) => (
                             <div key={user._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
                                 <div className="flex justify-between items-start">

@@ -70,7 +70,7 @@ const Navbar = () => {
                             <span className='text-[#db0000]'>Blood</span>Connect </span>
                     </Link>
 
-                    <div className="hidden md:flex items-center gap-8">
+                    <div className="hidden lg:flex items-center gap-8">
                         <Link href="/" className={linkClass('/')}>Home</Link>
                         <Link href="/donationrequest" className={linkClass('/donationrequest')}>Donation Requests</Link>
                         <Link href="/searchdonor" className={linkClass('/searchdonor')}>Search Donor</Link>
@@ -82,7 +82,7 @@ const Navbar = () => {
                     </div>
 
 
-                    <div className="hidden md:flex items-center gap-4">
+                    <div className="hidden lg:flex items-center gap-4">
                         <ThemeSwitch />
 
 
@@ -151,7 +151,7 @@ const Navbar = () => {
                     </div>
 
 
-                    <div className="md:hidden flex items-center gap-4">
+                    <div className="lg:hidden flex items-center gap-4">
                         <ThemeSwitch />
 
                         {!user ? (
@@ -236,7 +236,7 @@ const Navbar = () => {
 
 
             {isMenuOpen && (
-                <div className="md:hidden bg-white dark:bg-black border-b border-slate-100 px-4 pt-2 pb-4 space-y-2 shadow-inner animate-in fade-in slide-in-from-top-5 duration-200">
+                <div className="lg:hidden bg-white dark:bg-black border-b border-slate-100 px-4 pt-2 pb-4 space-y-2 shadow-inner  slide-in-from-top-5 duration-200 z-50">
                     <Link
                         href="/"
                         onClick={() => setIsMenuOpen(false)}

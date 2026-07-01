@@ -95,24 +95,24 @@ export default function AdminHomeAllCards() {
     return (
         <div className='dark:bg-white/20 bg-white'>
 
-            <div className="w-full min-h-screen   mx-auto py-20 md:py-6 ">
+            <div className="w-full min-h-screen px-2  mx-auto py-17 lg:py-6  max-w-11/12">
 
 
-                <section className="bg-gradient-to-r max-w-7xl  mx-auto from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-10 rounded-2xl  shadow-sm">
+                <section className="bg-gradient-to-r  from-[#db0000]/20 to-red-50 text-white py-12 px-6 sm:px-8 lg:px-10 rounded-2xl  shadow-sm">
                     <div className=" mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
-                            <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
+                            <h1 className="text-xl lg:text-3xl font-bold text-slate-800 dark:text-white">
                                 Welcome back, <span className="text-[#db0000] font-extrabold">{user?.name || "Donor"}</span> !
                             </h1>
-                            <p className="md:text-[1rem] text-sm text-slate-500 dark:text-gray-300 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
+                            <p className="lg:text-[1rem] text-xs text-slate-500 dark:text-gray-300 mt-1">Monitor platform activity, manage users, and oversee blood donation requests from a centralized dashboard.</p>
                         </div>
                         <h1 className=' uppercase text-right text-[#db0000] font-bold '>{user?.role}</h1>
                     </div>
                 </section>
 
 
-                <section className="text-slate-600 py-10 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
-                    <div className="max-w-7xl mx-auto">
+                <section className="text-slate-600 pt-7 select-none font-sans antialiased">
+                    <div className="">
 
 
 

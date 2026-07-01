@@ -145,7 +145,7 @@ export default function ProfileAdmin({ userData }) {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6 bg-white dark:bg-white/20 rounded-2xl border border-slate-100 shadow-sm mt-7 relative overflow-hidden">
+        <div className="max-w-11/12 mx-auto p-6 bg-white dark:bg-white/20 rounded-2xl border border-slate-100 shadow-sm mt-7 relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-sm tracking-wide shadow-xs">
                 Blood Group : {userData?.bloodGroup}
             </div>

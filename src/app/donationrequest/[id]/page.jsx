@@ -27,7 +27,7 @@ const DonationDetailspage = async ({ params }) => {
 
 
     return (
-        <div className="min-h-screen py-28 md:py-40 bg-slate-50/50 dark:bg-white/10">
+        <div className="min-h-screen px-2 py-28 md:py-40 bg-slate-50/50 dark:bg-white/10">
 
             <div className='mx-auto container'>
                 <div className='text-center'>

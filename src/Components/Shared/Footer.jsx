@@ -27,7 +27,7 @@ const Footer = () => {
                 viewport={{ once: true }}
             >
 
-                <div className="relative mb-30 container mx-auto bg-white dark:bg-white/10 rounded-2xl border border-slate-100 shadow-sm px-6 sm:px-12 pt-16 pb-8 z-10">
+                <div className="relative mb-11 lg:mb-30 container mx-auto bg-white dark:bg-white/10 rounded-2xl border border-slate-100 shadow-sm px-6 sm:px-12 pt-16 pb-8 z-10">
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-100">
 
@@ -107,7 +107,7 @@ const Footer = () => {
 
                 </div>
 
-                <div className="absolute left-1/2 bottom-0 -translate-x-1/2 container mx-auto text-center pointer-events-none z-0 h-[10vw] flex items-end justify-center overflow-visible px-4 sm:px-6 lg:px-8">
+                <div className="absolute  left-1/2 bottom-0 -translate-x-1/2 container mx-auto text-center pointer-events-none z-0 h-[10vw] flex items-end justify-center overflow-visible px-4 sm:px-6 lg:px-8">
                     <span className="text-[11vw] font-black tracking-tighter dark:text-rose-300/[0.10]  text-rose-900/[0.06] uppercase block leading-none translate-y-[15%] select-none">
                         BloodConnect
                     </span>

@@ -28,7 +28,7 @@ const images = [
 export default function Momentsofhope() {
   return (
     <section className="py-20 bg-white dark:bg-white/13">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-11/14 mx-auto px-4">
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -40,11 +40,11 @@ export default function Momentsofhope() {
               Moments of Hope
             </span>
 
-            <h2 className="text-4xl font-bold mt-4">
+            <h2 className="text-2xl lg:text-4xl font-bold mt-4">
               Community Gallery
             </h2>
 
-            <p className="text-gray-500 mt-3 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-gray-500 text-xs lg:text-[1rem] mt-3 dark:text-gray-300 max-w-2xl mx-auto">
               Explore inspiring moments from blood donation drives.
             </p>
           </div>

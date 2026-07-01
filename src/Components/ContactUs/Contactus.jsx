@@ -54,14 +54,14 @@ const ContactSection = () => {
 
     return (
         <section className="bg-slate-50 dark:bg-white/10 text-slate-600 py-24 px-4 sm:px-6 lg:px-8 select-none font-sans overflow-hidden antialiased">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-11/14 mx-auto">
 
                 <div className="mb-16 space-y-3 text-center">
 
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                    <h2 className="text-2xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
                         Contact Us
                     </h2>
-                    <p className="text-base sm:text-lg text-slate-500 dark:text-gray-300 font-normal leading-relaxed">
+                    <p className="text-xs lg:text-[1rem] text-slate-500 dark:text-gray-300 font-normal leading-relaxed">
                         Have questions or need blood support? Our team is here to help you anytime.
                     </p>
                 </div>

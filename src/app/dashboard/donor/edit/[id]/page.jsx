@@ -28,10 +28,10 @@ const Editpage = async ({ params }) => {
                 </Link>
 
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+                    <h1 className="text-2xl lg:text-4xl font-bold text-slate-900 dark:text-white">
                         Edit Donation Request
                     </h1>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-gray-300 max-w-2xl">
+                    <p className="mt-2 text-xs lg:text-[1rem] text-slate-500 dark:text-gray-300 max-w-2xl">
                         Keep your donation request accurate by updating the necessary information below.
                     </p>
                 </div>

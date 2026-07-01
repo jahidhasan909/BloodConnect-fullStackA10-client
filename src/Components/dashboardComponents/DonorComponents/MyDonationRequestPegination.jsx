@@ -98,14 +98,14 @@ const MyDonationRequestPegination = ({ donationRequest, user }) => {
     return (
         <div className='bg-white/10'>
 
-            <div className="py-20 md:py-6 lg:py-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20  relative">
+            <div className="py-17 px-2  lg:py-8 max-w-11/12 mx-auto space-y-6 md:space-y-8 min-h-screen pb-20  relative">
 
                 <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100   flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                             Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span> !
                         </h1>
-                        <p className="text-xs md:text-sm text-slate-500 mt-1">View and manage all your blood donation requests.</p>
+                        <p className="lg:text-[1rem] text-xs text-slate-500 mt-1">View and manage all your blood donation requests.</p>
                     </div>
 
                     <div className="flex items-center gap-2 self-end sm:self-auto">

@@ -94,7 +94,7 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
     return (
         <div className='bg-white/10'>
 
-        <div className="py-22 md:py-6 lg:py-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative ">
+        <div className="py-17 px-2 lg:py-8 max-w-11/12 mx-auto space-y-6 md:space-y-8 min-h-screen pb-24 relative ">
             
             {activeMenuId !== null && (
                 <div
@@ -103,12 +103,12 @@ const AllDonationRequestvolunteerDashboard = ({ donationRequest }) => {
                 />
             )}
 
-            <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100  flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <header className="py-13 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-slate-100  flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
+                    <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                         All Blood Donation Requests <span className="text-red-600 font-extrabold"></span>
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-500 mt-1 dark:text-gray-300">Review requests and update the donation operations status.</p>
+                    <p className="text-xs lg:text-[1rem] text-slate-500 mt-1 dark:text-gray-300">Review requests and update the donation operations status.</p>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto">

@@ -76,24 +76,24 @@ const CommunityImpactStats = () => {
     return (
         <section className="bg-[#db0000]/16 dark:bg-white/30 z-10 relative overflow-hidden  rounded-b-4xl text-slate-600 py-13 px-4 sm:px-6 lg:px-8 select-none font-sans antialiased">
             <div className="absolute -top-40 left-1/2 -z-10 -translate-x-1/2 w-[700px] h-[300px] bg-red-400/20 blur-[120px] rounded-full pointer-events-none" />
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-11/12 mx-auto">
 
                 <div className=" gap-4   mb-7">
                     <div>
                         <div className="flex  justify-center items-center  rounded-full  px-3 py-1 mb-2">
                             <Chip color="" className='bg-red-100 dark:bg-white/10 dark:text-white text-[#db0000] gap-2'><span className="h-2 w-2  rounded-full bg-red-600 animate-pulse"></span> Live Statistics</Chip>
                         </div>
-                        <h3 className="text-4xl text-center font-black text-slate-900 dark:text-white tracking-tight">
+                        <h3 className="text-2xl lg:text-4xl  text-center font-black text-slate-900 dark:text-white tracking-tight">
                             <span className='text-[#db0000]'>Community </span>Impact
                         </h3>
-                        <p className="text-[1rem] text-gray-500 dark:text-gray-200 mt-2 text-center">
+                        <p className="text-xs lg:text-[1rem] text-gray-500 dark:text-gray-200 mt-2 text-center">
                             Track the real-time impact of our community through active donors, blood requests, and <br /> life-saving contributions.
                         </p>
                     </div>
                 </div>
 
                 <div className="absolute bottom-0 -z-10 -right-32 w-[400px] h-[400px] bg-rose-300/20 blur-[140px] rounded-full pointer-events-none" />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {statsData.map((stat, index) => {
                         const IconComponent = stat.icon;
 

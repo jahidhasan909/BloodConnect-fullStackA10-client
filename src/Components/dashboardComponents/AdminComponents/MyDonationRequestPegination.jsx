@@ -98,14 +98,14 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
     return (
         <div className='bg-white/10'>
 
-            <div className="py-20 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8 min-h-screen pb-20  relative">
+            <div className="py-17 px-2 lg:py-10 max-w-11/12 mx-auto space-y-6 md:space-y-8 min-h-screen   relative">
 
                 <header className="py-10 px-10 rounded-2xl bg-gradient-to-r from-[#db0000]/20 to-red-50 border border-red-100   flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white">
                             Welcome back, <span className="text-red-600 font-extrabold">{user?.name || "Donor"}</span> !
                         </h1>
-                        <p className="text-xs md:text-[1rem] text-slate-500 mt-1 dark:text-gray-300">View and manage all your blood donation requests.</p>
+                        <p className="text-xs lg:text-[1rem] text-slate-500 mt-1 dark:text-gray-300">View and manage all your blood donation requests.</p>
                     </div>
 
                     <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -131,7 +131,7 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
                 {filteredRequests.length > 0 ? (
                     <section className="space-y-4 relative">
 
-                        <div className="hidden sm:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                        <div className="hidden lg:block overflow-visible rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                             <Table className="overflow-visible">
                                 <Table.ScrollContainer className="overflow-visible">
                                     <Table.Content aria-label="Requests table" className="min-w-[800px] md:min-w-[1000px] overflow-visible">
@@ -212,7 +212,7 @@ const MyDonationRequestPeginationAdmin = ({ donationRequest, user }) => {
                         </div>
 
                         {/* MOBILE VIEW */}
-                        <div className="block sm:hidden space-y-4">
+                        <div className="block lg:hidden space-y-4">
                             {filteredRequests.map((request) => (
                                 <div key={request._id} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 relative">
                                     <div className="flex justify-between items-start">
